@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI PM PORTFOLIO</title>
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/pages.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">跳到主要内容</a>
+  <div class="page-transition" aria-hidden="true"></div>
+  <div class="site-grain" aria-hidden="true"></div>
+  <header class="site-header site-header--hero">
+    <a class="brand brand--mark" href="./" aria-label="个人作品集首页" data-transition-link><span>LY</span><small>PERSONAL<br>PORTFOLIO</small></a>
+    <button class="menu-toggle" type="button" data-menu-toggle aria-expanded="false" aria-controls="primary-nav">菜单</button>
+    <nav class="site-nav" id="primary-nav" data-menu aria-label="主导航">
+      <a href="./" aria-current="page" data-transition-link>首页</a>
+      <a href="#internship" data-transition-link>实习</a>
+      <a href="#works" data-transition-link>项目</a>
+      <a href="#about" data-transition-link>关于</a>
+    </nav>
+  </header>
+
+  <main id="main">
+    <section class="hero-stage" data-hero-stage aria-labelledby="hero-title">
+      <div class="hero-stage__copy">
+        <div class="hero-stage__meta" aria-hidden="true"><span>LIUYING / PERSONAL WORK</span><span>2026 / SELECTED CASES</span></div>
+        <h1 id="hero-title" aria-label="AI PM PORTFOLIO"><span id="hero-letters" class="hero-letters" aria-hidden="true"></span></h1>
+        <div class="hero-stage__details">
+          <p class="hero-stage__role">AI 产品经理 · 把复杂问题变成清晰、可用的产品体验</p>
+          <div class="hero-letter-controls" aria-label="字母图片交互控制">
+            <button id="letter-replay" type="button" disabled>重播开场</button>
+            <button id="letter-pause" type="button" disabled aria-pressed="false">暂停自动</button>
+          </div>
+        </div>
+      </div>
+      <p id="letter-status" class="hero-stage__status" role="status">正在准备字母图片…</p>
+      <a class="hero-stage__scroll" href="#works" aria-label="查看项目">查看项目 <span>↓</span></a>
+    </section>
+
+    <section class="works-intro" id="works" aria-labelledby="works-title" data-reveal>
+      <div class="works-intro__label">
+        <span>LOOKING FOR</span>
+        <strong>你想看哪类项目？</strong>
+      </div>
+      <div class="filter-panel" aria-label="项目筛选框架">
+        <button type="button" data-project-filter data-filter="all" aria-pressed="true">全部</button>
+        <button type="button" data-project-filter data-filter="type-a" aria-pressed="false">项目类型 A</button>
+        <button type="button" data-project-filter data-filter="type-b" aria-pressed="false">项目类型 B</button>
+        <button type="button" data-project-filter data-filter="type-c" aria-pressed="false">项目类型 C</button>
+        <button type="button" data-project-filter data-filter="type-d" aria-pressed="false">项目类型 D</button>
+      </div>
+      <div class="works-intro__heading">
+        <p class="eyebrow">SELECTED WORKS</p>
+        <h2 id="works-title">项目经历</h2>
+        <p>这里将放一段项目总览说明。</p>
+      </div>
+    </section>
+
+    <section class="works-grid" aria-label="项目卡片结构" data-reveal>
+      <article class="work-item work-item--feature" data-project-preview data-project-card data-category="type-a">
+        <a href="#project-detail" aria-label="项目 01 详情占位">
+          <div class="work-item__media work-item__media--board"><span class="work-item__sticker">01</span><div class="board-window"><b>项目主视觉 / 截图位置</b><i></i><i></i><i></i><div><span></span><span></span><span></span></div></div></div>
+          <div class="work-item__meta"><p>项目分类 / 角色 / 时间</p><h3>项目名称<br>占位</h3><span>一句话项目价值说明 <b>→</b></span></div>
+        </a>
+      </article>
+      <article class="work-item work-item--warm" data-project-preview data-project-card data-category="type-b">
+        <a href="#project-detail" aria-label="项目 02 详情占位">
+          <div class="work-item__media work-item__media--agent"><div class="agent-bubble">项目图片<br>或插画位置</div><div class="agent-notes"><i></i><i></i><i></i></div><strong>02</strong></div>
+          <div class="work-item__meta"><p>项目分类 / 角色 / 时间</p><h3>项目名称<br>占位</h3><span>一句话项目价值说明 <b>→</b></span></div>
+        </a>
+      </article>
+      <article class="work-item work-item--image" data-project-preview data-project-card data-category="type-c">
+        <a href="#project-detail" aria-label="项目 03 详情占位">
+          <div class="work-item__media work-item__media--placeholder"><span>PROJECT<br>VISUAL 03</span></div>
+          <div class="work-item__meta"><p>项目分类 / 角色 / 时间</p><h3>项目名称<br>占位</h3><span>一句话项目价值说明 <b>→</b></span></div>
+        </a>
+      </article>
+      <article class="work-item work-item--ink" data-project-preview data-project-card data-category="type-a type-d">
+        <a href="#project-detail" aria-label="项目 04 详情占位">
+          <div class="work-item__media work-item__media--boboli"><span>04</span><span>×</span><span>WORK</span><i>+</i></div>
+          <div class="work-item__meta"><p>项目分类 / 角色 / 时间</p><h3>项目名称<br>占位</h3><span>一句话项目价值说明 <b>→</b></span></div>
+        </a>
+      </article>
+      <article class="work-item work-item--travel" data-project-preview data-project-card data-category="type-b">
+        <a href="#project-detail" aria-label="项目 05 详情占位">
+          <div class="work-item__media work-item__media--placeholder work-item__media--light"><span>PROJECT<br>VISUAL 05</span></div>
+          <div class="work-item__meta"><p>项目分类 / 角色 / 时间</p><h3>项目名称<br>占位</h3><span>一句话项目价值说明 <b>→</b></span></div>
+        </a>
+      </article>
+      <article class="work-item work-item--coral" data-project-preview data-project-card data-category="type-d">
+        <a href="#project-detail" aria-label="项目 06 详情占位">
+          <div class="work-item__media work-item__media--commerce"><strong>PROJECT<br>06</strong><div><i></i><i></i><i></i><i></i></div></div>
+          <div class="work-item__meta"><p>项目分类 / 角色 / 时间</p><h3>项目名称<br>占位</h3><span>一句话项目价值说明 <b>→</b></span></div>
+        </a>
+      </article>
+    </section>
+
+    <section class="page-frame" id="internship" aria-labelledby="internship-title" data-reveal>
+      <p class="eyebrow">INTERNSHIP</p><h2 id="internship-title">实习经历<br>结构框架</h2>
+      <div class="frame-columns"><div>公司 / 岗位 / 时间</div><div>工作内容与关键贡献</div><div>关联项目入口</div></div>
+    </section>
+    <section class="page-frame page-frame--dark" id="about" aria-labelledby="about-title" data-reveal>
+      <p class="eyebrow">ABOUT</p><h2 id="about-title">关于我<br>结构框架</h2>
+      <div class="frame-columns"><div>个人简介</div><div>教育 / 技能</div><div>简历 / 联系方式</div></div>
+    </section>
+  </main>
+
+  <footer class="site-footer"><span>PERSONAL PORTFOLIO / FRAMEWORK</span><a href="#about">关于页面结构 →</a></footer>
+  <script src="js/letter-config.js"></script>
+  <script src="js/hero-letters.js"></script>
+  <script src="js/site.js"></script>
+  <script>PortfolioSite.init();</script>
+</body>
+</html>

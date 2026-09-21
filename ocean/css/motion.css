@@ -1,0 +1,273 @@
+/* Ocean motion layer: isolated, optional and safe to remove. */
+
+.letter-text,
+.letter-image {
+  transition:
+    opacity 260ms ease,
+    transform 420ms cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+[data-letter-index] {
+  position: relative;
+}
+
+.letter-image {
+  position: absolute;
+  inset: 50% auto auto 50%;
+  z-index: 1;
+  display: block;
+  width: min(92%, 9rem);
+  max-height: 92%;
+  object-fit: contain;
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, -48%) rotate(-2deg) scale(0.96);
+}
+
+html:not(.ocean-motion-paused):not([data-motion="paused"]) .letter-asset-ready:hover .letter-text,
+html:not(.ocean-motion-paused):not([data-motion="paused"]) .letter-asset-ready:focus-within .letter-text {
+  opacity: 0.12;
+  transform: translateY(0.08em) rotate(1.5deg) scale(0.98);
+}
+
+html:not(.ocean-motion-paused):not([data-motion="paused"]) .letter-asset-ready:hover .letter-image,
+html:not(.ocean-motion-paused):not([data-motion="paused"]) .letter-asset-ready:focus-within .letter-image {
+  opacity: 1;
+  transform: translate(-50%, -50%) rotate(0deg) scale(1);
+}
+
+.ocean-paper-cursor,
+.ocean-cursor-trail {
+  position: fixed;
+  inset: 0 auto auto 0;
+  z-index: 2147483646;
+  pointer-events: none;
+}
+
+.ocean-cursor-trail {
+  width: 100vw;
+  height: 100vh;
+}
+
+.ocean-paper-cursor {
+  width: 30px;
+  height: 23px;
+  opacity: 0;
+  transform-origin: 2px 12px;
+  transition: opacity 100ms linear;
+  will-change: transform;
+}
+
+.ocean-paper-cursor.is-visible {
+  opacity: 0.92;
+}
+
+.ocean-paper-cursor svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  filter: drop-shadow(0 2px 2px rgba(7, 62, 70, 0.18));
+}
+
+.paper-cursor__hull {
+  fill: rgba(244, 250, 246, 0.96);
+  stroke: rgba(14, 84, 92, 0.86);
+  stroke-width: 1.3;
+  stroke-linejoin: round;
+}
+
+.paper-cursor__sail {
+  fill: rgba(226, 244, 241, 0.94);
+  stroke: rgba(14, 84, 92, 0.86);
+  stroke-width: 1.2;
+  stroke-linejoin: round;
+}
+
+.paper-cursor__fold {
+  fill: none;
+  stroke: rgba(32, 119, 126, 0.7);
+  stroke-width: 1;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.paper-cursor__bow {
+  fill: none;
+  stroke: rgba(32, 119, 126, 0.78);
+  stroke-width: 1.15;
+  stroke-linecap: round;
+}
+
+html.ocean-cursor-active,
+html.ocean-cursor-active body,
+html.ocean-cursor-active body * {
+  cursor: none !important;
+}
+
+[data-liquid-stage] {
+  touch-action: pan-y;
+}
+
+[data-view="gallery"] [data-liquid-stage] {
+  position: relative;
+  min-height: clamp(22rem, 58vw, 42rem);
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.ocean-liquid-canvas {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  display: none;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+[data-view="gallery"] .ocean-liquid-canvas {
+  display: block;
+}
+
+[data-view="gallery"] .ocean-liquid-enhanced .project-tile {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: min(48vw, 32.5rem);
+  max-width: calc(100% - 3rem);
+  transform-origin: center;
+  will-change: transform;
+}
+
+[data-view="gallery"] .ocean-liquid-enhanced.is-dragging .project-tile {
+  transition: none;
+  user-select: none;
+}
+
+[data-view="gallery"] .ocean-liquid-enhanced .project-tile__surface {
+  position: relative;
+  overflow: hidden;
+  border-radius: clamp(1.5rem, 4vw, 3.5rem);
+  background: rgba(104, 178, 185, 0.2);
+  box-shadow:
+    inset 0 0 0 1px rgba(235, 251, 248, 0.34),
+    0 1.2rem 3rem rgba(12, 76, 82, 0.08);
+}
+
+[data-view="gallery"] .ocean-liquid-enhanced .project-tile__surface::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(145deg, rgba(239, 250, 245, 0.2), transparent 58%);
+  pointer-events: none;
+}
+
+[data-view="gallery"] .ocean-liquid-enhanced .project-tile__number {
+  position: relative;
+  z-index: 2;
+}
+
+[data-view="list"] .ocean-liquid-canvas {
+  display: none;
+}
+
+[data-sticker-viewport] {
+  overflow: hidden;
+}
+
+[data-sticker-track] {
+  display: flex;
+  width: max-content;
+}
+
+.ocean-sticker-set {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: clamp(1rem, 3vw, 2.5rem);
+  padding-right: clamp(1rem, 3vw, 2.5rem);
+}
+
+.ocean-sticker {
+  display: block;
+  width: clamp(5rem, 11vw, 9rem);
+  height: clamp(5rem, 11vw, 9rem);
+  object-fit: contain;
+  flex: none;
+}
+
+[data-sticker-viewport].has-stickers [data-sticker-track] {
+  animation: ocean-sticker-drift 30s linear infinite;
+}
+
+[data-sticker-viewport].has-stickers:hover [data-sticker-track],
+[data-sticker-viewport].has-stickers:focus-within [data-sticker-track],
+[data-sticker-viewport].is-paused [data-sticker-track],
+.ocean-motion-paused [data-sticker-track] {
+  animation-play-state: paused;
+}
+
+html[data-motion="paused"] [data-sticker-track] {
+  animation-play-state: paused;
+}
+
+html.ocean-motion-paused .letter-text,
+html.ocean-motion-paused .letter-image,
+html[data-motion="paused"] .letter-text,
+html[data-motion="paused"] .letter-image {
+  transition: none;
+}
+
+[data-sticker-viewport].is-empty [data-sticker-track] {
+  display: none;
+}
+
+@keyframes ocean-sticker-drift {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (max-width: 44rem) {
+  [data-view="gallery"] .ocean-liquid-enhanced .project-tile {
+    width: min(76vw, 28rem);
+  }
+}
+
+@media (hover: none), (pointer: coarse) {
+  .ocean-paper-cursor,
+  .ocean-cursor-trail {
+    display: none !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .letter-text,
+  .letter-image,
+  [data-view="gallery"] .ocean-liquid-enhanced .project-tile {
+    transition: none !important;
+  }
+
+  .letter-asset-ready:hover .letter-text,
+  .letter-asset-ready:focus-within .letter-text {
+    opacity: 1;
+    transform: none;
+  }
+
+  .letter-asset-ready:hover .letter-image,
+  .letter-asset-ready:focus-within .letter-image {
+    opacity: 0;
+    transform: translate(-50%, -50%);
+  }
+
+  [data-sticker-track] {
+    animation: none !important;
+  }
+
+  .ocean-paper-cursor,
+  .ocean-cursor-trail {
+    display: none !important;
+  }
+}

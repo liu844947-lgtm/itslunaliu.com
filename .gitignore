@@ -1,0 +1,4 @@
+node_modules/
+static-server.pid
+.DS_Store
+*.log

@@ -1,0 +1,15 @@
+<!doctype html>
+<html lang="zh-CN">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Project — LIUYING</title><link rel="icon" href="data:,"><link rel="stylesheet" href="css/ocean.css"><link rel="stylesheet" href="css/motion.css"><link rel="stylesheet" href="css/long-page.css"></head>
+<body class="project-detail-page" data-project-detail>
+  <header class="site-header"><a class="wordmark" href="index.html#home">LIUYING</a><a class="detail-back" href="index.html#projects">← 返回项目</a></header>
+  <main id="main" class="detail-main"><p class="eyebrow">PROJECT / <span data-project-number>01</span></p><h1>PROJECT <span data-project-number>01</span></h1><div class="detail-placeholder" role="img" aria-label="项目主图留白"></div><section class="detail-grid"><div><p class="index-number" data-project-number>01</p><div class="detail-lines"></div></div><div class="detail-copy-space" aria-label="项目说明留白"></div></section></main>
+  <footer class="site-footer"><span>LIUYING / PROJECT DETAIL</span><a href="index.html#projects">返回项目总览 ↑</a><button class="motion-toggle" data-motion-toggle aria-pressed="false">暂停动效</button></footer>
+  <script>
+    const id = new URLSearchParams(location.search).get("id");
+    const safe = /^(0[1-5])$/.test(id || "") ? id : "01";
+    document.querySelectorAll("[data-project-number]").forEach((node) => node.textContent = safe);
+  </script>
+  <script defer src="js/site.js"></script><script defer src="js/motion.js"></script><script defer src="js/global-liquid.bundle.js"></script>
+</body>
+</html>

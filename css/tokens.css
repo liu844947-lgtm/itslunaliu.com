@@ -1,0 +1,22 @@
+:root {
+  --blue: #0877d1;
+  --blue-deep: #075ba4;
+  --paper: #f7f7f5;
+  --paper-soft: #eef1f2;
+  --ink: #202326;
+  --muted: #6b737a;
+  --yellow: #f4dc24;
+  --line: #202326;
+  --white: #fff;
+  --space-1: 8px;
+  --space-2: 16px;
+  --space-3: 24px;
+  --space-4: 40px;
+  --space-5: 64px;
+  --space-6: 104px;
+  --radius-pill: 999px;
+  --radius-panel: 28px;
+  --radius-card: 14px;
+  --shadow-soft: 0 16px 42px rgb(32 35 38 / 10%);
+  --ease-etoha: cubic-bezier(.22, .8, .2, 1);
+}
