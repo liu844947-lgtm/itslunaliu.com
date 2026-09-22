@@ -1,0 +1,87 @@
+name: Deploy ocean portfolio
+
+on:
+  push:
+    branches: [master]
+    paths:
+      - "ocean/**"
+      - ".github/workflows/deploy-ocean.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ocean-production
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      ECS_HOST: ${{ secrets.ECS_HOST }}
+      ECS_USER: ${{ secrets.ECS_USER }}
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Package ocean theme
+        run: tar -czf ocean-release.tar.gz -C ocean .
+
+      - name: Configure SSH
+        shell: bash
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.ECS_SSH_PRIVATE_KEY }}
+          SSH_KNOWN_HOSTS: ${{ secrets.ECS_KNOWN_HOSTS }}
+        run: |
+          install -d -m 700 "$HOME/.ssh"
+          printf '%s\n' "$SSH_PRIVATE_KEY" > "$HOME/.ssh/deploy_key"
+          printf '%s\n' "$SSH_KNOWN_HOSTS" > "$HOME/.ssh/known_hosts"
+          chmod 600 "$HOME/.ssh/deploy_key" "$HOME/.ssh/known_hosts"
+
+      - name: Upload release archive
+        run: scp -i "$HOME/.ssh/deploy_key" -o BatchMode=yes -o IdentitiesOnly=yes ocean-release.tar.gz "$ECS_USER@$ECS_HOST:/tmp/itslunaliu-ocean-${GITHUB_SHA}.tar.gz"
+
+      - name: Promote release on ECS
+        shell: bash
+        run: |
+          ssh -i "$HOME/.ssh/deploy_key" -o BatchMode=yes -o IdentitiesOnly=yes "$ECS_USER@$ECS_HOST" "ARCHIVE=/tmp/itslunaliu-ocean-${GITHUB_SHA}.tar.gz RELEASE_ID=${GITHUB_SHA} bash -s" <<'REMOTE'
+          set -euo pipefail
+
+          live=/var/www/itslunaliu.com
+          stage="/var/www/.itslunaliu-ocean-${RELEASE_ID}"
+          backup="/var/www/itslunaliu.com.previous-$(date +%Y%m%d%H%M%S)"
+
+          rm -rf "$stage"
+          install -d -m 0755 "$stage"
+          tar -xzf "$ARCHIVE" -C "$stage"
+          test -f "$stage/index.html"
+          test -f "$stage/css/ocean.css"
+          test -f "$stage/js/global-liquid.bundle.js"
+          test -f "$stage/project.html"
+          chown -R nginx:nginx "$stage"
+          find "$stage" -type d -exec chmod 755 {} \;
+          find "$stage" -type f -exec chmod 644 {} \;
+
+          if [ -d "$live" ]; then
+            mv "$live" "$backup"
+          fi
+          mv "$stage" "$live"
+
+          rollback() {
+            rm -rf "$live"
+            if [ -d "$backup" ]; then mv "$backup" "$live"; fi
+            systemctl reload nginx || true
+            exit 1
+          }
+
+          if ! nginx -t || ! systemctl reload nginx || ! curl --fail --silent --show-error --insecure -H 'Host: itslunaliu.com' https://127.0.0.1/ >/dev/null; then
+            rollback
+          fi
+
+          rm -f "$ARCHIVE"
+          echo "Deployed ocean release ${RELEASE_ID}"
+          REMOTE
+
+      - name: Verify public HTTPS
+        run: curl --fail --silent --show-error --location https://itslunaliu.com/ | grep -q 'data-page="home"'
