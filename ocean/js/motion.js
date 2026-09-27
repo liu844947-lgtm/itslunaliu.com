@@ -684,11 +684,20 @@
     state.refreshers.push(syncPausedState);
     syncPausedState();
 
-    Promise.all(assets.map((asset) => decodeImage(asset.src.trim()).then((image) => ({
+    Promise.allSettled(assets.map((asset) => decodeImage(asset.src.trim()).then((image) => ({
       image,
       alt: typeof asset.alt === "string" ? asset.alt : "",
-    })))).then((decodedAssets) => {
+    })))).then((results) => {
       if (!state.initialized || state.generation !== generation || !track.isConnected) return;
+      const decodedAssets = results
+        .filter((result) => result.status === "fulfilled")
+        .map((result) => result.value);
+      if (!decodedAssets.length) {
+        viewport.classList.add("is-empty");
+        viewport.classList.remove("has-stickers");
+        if (toggle) toggle.hidden = true;
+        return;
+      }
       const makeSet = (decorative) => {
         const set = document.createElement("div");
         set.className = "ocean-sticker-set";
@@ -708,9 +717,6 @@
       viewport.classList.add("has-stickers");
       if (toggle) toggle.hidden = false;
       syncPausedState();
-    }).catch(() => {
-      viewport.classList.add("is-empty");
-      if (toggle) toggle.hidden = true;
     });
   }
 

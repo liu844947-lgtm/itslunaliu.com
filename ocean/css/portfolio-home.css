@@ -18,7 +18,14 @@
   --font-jp: "Zen Kaku Gothic New", "Noto Sans SC", "Microsoft YaHei", sans-serif;
 }
 
+html {
+  overflow-x: clip;
+}
+
 body.one-page {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: clip;
   color: var(--portfolio-ink);
   background: var(--portfolio-paper);
   font-family: var(--font-en);
@@ -141,9 +148,14 @@ body.one-page .site-header[data-on-dark="true"] nav a:not(.nav-cta) { color: #ff
 
 body.one-page .hero {
   position: relative;
-  height: min(100svh, 62.5vw);
-  min-height: 0;
-  aspect-ratio: 16 / 10;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  /* Fill the viewport width; keep a readable hero height without locking a fixed canvas. */
+  height: 100svh;
+  min-height: min(100svh, 900px);
+  max-height: none;
+  aspect-ratio: auto;
   padding: 0;
   color: var(--portfolio-ink);
   background: var(--portfolio-paper);
@@ -190,8 +202,8 @@ body.one-page .hero::after {
 .portfolio-title {
   position: absolute;
   z-index: 2;
-  left: max(24px, 4vw);
-  right: max(24px, 4vw);
+  left: max(16px, 3vw);
+  right: max(16px, 3vw);
   top: 50%;
   bottom: auto;
   display: flex;
@@ -200,16 +212,17 @@ body.one-page .hero::after {
   justify-content: center;
   gap: 0;
   width: auto;
-  max-width: none;
+  max-width: calc(100% - 2 * max(16px, 3vw));
   margin: 0;
+  box-sizing: border-box;
   transform: translateY(-54%);
   color: #0971e7;
   font-family: var(--font-display);
-  /* Figma 172:1031 — Rammetto 200 / tracking 20; adaptive within side margins. */
-  font-size: clamp(36px, calc((100vw - 48px) / 8.5), 200px);
+  /* Scale to available width so PORTFOLIO never forces horizontal scroll. */
+  font-size: clamp(32px, calc((100vw - 64px) / 9.2), 200px);
   font-weight: 400;
   line-height: 1;
-  letter-spacing: clamp(0px, 1.04vw, 20px);
+  letter-spacing: clamp(0px, .8vw, 20px);
   text-align: center;
 }
 
@@ -300,7 +313,8 @@ body.one-page .letter-flip.is-flipped {
   font-weight: 300;
   letter-spacing: .43px;
   line-height: 1.5;
-  white-space: nowrap;
+  white-space: normal;
+  max-width: 22ch;
 }
 
 .button, .button--solid, .button--ghost { color: var(--portfolio-link); }
@@ -842,7 +856,58 @@ body.one-page .project-case-list {
   letter-spacing: .933px;
   line-height: 33.6px;
 }
-.sticker-band { min-height: 330px; padding: 54px max(24px, 4vw); color: #fff; background: var(--portfolio-blue); border: 0; }
+.sticker-band {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(180px, 280px) minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(20px, 4vw, 48px);
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  min-height: 330px;
+  margin: 0;
+  padding: 54px max(24px, 4vw);
+  overflow: hidden;
+  color: #fff;
+  background: var(--portfolio-blue);
+  border: 0;
+}
+.sticker-band__intro {
+  position: relative;
+  z-index: 2;
+  max-width: 22ch;
+}
+.sticker-band__intro span {
+  display: block;
+  margin-bottom: 14px;
+  font-size: 11px;
+  letter-spacing: .16em;
+  opacity: .78;
+}
+.sticker-band__intro p {
+  margin: 0 0 18px;
+  font-family: var(--font-jp);
+  font-size: clamp(22px, 2.4vw, 34px);
+  font-weight: 700;
+  line-height: 1.25;
+}
+.sticker-band__intro a {
+  display: inline-flex;
+  padding-bottom: 4px;
+  border-bottom: 1px solid rgba(255, 255, 255, .7);
+  font-size: 13px;
+  letter-spacing: .06em;
+}
+.sticker-band [data-sticker-track] {
+  min-width: 0;
+  max-width: 100%;
+}
+.sticker-band.is-empty {
+  grid-template-columns: 1fr;
+  min-height: 180px;
+}
 .contact-section {
   position: relative;
   isolation: isolate;
@@ -1075,7 +1140,11 @@ body.one-page .site-footer { display: none !important; }
   .project-entry__summary { max-width: none; font-size: 14px; }
   .about-portrait { grid-template-columns: 1fr; gap: 42px; }
   .portrait-slot { aspect-ratio: 1.1; }
-  .sticker-band { min-height: 320px; grid-template-columns: 1fr; gap: 20px; }
+  .sticker-band {
+    grid-template-columns: 1fr;
+    min-height: 320px;
+    gap: 20px;
+  }
   .contact-section { min-height: 560px; padding: 170px 20px 54px; }
   .contact-arc { top: 0; width: 240vw; height: 280px; transform: translate(-50%, -58%); }
   .contact-character { top: 34px; width: 54px; height: 54px; font-size: 22px; }
