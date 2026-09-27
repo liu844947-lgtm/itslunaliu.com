@@ -226,14 +226,65 @@ body.has-case-devices .case-nav a.nav-cta {
   background: #116af8;
   padding-inline: 16px;
 }
+/* ScoutAI / Travel / other cover pages: homepage design system */
+body.project-detail-page:not(.has-case-devices) {
+  --case-blue: #0870ca;
+  --case-link: #116af8;
+  --case-ink: #343434;
+  --case-paper: #f7f7f7;
+  --case-line: #b3b3b3;
+  --font-en: "Roboto", "Helvetica Neue", Arial, sans-serif;
+  --font-jp: "Zen Kaku Gothic New", "Noto Sans SC", "Microsoft YaHei", sans-serif;
+  color: var(--case-ink);
+  background: var(--case-paper);
+  font-family: var(--font-en);
+}
+body.project-detail-page:not(.has-case-devices) .site-header--case {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+  max-width: none;
+  padding: 22px clamp(20px, 4vw, 56px);
+  background: transparent;
+  border-bottom: 0;
+  backdrop-filter: none;
+}
+body.project-detail-page:not(.has-case-devices) .site-header--case .wordmark {
+  color: var(--case-blue);
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: .14em;
+}
 body:not(.has-case-devices) .case-nav {
   display: flex;
-  gap: 12px;
   align-items: center;
+  gap: 6px;
+  padding: 6px 6px 6px 18px;
+  border: 1px solid #fff;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, .6);
+  box-shadow: none;
+}
+body:not(.has-case-devices) .case-nav a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 36px;
+  padding: 6px 14px 5px;
+  border-radius: 9999px;
+  color: var(--case-ink, #343434);
+  font-family: var(--font-en, inherit);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: .08em;
 }
 body:not(.has-case-devices) .case-nav .nav-cta {
   color: #fff;
-  background: #116af8;
+  background: var(--case-link, #116af8);
   border-radius: 9999px;
   padding: 8px 14px;
 }
@@ -361,17 +412,100 @@ body.hide-case-footer .site-footer,
   border-radius: 4px;
   filter: drop-shadow(0 24px 48px rgba(7, 40, 90, .35));
 }
+/* Original case structure, portfolio tokens (ScoutAI / Travel / Loom…) */
 .case-hero:not(.has-devices) {
+  margin: 0 clamp(16px, 3vw, 40px);
+  border-radius: 26.67px;
   background:
-    radial-gradient(90% 80% at 78% 18%, rgba(255, 255, 255, .22), transparent 55%),
-    linear-gradient(160deg, #0b4f9c 0%, #086be6 48%, #5aa7ff 100%);
+    radial-gradient(90% 80% at 82% 12%, rgba(8, 112, 202, .1), transparent 52%),
+    linear-gradient(165deg, #ffffff 0%, #f3f8fd 58%, #e8f2fb 100%);
+  color: var(--case-ink, #343434);
+  box-shadow: 0 18px 48px rgba(8, 40, 90, .08);
+}
+.case-hero:not(.has-devices) .case-pill {
+  background: rgba(8, 112, 202, .12);
+  color: var(--case-blue, #0870ca);
+  font-family: var(--font-jp, inherit);
+  font-weight: 500;
+}
+.case-hero:not(.has-devices) .case-highlight {
+  color: var(--case-ink, #343434);
+  font-family: var(--font-jp, inherit);
+  font-weight: 500;
+}
+.case-hero:not(.has-devices) .case-english {
+  color: var(--case-blue, #0870ca);
+  opacity: 1;
+  font-family: var(--font-en, inherit);
+  font-weight: 500;
+}
+.case-hero:not(.has-devices) h1 {
+  color: var(--case-ink, #343434);
+  font-family: var(--font-jp, inherit);
+  font-weight: 700;
+  letter-spacing: -.02em;
+}
+.case-hero:not(.has-devices) .case-tags li {
+  border-color: rgba(8, 112, 202, .35);
+  color: var(--case-blue, #0870ca);
+  font-family: var(--font-jp, inherit);
 }
 .case-hero:not(.has-devices) .case-hero__media {
   padding: 18px;
-  border-radius: 28px;
-  background: rgba(255, 255, 255, .12);
-  border: 1px solid rgba(255, 255, 255, .28);
-  backdrop-filter: blur(6px);
+  border-radius: 22px;
+  background: rgba(255, 255, 255, .72);
+  border: 1px solid rgba(179, 179, 179, .45);
+}
+.case-hero:not(.has-devices) .case-hero__media > img,
+.case-hero:not(.has-devices) .case-hero__media > video {
+  filter: drop-shadow(0 18px 36px rgba(8, 40, 90, .16));
+}
+.case-hero:not(.has-devices) .case-cover-fallback {
+  border-color: rgba(8, 112, 202, .28);
+  background: rgba(8, 112, 202, .06);
+  color: var(--case-ink, #343434);
+}
+body.project-detail-page:not(.has-case-devices) .case-section-title {
+  font-family: var(--font-jp, inherit);
+  color: var(--case-ink, #343434);
+}
+body.project-detail-page:not(.has-case-devices) .case-section-title span {
+  color: var(--case-blue, #0870ca);
+}
+body.project-detail-page:not(.has-case-devices) .case-story__body,
+body.project-detail-page:not(.has-case-devices) .case-gallery__item p,
+body.project-detail-page:not(.has-case-devices) .case-outcome__grid p {
+  font-family: var(--font-jp, inherit);
+  color: var(--case-ink, #343434);
+}
+body.project-detail-page:not(.has-case-devices) .case-links a {
+  border-color: var(--case-line, #b3b3b3);
+  color: var(--case-link, #116af8);
+  font-family: var(--font-jp, inherit);
+}
+body.project-detail-page:not(.has-case-devices) .case-links a:hover {
+  background: var(--case-link, #116af8);
+  border-color: var(--case-link, #116af8);
+  color: #fff;
+}
+body.project-detail-page:not(.has-case-devices) .case-outcome__grid {
+  background: var(--case-line, #b3b3b3);
+  border-color: var(--case-line, #b3b3b3);
+}
+body.project-detail-page:not(.has-case-devices) .case-outcome__grid article {
+  background: #fff;
+}
+body.project-detail-page:not(.has-case-devices) .case-outcome__grid h3 {
+  color: var(--case-blue, #0870ca);
+  font-family: var(--font-en, inherit);
+}
+body.project-detail-page:not(.has-case-devices) .case-back-link {
+  color: var(--case-link, #116af8);
+  font-family: var(--font-jp, inherit);
+}
+body.project-detail-page:not(.has-case-devices) .site-footer {
+  background: var(--case-paper, #f7f7f7);
+  color: var(--case-ink, #343434);
 }
 .case-devices {
   position: relative;

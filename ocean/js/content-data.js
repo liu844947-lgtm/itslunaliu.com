@@ -156,7 +156,6 @@
         summary: '个人项目：输入研究问题，跨平台抓取用户反馈，输出带原话证据的结构化报告。',
         cover: 'assets/projects/scoutai/scoutai-macbook-base.png',
         coverLabel: 'ScoutAI 网页端 Demo',
-        heroBg: '',
         story: '用户反馈分散在 Twitter、Reddit、B 站、YouTube 等平台，手工抓取清洗常耗数天，报告又常缺少可追溯原话。ScoutAI 从研究问题出发，自动生成中英关键词、跨平台采集与清洗，并输出带样本引用的结构化报告；支持基于证据继续追问。暑假作品，部分平台爬取可能已失效，建议以录屏与现存页面为准。',
         links: [
           { label: '在线体验', href: 'https://www.scoutai.sudoxai.com/' }
