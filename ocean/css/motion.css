@@ -219,10 +219,11 @@ html.ocean-cursor-active body * {
 
 .ocean-sticker {
   display: block;
-  width: clamp(5rem, 11vw, 9rem);
-  height: clamp(5rem, 11vw, 9rem);
+  width: 80px;
+  height: 80px;
   object-fit: contain;
   flex: none;
+  background: rgba(255, 254, 250, .04);
 }
 
 [data-sticker-viewport].has-stickers [data-sticker-track] {

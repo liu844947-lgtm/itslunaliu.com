@@ -1,5 +1,4 @@
 /* Portfolio home — Figma 169:2737 tokens + component type scale. */
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Rammetto+One&family=Zen+Kaku+Gothic+New:wght@400;500;700;900&display=swap');
 :root {
   /* from Figma variables */
   --portfolio-blue: #0870ca;
@@ -859,54 +858,83 @@ body.one-page .project-case-list {
 .sticker-band {
   position: relative;
   z-index: 1;
-  display: grid;
-  grid-template-columns: minmax(180px, 280px) minmax(0, 1fr);
-  align-items: center;
-  gap: clamp(20px, 4vw, 48px);
+  display: block;
   width: 100%;
   max-width: 100%;
   box-sizing: border-box;
-  min-height: 330px;
+  min-height: 0;
   margin: 0;
-  padding: 54px max(24px, 4vw);
+  padding: clamp(36px, 5vw, 64px) 0 clamp(12px, 2vw, 20px);
   overflow: hidden;
-  color: #fff;
-  background: var(--portfolio-blue);
+  color: #fffefa;
+  background: #00391f;
   border: 0;
 }
-.sticker-band__intro {
-  position: relative;
-  z-index: 2;
-  max-width: 22ch;
+.sticker-band__head {
+  width: min(calc(100% - 48px), 760px);
+  margin: 0 auto clamp(18px, 2vw, 28px);
 }
-.sticker-band__intro span {
-  display: block;
-  margin-bottom: 14px;
-  font-size: 11px;
-  letter-spacing: .16em;
-  opacity: .78;
-}
-.sticker-band__intro p {
-  margin: 0 0 18px;
-  font-family: var(--font-jp);
-  font-size: clamp(22px, 2.4vw, 34px);
+.sticker-band__label {
+  margin: 0 0 12px;
+  color: rgba(255, 254, 250, .58);
+  font-size: 12px;
   font-weight: 700;
-  line-height: 1.25;
+  letter-spacing: .18em;
+  text-transform: uppercase;
 }
-.sticker-band__intro a {
+.sticker-band h2 {
+  margin: 0;
+  color: #fffefa;
+  font-family: var(--font-jp);
+  font-size: clamp(40px, 5vw, 72px);
+  font-weight: 900;
+  line-height: 1.05;
+}
+.sticker-band__copy {
+  max-width: 62ch;
+  margin: 16px 0 0;
+  color: rgba(255, 254, 250, .78);
+  font-size: 15px;
+  line-height: 1.85;
+}
+.sticker-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 16px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.sticker-tags li {
   display: inline-flex;
-  padding-bottom: 4px;
-  border-bottom: 1px solid rgba(255, 255, 255, .7);
-  font-size: 13px;
+  align-items: center;
+  min-height: 36px;
+  padding: 6px 14px;
+  border: 1px solid rgba(255, 254, 250, .22);
+  border-radius: 999px;
+  color: rgba(255, 254, 250, .88);
+  font-size: 12px;
+  font-weight: 700;
   letter-spacing: .06em;
 }
-.sticker-band [data-sticker-track] {
+.sticker-tags .is-accent {
+  border-color: rgba(235, 123, 168, .55);
+  color: #eb7ba8;
+  background: rgba(235, 123, 168, .12);
+}
+.sticker-marquee {
   min-width: 0;
   max-width: 100%;
+  margin-top: 8px;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 3%, #000 97%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 3%, #000 97%, transparent);
 }
 .sticker-band.is-empty {
-  grid-template-columns: 1fr;
-  min-height: 180px;
+  min-height: 0;
+}
+.sticker-band .sticker-empty-copy {
+  width: min(calc(100% - 48px), 760px);
+  margin: 8px auto 20px;
 }
 .contact-section {
   position: relative;
@@ -1140,11 +1168,8 @@ body.one-page .site-footer { display: none !important; }
   .project-entry__summary { max-width: none; font-size: 14px; }
   .about-portrait { grid-template-columns: 1fr; gap: 42px; }
   .portrait-slot { aspect-ratio: 1.1; }
-  .sticker-band {
-    grid-template-columns: 1fr;
-    min-height: 320px;
-    gap: 20px;
-  }
+  .sticker-band__head { width: min(calc(100% - 32px), 760px); }
+  .sticker-band h2 { font-size: clamp(36px, 10vw, 52px); }
   .contact-section { min-height: 560px; padding: 170px 20px 54px; }
   .contact-arc { top: 0; width: 240vw; height: 280px; transform: translate(-50%, -58%); }
   .contact-character { top: 34px; width: 54px; height: 54px; font-size: 22px; }

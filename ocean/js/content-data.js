@@ -15,7 +15,7 @@
         '在校项目：作为负责人完成省级大创项目，搭建 GIS + AHP 选址评估模型，积累数据分析与多维度建模经验。'
       ],
       interests: ['素描与写生', '游戏主播定制表情包', '小红书文创设计', '无属性设计接单'],
-      photo: 'assets/profile-photo.png'
+      photo: 'assets/profile-photo.jpg'
     },
     internships: [
       {
@@ -173,13 +173,13 @@
         highlight: '把模糊的旅行意愿澄清成可调整的个性化路线，并用地图验证可行性。',
         tags: ['个人项目', '旅行 Agent', '需求澄清', 'Vibe Coding'],
         summary: '个人项目：帮助用户明确旅行需求、生成个性化路线，并通过地图验证与持续调整形成行程。',
-        cover: 'assets/projects/shared/travel-route-detail.png',
+        cover: 'assets/projects/shared/travel-route-detail.jpg',
         coverLabel: '旅行路线详情',
         story: '用户常常说不清旅行偏好，路线生成后又难验证是否可走。小迹旅行 Agent 从需求澄清开始，生成个性化行程，并提供地图与细节页帮助用户调整。该项目为暑假个人研究作品，已有一段时间未维护，作品集以界面截图与录屏展示为主。',
         links: [],
         gallery: [
-          { title: '行程路线详情', caption: '在地图与卡片中查看生成后的路线结构。', src: 'assets/projects/shared/travel-route-detail.png' },
-          { title: '产品首页', caption: '从首页进入需求澄清与行程生成。', src: 'assets/projects/shared/travel-home.png' }
+          { title: '行程路线详情', caption: '在地图与卡片中查看生成后的路线结构。', src: 'assets/projects/shared/travel-route-detail.jpg' },
+          { title: '产品首页', caption: '从首页进入需求澄清与行程生成。', src: 'assets/projects/shared/travel-home.jpg' }
         ],
         result: '完成可演示的旅行 Agent Demo，覆盖需求澄清、路线生成与详情查看。',
         iteration: '久未维护；后续若重启，优先修复数据源与地图链路，并补录最新演示视频。',
