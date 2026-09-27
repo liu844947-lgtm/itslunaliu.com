@@ -223,7 +223,7 @@ html.ocean-cursor-active body * {
   height: 80px;
   object-fit: contain;
   flex: none;
-  background: rgba(255, 254, 250, .04);
+  background: rgba(8, 112, 202, .06);
 }
 
 [data-sticker-viewport].has-stickers [data-sticker-track] {

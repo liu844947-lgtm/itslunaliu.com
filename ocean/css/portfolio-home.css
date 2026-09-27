@@ -866,9 +866,9 @@ body.one-page .project-case-list {
   margin: 0;
   padding: clamp(36px, 5vw, 64px) 0 clamp(12px, 2vw, 20px);
   overflow: hidden;
-  color: #fffefa;
-  background: #00391f;
-  border: 0;
+  color: var(--portfolio-ink);
+  background: var(--portfolio-paper);
+  border-top: 1px solid rgba(8, 112, 202, .12);
 }
 .sticker-band__head {
   width: min(calc(100% - 48px), 760px);
@@ -876,26 +876,29 @@ body.one-page .project-case-list {
 }
 .sticker-band__label {
   margin: 0 0 12px;
-  color: rgba(255, 254, 250, .58);
+  color: var(--portfolio-blue);
+  font-family: var(--font-en);
   font-size: 12px;
-  font-weight: 700;
-  letter-spacing: .18em;
+  font-weight: 500;
+  letter-spacing: .16em;
   text-transform: uppercase;
 }
 .sticker-band h2 {
   margin: 0;
-  color: #fffefa;
-  font-family: var(--font-jp);
-  font-size: clamp(40px, 5vw, 72px);
-  font-weight: 900;
+  color: var(--portfolio-ink);
+  font-family: var(--font-display);
+  font-size: clamp(36px, 4.2vw, 60px);
+  font-weight: 400;
   line-height: 1.05;
 }
 .sticker-band__copy {
   max-width: 62ch;
   margin: 16px 0 0;
-  color: rgba(255, 254, 250, .78);
-  font-size: 15px;
-  line-height: 1.85;
+  color: var(--portfolio-ink);
+  font-family: var(--font-jp);
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.8;
 }
 .sticker-tags {
   display: flex;
@@ -910,17 +913,19 @@ body.one-page .project-case-list {
   align-items: center;
   min-height: 36px;
   padding: 6px 14px;
-  border: 1px solid rgba(255, 254, 250, .22);
+  border: 1px solid rgba(8, 112, 202, .28);
   border-radius: 999px;
-  color: rgba(255, 254, 250, .88);
+  color: var(--portfolio-blue);
+  background: #fff;
+  font-family: var(--font-en);
   font-size: 12px;
-  font-weight: 700;
-  letter-spacing: .06em;
+  font-weight: 500;
+  letter-spacing: .04em;
 }
 .sticker-tags .is-accent {
-  border-color: rgba(235, 123, 168, .55);
-  color: #eb7ba8;
-  background: rgba(235, 123, 168, .12);
+  border-color: var(--portfolio-blue);
+  color: #fff;
+  background: var(--portfolio-blue);
 }
 .sticker-marquee {
   min-width: 0;

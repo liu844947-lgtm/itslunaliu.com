@@ -46,7 +46,7 @@
   const sections = [...document.querySelectorAll('main > section[id]')];
   const links = [...document.querySelectorAll('#primary-nav a[href^="#"]')];
   const header = document.querySelector('.site-header');
-  const darkIds = new Set(['projects', 'contact', 'stickers']);
+  const darkIds = new Set(['projects', 'contact']);
   const updateCurrent = () => {
     const midpoint = window.scrollY + window.innerHeight * .3;
     let current = sections[0]?.id;
