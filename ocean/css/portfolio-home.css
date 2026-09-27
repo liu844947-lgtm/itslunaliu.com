@@ -387,6 +387,25 @@ body.one-page .letter-flip.is-flipped .letter-image[data-letter-index] {
 .section-title span {
   display: none;
 }
+.internship-section .experience-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(18px, 2vw, 24px);
+  padding-top: clamp(24px, 2.5vw, 36px);
+}
+.internship-section .experience,
+.internship-section .experience--reverse {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  padding: clamp(20px, 2vw, 28px);
+  background: #fff;
+  border: 1px solid #b3b3b3 !important;
+  border-radius: var(--portfolio-radius);
+  box-shadow: none;
+  outline: none;
+}
 .experience-list {
   display: grid;
   gap: clamp(48px, 4.5vw, 67px);
@@ -407,6 +426,30 @@ body.one-page .letter-flip.is-flipped .letter-image[data-letter-index] {
   border-radius: var(--portfolio-radius);
   box-shadow: none;
   outline: none;
+}
+.internship-section .experience-copy {
+  gap: 12px;
+  padding: 0;
+}
+.internship-section .experience-copy .index-number {
+  font-size: 13px;
+  line-height: 1.4;
+}
+.internship-section .experience-copy h3 {
+  font-size: clamp(20px, 1.55vw, 26px);
+  letter-spacing: 1px;
+  line-height: 1.35;
+}
+.internship-section .experience-copy p,
+.internship-section .experience-copy li {
+  font-size: clamp(14px, .95vw, 16px);
+  line-height: 1.65;
+  letter-spacing: .3px;
+}
+.internship-section .experience-copy li::before {
+  top: .62em;
+  width: 5px;
+  height: 5px;
 }
 
 .experience--reverse { grid-template-columns: minmax(0, 1.35fr) minmax(0, .92fr); }
@@ -1163,6 +1206,18 @@ body.one-page .site-footer { display: none !important; }
   .section-title { font-size: clamp(36px, 10vw, 48px); }
   .section-kicker,
   .project-index__kicker { font-size: 16px; letter-spacing: .8px; }
+  .internship-section .experience-list {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    padding-top: 20px;
+  }
+  .internship-section .experience,
+  .internship-section .experience--reverse {
+    padding: 18px;
+  }
+  .internship-section .experience-copy h3 { font-size: 20px; }
+  .internship-section .experience-copy p,
+  .internship-section .experience-copy li { font-size: 14px; line-height: 1.6; }
   .experience, .experience--reverse {
     display: flex;
     flex-direction: column;
