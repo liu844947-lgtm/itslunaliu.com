@@ -24,7 +24,8 @@
       if (data?.source !== 'phenome-ring-showcase') return;
       if (data.type === 'ready') { ready = true; select(); syncMotion(); }
       if (data.type === 'step' && Math.abs(data.delta) === 1) request(Number(projects.dataset.current || 0) + data.delta);
-      if (!Number.isInteger(data.index) || data.index < 0 || data.index > 4) return;
+      const projectCount = Number(projects.dataset.projectCount || projects.querySelectorAll('[data-project-index]').length);
+      if (!Number.isInteger(data.index) || data.index < 0 || data.index >= projectCount) return;
       if (data.type === 'select') request(data.index);
       if (data.type === 'card-click') location.href = `project.html?id=${String(data.index + 1).padStart(2, '0')}`;
     });
@@ -44,11 +45,17 @@
   }
   const sections = [...document.querySelectorAll('main > section[id]')];
   const links = [...document.querySelectorAll('#primary-nav a[href^="#"]')];
+  const header = document.querySelector('.site-header');
+  const darkIds = new Set(['projects', 'contact', 'stickers']);
   const updateCurrent = () => {
     const midpoint = window.scrollY + window.innerHeight * .3;
     let current = sections[0]?.id;
     for (const section of sections) if (section.offsetTop <= midpoint) current = section.id;
-    links.forEach(link => link.setAttribute('aria-current', link.hash === `#${current}` ? 'location' : 'false'));
+    links.forEach((link) => {
+      if (link.hash === `#${current}`) link.setAttribute('aria-current', 'location');
+      else link.removeAttribute('aria-current');
+    });
+    if (header) header.dataset.onDark = darkIds.has(current) ? 'true' : 'false';
   };
   window.addEventListener('scroll', updateCurrent, { passive: true });
   window.addEventListener('resize', updateCurrent, { passive: true });

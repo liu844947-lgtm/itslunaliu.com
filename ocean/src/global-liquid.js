@@ -51,7 +51,9 @@ if (renderer && targets.length) {
         }
         // Ice-works-showcase capillary wake, in the same CSS-pixel space.
         float toMouse=length(p-mouse.xy);
-        distance+=sin(toMouse*.05-time*7.)*mouse.w*4.*exp(-toMouse/260.);
+        float wake = sin(toMouse*.038-time*8.) * mouse.w * 9. * exp(-toMouse/390.);
+        float ripple = sin(toMouse*.105-time*4.2) * mouse.w * 2.2 * exp(-toMouse/520.);
+        distance += wake + ripple;
         float aa=clamp(fwidth(distance),.5,2.);
         gl_FragColor=vec4(color,1.-smoothstep(-aa,aa,distance));
       }
@@ -91,11 +93,11 @@ if (renderer && targets.length) {
       if (rect.bottom < -40 || rect.top > height+40 || !rect.width || !rect.height || visible >= 8) return;
       const cx=rect.left+rect.width/2, cy=rect.top+rect.height/2;
       const dx=cursor.x-cx, dy=cursor.y-cy;
-      const reach=Math.max(rect.width,rect.height)*.9;
+      const reach=Math.max(rect.width,rect.height)*1.35;
       const influence=live?Math.max(0,1-Math.hypot(dx,dy)/reach)*amount:0;
-      const leanTarget=new THREE.Vector2(dx,dy).normalize().multiplyScalar(influence*10);
+      const leanTarget=new THREE.Vector2(dx,dy).normalize().multiplyScalar(influence*16);
       surface.lean.lerp(leanTarget,chase(influence? .14:.06));
-      surface.swell+=(influence*.025-surface.swell)*chase(.12);
+      surface.swell+=(influence*.045-surface.swell)*chase(.12);
       if(paused()){surface.lean.set(0,0);surface.swell=0;}
       uniforms.boxes.value[visible].set(cx+surface.lean.x,height-cy-surface.lean.y,rect.width*(1+surface.swell)/2,rect.height*(1+surface.swell)/2);
       uniforms.colors.value[visible].set(surface.color.r,surface.color.g,surface.color.b);

@@ -51,45 +51,69 @@
     if (!title) return;
     const controls = [];
     const timers = new Set();
-    let ready = false, visible = false, inside = false, started = false, next = 0;
+    let ready = false;
+    let visible = false;
+    let introPlayed = false;
+    let introRunning = false;
+
     const later = (fn, delay) => {
       const timer = setTimeout(() => { timers.delete(timer); fn(); }, delay);
       timers.add(timer);
     };
-    const stop = () => {
+
+    const clearTimers = () => {
       timers.forEach(clearTimeout);
       timers.clear();
-      controls.forEach(control => control.reset());
     };
-    const canPlay = () => ready && visible && !inside && motionEnabled();
-    const idle = () => {
-      if (!canPlay()) return;
+
+    const resetUnpinned = () => {
+      controls.forEach((control) => control?.reset());
+    };
+
+    const setCollage = (on) => {
+      title.classList.toggle("is-letter-collage", on);
+    };
+
+    // First time the title enters view: flip all letters once together, then return.
+    const playIntroOnce = () => {
+      if (!ready || !visible || introPlayed || introRunning || !controls.length) return;
+      if (!motionEnabled()) {
+        introPlayed = true;
+        return;
+      }
+      introRunning = true;
+      introPlayed = true;
+      clearTimers();
+      setCollage(true);
+      controls.forEach((control) => control?.flip(true));
       later(() => {
-        if (!canPlay()) return;
-        const control = controls[next++ % controls.length];
-        control?.flip(true);
-        later(() => control?.reset(), 1200);
-        idle();
-      }, 3600);
+        resetUnpinned();
+        setCollage(false);
+        introRunning = false;
+      }, 1600);
     };
+
     const refresh = () => {
-      stop();
-      if (!canPlay() || !controls.length) return;
-      if (started) { idle(); return; }
-      started = true;
-      // Source template rhythm: ordered opening, held collage, then letter return.
-      controls.forEach((control, index) => later(() => control.flip(true), 250 + index * 70));
-      controls.forEach((control, index) => later(() => control.reset(), 2300 + index * 65));
-      later(idle, 3000);
+      if (!ready) return;
+      if (visible) playIntroOnce();
+      else {
+        clearTimers();
+        introRunning = false;
+        setCollage(false);
+        resetUnpinned();
+      }
     };
-    listen(title, 'pointerenter', () => { inside = true; stop(); });
-    listen(title, 'pointerleave', () => { inside = false; refresh(); });
-    listen(title, 'focusin', () => { inside = true; stop(); });
-    listen(title, 'focusout', event => { if (!title.contains(event.relatedTarget)) { inside = false; refresh(); } });
-    const observer = new IntersectionObserver(([entry]) => { visible = entry.isIntersecting; refresh(); }, { threshold: .25 });
+
+    const observer = new IntersectionObserver(([entry]) => {
+      visible = entry.isIntersecting;
+      refresh();
+    }, { threshold: 0.25 });
     observer.observe(title);
     state.refreshers.push(refresh);
-    state.cleanups.push(() => { observer.disconnect(); stop(); });
+    state.cleanups.push(() => {
+      observer.disconnect();
+      clearTimers();
+    });
 
     const pending = letters.slice(0, 9).map((asset, index) => {
       if (!asset || typeof asset.src !== "string" || !asset.src.trim()) return;
@@ -102,6 +126,12 @@
         const image = document.createElement("img");
         image.className = "letter-image";
         image.dataset.oceanMotion = "letter";
+        image.dataset.letterIndex = String(index);
+        const layout = asset.layout || {};
+        image.style.setProperty("--letter-left", layout.left || "0");
+        image.style.setProperty("--letter-top", layout.top || "0");
+        image.style.setProperty("--letter-size", layout.size || "15vw");
+        image.style.setProperty("--letter-rotation", layout.rotation || "0deg");
         image.src = decoded.currentSrc || decoded.src;
         image.alt = "";
         image.setAttribute("aria-hidden", "true");
@@ -113,17 +143,39 @@
         button.setAttribute("aria-pressed", "false");
         button.append(text, image);
         holder.append(button);
+        holder.classList.add("letter-asset-ready");
         let pinned = false;
         const flip = (on) => {
           button.classList.toggle("is-flipped", on);
           button.setAttribute("aria-pressed", String(on));
         };
         controls[index] = { flip, reset: () => flip(pinned) };
-        listen(button, "pointerenter", (event) => { if (event.pointerType !== "touch") flip(true); });
-        listen(button, "pointerleave", () => flip(pinned));
-        listen(button, "click", () => { pinned = !pinned; flip(pinned); });
-        listen(button, "keydown", (event) => { if (event.key === "Escape") { pinned = false; flip(false); } });
-        state.cleanups.push(() => { holder.append(text); button.remove(); });
+        // Hover only this letter — never flip neighbors.
+        listen(button, "pointerenter", (event) => {
+          if (event.pointerType === "touch" || introRunning) return;
+          flip(true);
+        });
+        listen(button, "pointerleave", () => {
+          if (introRunning) return;
+          flip(pinned);
+        });
+        listen(button, "click", (event) => {
+          event.stopPropagation();
+          if (introRunning) return;
+          pinned = !pinned;
+          flip(pinned);
+        });
+        listen(button, "keydown", (event) => {
+          if (event.key === "Escape") {
+            pinned = false;
+            flip(false);
+          }
+        });
+        state.cleanups.push(() => {
+          holder.classList.remove("letter-asset-ready");
+          holder.append(text);
+          button.remove();
+        });
       }).catch(() => {
         /* Keep the authored letter visible when an asset cannot be decoded. */
       });
@@ -144,8 +196,6 @@
     let ripples = [];
     let lastPoint = null;
     let lastRippleTime = 0;
-    let heading = 0;
-    let facing = 1;
     let active = false;
     let width = 0;
     let height = 0;
@@ -158,7 +208,12 @@
     function removeCursor() {
       active = false;
       root.classList.remove("ocean-cursor-active");
-      cursor?.classList.remove("is-visible");
+      cursor?.classList.remove("is-visible", "is-pressed");
+    }
+
+    function setPressed(pressed) {
+      if (!cursor || !active) return;
+      cursor.classList.toggle("is-pressed", pressed);
     }
 
     function resizeCanvas() {
@@ -181,8 +236,21 @@
         return;
       }
 
-      points = points.filter((point) => now - point.time < 1000);
-      ripples = ripples.filter((ripple) => now - ripple.time < 920);
+      // Wake size ×2 vs prior short trail; path still capped so scribbling stays finite.
+      const TRAIL_AGE_MS = 480;
+      const MAX_PATH_PX = 144;
+      const MAX_POINTS = 18;
+      points = points.filter((point) => now - point.time < TRAIL_AGE_MS);
+      while (points.length > MAX_POINTS) points.shift();
+      while (points.length > 2) {
+        let length = 0;
+        for (let index = 1; index < points.length; index += 1) {
+          length += Math.hypot(points[index].x - points[index - 1].x, points[index].y - points[index - 1].y);
+        }
+        if (length <= MAX_PATH_PX) break;
+        points.shift();
+      }
+      ripples = ripples.filter((ripple) => now - ripple.time < 520);
       context.clearRect(0, 0, width, height);
       if (points.length > 1) {
         context.lineCap = "round";
@@ -190,21 +258,22 @@
         for (let index = 1; index < points.length; index += 1) {
           const previous = points[index - 1];
           const point = points[index];
-          const age = (now - point.time) / 1000;
+          const age = (now - point.time) / TRAIL_AGE_MS;
           context.beginPath();
-          context.moveTo(previous.x, previous.y);
-          context.lineTo(point.x, point.y);
-          context.strokeStyle = `rgba(111, 196, 205, ${Math.max(0, (1 - age) * 0.24)})`;
-          context.lineWidth = Math.max(0.5, (1 - age) * 2.2);
+          const sway = Math.sin(index * 0.65 + now * 0.002) * (1 - age) * 8;
+          context.moveTo(previous.x, previous.y + sway);
+          context.quadraticCurveTo(point.x, point.y - sway, point.x, point.y);
+          context.strokeStyle = `rgba(17, 106, 248, ${Math.max(0, (1 - age) * 0.3)})`;
+          context.lineWidth = Math.max(0.7, (1 - age) * 7.5);
           context.stroke();
         }
       }
       ripples.forEach((ripple) => {
-        const age = (now - ripple.time) / 920;
+        const age = (now - ripple.time) / 520;
         context.beginPath();
-        context.ellipse(ripple.x, ripple.y, 3 + age * 15, 1.3 + age * 5, ripple.angle, 0, Math.PI * 2);
-        context.strokeStyle = `rgba(118, 197, 202, ${Math.max(0, (1 - age) * 0.16)})`;
-        context.lineWidth = Math.max(0.45, 1.2 - age * 0.7);
+        context.ellipse(ripple.x, ripple.y, 3 + age * 18, 1.4 + age * 6, ripple.angle, 0, Math.PI * 2);
+        context.strokeStyle = `rgba(17, 106, 248, ${Math.max(0, (1 - age) * 0.18)})`;
+        context.lineWidth = Math.max(0.4, 0.9 - age * 0.5);
         context.stroke();
       });
       if (points.length || ripples.length) frame = requestAnimationFrame(draw);
@@ -229,12 +298,8 @@
       cursor.className = "ocean-paper-cursor";
       cursor.setAttribute("aria-hidden", "true");
       cursor.innerHTML = [
-        '<svg viewBox="0 0 32 25" focusable="false" aria-hidden="true">',
-        '<path class="paper-cursor__sail" d="M3 11.5 16 2.5l13 9H3Z"/>',
-        '<path class="paper-cursor__hull" d="M2 11.5h28l-6 10H8l-6-10Z"/>',
-        '<path class="paper-cursor__fold" d="m8 21.5 8-10 8 10M3 11.5h26"/>',
-        '<path class="paper-cursor__bow" d="m24 12 3.5 3.2"/>',
-        "</svg>",
+        '<img class="ocean-paper-cursor__boat" src="assets/cursor-boat.png" alt="" draggable="false" />',
+        '<img class="ocean-paper-cursor__fish" src="assets/cursor-fish.png" alt="" draggable="false" />',
       ].join("");
       document.body.append(canvas, cursor);
       resizeCanvas();
@@ -272,29 +337,37 @@
       const point = { x: event.clientX, y: event.clientY, time: performance.now() };
       if (!lastPoint || Math.hypot(point.x - lastPoint.x, point.y - lastPoint.y) > 3) {
         if (lastPoint) {
-          const dx = point.x - lastPoint.x;
-          const dy = point.y - lastPoint.y;
-          if (Math.abs(dx) > 2) facing = dx < 0 ? -1 : 1;
-          const targetHeading = Math.max(-18, Math.min(18, Math.atan2(dy, Math.max(8, Math.abs(dx))) * 180 / Math.PI));
-          heading += (targetHeading - heading) * 0.28;
         }
         points.push(point);
-        if (points.length > 48) points.shift();
-        if (point.time - lastRippleTime > 110) {
-          ripples.push({ x: point.x - 3, y: point.y + 8, time: point.time, angle: heading * Math.PI / 180 });
+        if (points.length > 24) points.shift();
+        if (point.time - lastRippleTime > 140) {
+          ripples.push({ x: point.x - 3, y: point.y + 8, time: point.time, angle: 0 });
           lastRippleTime = point.time;
         }
         lastPoint = point;
         requestDraw();
       }
-      cursor.style.transform = `translate3d(${event.clientX - 2}px, ${event.clientY - 12}px, 0) rotate(${heading}deg) scaleX(${facing})`;
+      cursor.style.transform = `translate3d(${event.clientX - 8}px, ${event.clientY - 8}px, 0)`;
     }
 
     function onKeyDown() {
       if (active) removeCursor();
     }
 
+    function onPointerDown(event) {
+      if (event.pointerType === "touch" || isEditable(event.target)) return;
+      setPressed(true);
+    }
+
+    function onPointerUp(event) {
+      if (event.pointerType === "touch") return;
+      setPressed(false);
+    }
+
     listen(window, "pointermove", onPointerMove, { passive: true });
+    listen(window, "pointerdown", onPointerDown, { passive: true });
+    listen(window, "pointerup", onPointerUp, { passive: true });
+    listen(window, "pointercancel", onPointerUp, { passive: true });
     listen(window, "pointerleave", removeCursor);
     listen(window, "blur", removeCursor);
     listen(window, "keydown", onKeyDown, true);

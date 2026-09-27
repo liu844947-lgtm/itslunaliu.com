@@ -2,3 +2,6 @@ node_modules/
 static-server.pid
 .DS_Store
 *.log
+output/
+ocean/output-letter-reverse-check.png
+tmp-stickers.txt

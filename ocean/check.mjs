@@ -16,6 +16,11 @@ for (const id of sections) {
 assert.ok(!/精选项目|home-preview|preview-grid/.test(home), 'no duplicated selected-projects section');
 assert.equal((home.match(/data-projects-root/g) || []).length, 1, 'one project gallery');
 for (const id of ['01', '02', '03', '04', '05']) assert.ok(home.includes(`project.html?id=${id}`), `project ${id} has a detail URL`);
+assert.equal((home.match(/class="project-entry(?:\s|\")/g) || []).length, 5, 'five project entries');
+assert.ok(home.includes('data-project-count="5"'), 'project count is five');
+assert.ok(home.includes('>lunaliu<'), 'home wordmark is lunaliu');
+assert.ok(home.includes('class="project-brand-backdrop" aria-hidden="true">LUNALIU</div>'), 'independent LUNALIU background');
+assert.ok(!/<h1[^>]*>[^<]*LUNALIU/.test(home), 'LUNALIU does not replace the page title');
 
 const detail = await readFile(resolve(root, 'project.html'), 'utf8');
 assert.ok(detail.includes('index.html#projects'), 'detail returns to project section');

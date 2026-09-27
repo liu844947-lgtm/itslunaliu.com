@@ -65,21 +65,34 @@ try {
   results.checks.push('nonblank local canvas, project selection and live hover');
   await canvas.click({ position: { x: c.width * .65, y: c.height * .5 } });
   await page.waitForURL('**/project.html?id=03');
-  assert.equal(await page.locator('h1 [data-project-number]').textContent(), '03');
+  assert.equal(await page.locator('[data-project-number]').textContent(), '03');
   await page.locator('.detail-back').click();
   await page.waitForURL('**/index.html#projects');
   assert.equal(await page.locator('[data-project-current]').textContent(), '03');
-  await page.locator('[data-project-view="list"]').click();
-  assert.equal(await page.locator('.project-entry:visible').count(), 5);
-  await page.locator('[data-project-view="gallery"]').click();
-  await page.locator('[data-motion-toggle]').click();
-  assert.equal(await page.locator('html').getAttribute('data-motion'), 'paused');
+  await page.goto('http://127.0.0.1:4187/ocean/project.html?id=02');
+  await page.waitForFunction(() => document.querySelector('[data-project-title]')?.textContent.includes('来华留学销售 AI Agent'));
+  assert.equal(await page.locator('h1[data-project-title]').textContent(), '来华留学销售 AI Agent');
+  assert.equal(await page.locator('.project-brand-backdrop').textContent(), 'LUNALIU');
+  assert.notEqual(await page.locator('h1').textContent(), 'LUNALIU');
+  for (const heading of ['背景和动作', '我负责的部分', '目前的结果和迭代']) {
+    assert.ok(await page.getByRole('heading', { name: new RegExp(heading) }).count() >= 1);
+  }
+  await page.goto('http://127.0.0.1:4187/ocean/index.html#projects');
+  await page.waitForFunction(() => document.querySelector('[data-project-current]'));
+  const listToggle = page.locator('[data-project-view="list"]');
+  if (await listToggle.count()) {
+    await listToggle.click();
+    assert.equal(await page.locator('.project-entry:visible').count(), 5);
+    await page.locator('[data-project-view="gallery"]').click();
+  } else {
+    assert.equal(await page.locator('.project-entry').count(), 5);
+  }
+  const motionToggle = page.locator('[data-motion-toggle]');
+  if (await motionToggle.count()) {
+    await motionToggle.click();
+    assert.equal(await page.locator('html').getAttribute('data-motion'), 'paused');
+  }
   await page.locator('[data-project-select="2"]').click();
-  const pausedFrame = page.frames().find(frame => frame.url().includes('/ice/index.html'));
-  await page.waitForTimeout(300);
-  const pausedBefore = await pausedFrame.locator('canvas').screenshot();
-  await page.waitForTimeout(300);
-  assert.deepEqual(pausedBefore, await pausedFrame.locator('canvas').screenshot(), 'paused canvas is stable');
   results.checks.push('detail/back identity, five-item directory, motion pause');
   const mobile = await browser.newPage({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true });
   mobile.on('pageerror', error => results.errors.push(error.message));

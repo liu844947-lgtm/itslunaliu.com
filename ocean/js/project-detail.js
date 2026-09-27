@@ -1,0 +1,115 @@
+(() => {
+  'use strict';
+
+  const projects = Array.isArray(window.OceanContent?.projects)
+    ? window.OceanContent.projects
+    : [];
+  const requested = new URLSearchParams(location.search).get('id');
+  const project = projects.find((item) => item.id === requested) || projects[0];
+  if (!project) return;
+
+  const setText = (selector, value) => {
+    document.querySelectorAll(selector).forEach((node) => {
+      node.textContent = value || '';
+    });
+  };
+
+  setText('[data-project-number]', project.id);
+  setText('[data-project-pill]', project.pill || (project.kind === 'personal' ? '个人项目' : '实习项目'));
+  setText('[data-project-highlight]', project.highlight || project.summary || '');
+  setText('[data-project-english]', project.englishTitle || project.shortTitle || '');
+  setText('[data-project-title]', project.title);
+  setText('[data-project-story]', project.story || project.background || '');
+  setText('[data-project-result]', project.result || '');
+  setText('[data-project-iteration]', project.iteration || '');
+  document.title = `${project.title} — lunaliu`;
+
+  const tagsNode = document.querySelector('[data-project-tags]');
+  if (tagsNode) {
+    const tags = Array.isArray(project.tags) ? project.tags.filter(Boolean) : [];
+    tagsNode.replaceChildren(...tags.map((tag) => {
+      const item = document.createElement('li');
+      item.textContent = tag;
+      return item;
+    }));
+  }
+
+  const coverRoot = document.querySelector('[data-project-cover]');
+  const coverFallback = document.querySelector('[data-project-cover-fallback]');
+  if (coverRoot) {
+    if (project.cover) {
+      const img = document.createElement('img');
+      img.src = project.cover;
+      img.alt = project.coverLabel || project.title;
+      img.loading = 'eager';
+      coverRoot.replaceChildren(img);
+    } else if (coverFallback) {
+      coverFallback.textContent = project.coverLabel || '主视觉待补';
+      coverRoot.replaceChildren(coverFallback);
+    }
+  }
+
+  const linksNode = document.querySelector('[data-project-links]');
+  if (linksNode) {
+    const links = Array.isArray(project.links) ? project.links.filter((item) => item?.href) : [];
+    if (!links.length) {
+      linksNode.hidden = true;
+    } else {
+      linksNode.hidden = false;
+      const note = document.createElement('p');
+      note.className = 'case-links__note';
+      note.textContent = '体验入口（登录信息面试提供，不在站内展示）';
+      const list = document.createElement('ul');
+      links.forEach((link) => {
+        const item = document.createElement('li');
+        const anchor = document.createElement('a');
+        anchor.href = link.href;
+        anchor.target = '_blank';
+        anchor.rel = 'noopener noreferrer';
+        anchor.textContent = link.label || link.href;
+        item.appendChild(anchor);
+        list.appendChild(item);
+      });
+      linksNode.replaceChildren(note, list);
+    }
+  }
+
+  const galleryNode = document.querySelector('[data-project-gallery]');
+  if (galleryNode) {
+    const items = Array.isArray(project.gallery) ? project.gallery : [];
+    galleryNode.replaceChildren(...items.map((item) => {
+      const article = document.createElement('article');
+      article.className = 'case-gallery__item';
+      const title = document.createElement('h3');
+      title.textContent = item.title || '';
+      article.appendChild(title);
+
+      if (item.src) {
+        const figure = document.createElement('figure');
+        const media = document.createElement(item.type === 'video' ? 'video' : 'img');
+        media.src = item.src;
+        if (item.type === 'video') {
+          media.controls = true;
+          media.playsInline = true;
+        } else {
+          media.alt = item.title || project.title;
+          media.loading = 'lazy';
+        }
+        figure.appendChild(media);
+        article.appendChild(figure);
+      } else {
+        const placeholder = document.createElement('div');
+        placeholder.className = 'case-gallery__placeholder';
+        placeholder.textContent = item.note || '素材待补';
+        article.appendChild(placeholder);
+      }
+
+      if (item.caption) {
+        const caption = document.createElement('p');
+        caption.textContent = item.caption;
+        article.appendChild(caption);
+      }
+      return article;
+    }));
+  }
+})();

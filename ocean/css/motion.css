@@ -50,10 +50,10 @@ html:not(.ocean-motion-paused):not([data-motion="paused"]) .letter-asset-ready:f
 }
 
 .ocean-paper-cursor {
-  width: 30px;
-  height: 23px;
+  width: 46px;
+  height: 46px;
   opacity: 0;
-  transform-origin: 2px 12px;
+  transform-origin: 8px 8px;
   transition: opacity 100ms linear;
   will-change: transform;
 }
@@ -68,6 +68,33 @@ html:not(.ocean-motion-paused):not([data-motion="paused"]) .letter-asset-ready:f
   height: 100%;
   overflow: visible;
   filter: drop-shadow(0 2px 2px rgba(7, 62, 70, 0.18));
+}
+
+.ocean-paper-cursor img {
+  display: block;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  overflow: visible;
+  filter: drop-shadow(0 2px 2px rgba(7, 62, 70, 0.18));
+  transition: opacity 120ms ease, transform 160ms ease;
+}
+
+.ocean-paper-cursor__fish {
+  opacity: 0;
+  transform: scale(.78) rotate(-8deg);
+}
+
+.ocean-paper-cursor.is-pressed .ocean-paper-cursor__boat {
+  opacity: 0;
+  transform: scale(.78) rotate(8deg);
+}
+
+.ocean-paper-cursor.is-pressed .ocean-paper-cursor__fish {
+  opacity: 1;
+  transform: scale(1) rotate(0deg);
 }
 
 .paper-cursor__hull {

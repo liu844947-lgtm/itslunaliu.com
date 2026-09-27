@@ -9,15 +9,23 @@ body.one-page .site-header { position: fixed; inset: 0 0 auto; z-index: 20; max-
 .site-header nav a { position: relative; border-radius: 0; padding: 8px 14px; color: var(--blue); }
 .site-header nav a[aria-current=location]::after { content: ''; position: absolute; height: 2px; background: currentColor; bottom: 2px; left: 14px; right: 14px; }
 .hero-orb { display: none; }
-body.one-page .hero { min-height: 88svh; padding: 160px 4% 80px; background: var(--paper); color: var(--blue); justify-content: center; gap: 42px; overflow: visible; }
-.portfolio-title { display: grid; grid-template-columns: repeat(9, minmax(0, 1fr)); width: 100%; max-width: none; margin: 0; gap: 0; font-size: 180px; font-weight: 500; line-height: 1; }
-.portfolio-title > span, .portfolio-title > span:nth-child(n) { display: block; width: 100%; height: auto; aspect-ratio: .65; background: none; border: 0; border-radius: 0; transform: none; text-shadow: none; }
-.letter-flip { position: relative; width: 100%; height: 100%; display: grid; place-items: center; padding: 0; min-width: 0; font: inherit; perspective: 900px; }
+body.one-page .hero { min-height: 88svh; padding: 160px 4% 80px; background: var(--paper); color: var(--blue); justify-content: center; gap: 42px; overflow-x: hidden; overflow-y: visible; }
+.portfolio-title { display: flex; align-items: center; flex-wrap: nowrap; width: min(100%, 1680px); max-width: none; margin: 0; gap: clamp(2px, .38vw, 9px); font-size: clamp(148px, 14vw, 224px); font-weight: 500; line-height: .86; letter-spacing: -.045em; }
+.portfolio-title > span, .portfolio-title > span:nth-child(n) { display: block; flex: 0 1 .58em; width: auto; height: 1em; aspect-ratio: auto; background: none; border: 0; border-radius: 0; transform: none; text-shadow: none; transition: flex-basis .65s cubic-bezier(.2,.75,.2,1); }
+.portfolio-title > span:has(.letter-flip.is-flipped) { flex-basis: .8em; }
+.letter-flip { position: relative; width: 100%; height: 100%; display: grid; place-items: center; padding: 0; min-width: 0; font: inherit; perspective: 900px; transition: padding-inline .65s cubic-bezier(.2,.75,.2,1); }
+.letter-flip.is-flipped { padding-inline: .105em; }
 .letter-flip .letter-text { display: block; width: 100%; transform: rotateY(0) scale(1.08,1.36); backface-visibility: hidden; line-height: 1; font-weight: 600; transition: transform .65s cubic-bezier(.2,.75,.2,1), opacity .24s; }
-.letter-flip .letter-image { width: 172%; max-width: none; max-height: 154%; height: auto; transform: translate(calc(-50% + var(--card-x,0%)),calc(-50% + var(--card-y,0%))) rotate(var(--card-angle,0deg)) rotateY(-180deg) scale(.8); backface-visibility: hidden; opacity: 0; transition: transform .65s cubic-bezier(.2,.75,.2,1), opacity .24s; object-fit: contain; mix-blend-mode: multiply; }
+.letter-flip .letter-image { width: 174%; max-width: none; max-height: 158%; height: auto; transform: translate(calc(-50% + var(--card-x,0%)),calc(-50% + var(--card-y,0%))) rotate(var(--card-angle,0deg)) rotateY(-180deg) scale(.8); backface-visibility: hidden; opacity: 0; transition: transform .65s cubic-bezier(.2,.75,.2,1), opacity .24s; object-fit: contain; mix-blend-mode: multiply; }
 html .letter-flip.is-flipped .letter-text { transform: rotateY(180deg) scale(1.08,1.36); opacity: 0; }
 html .letter-flip.is-flipped .letter-image { transform: translate(calc(-50% + var(--card-x,0%)),calc(-50% + var(--card-y,0%))) rotate(var(--card-angle,0deg)) rotateY(0) scale(1); opacity: 1; }
 .portfolio-title > span { position: relative; z-index: var(--card-layer,1); }
+.hero { isolation: isolate; overflow-x: clip; }
+.hero::before, .hero::after { content: ''; position: absolute; inset: 17% -8% 13%; z-index: -1; pointer-events: none; border-radius: 50%; opacity: .42; }
+.hero::before { border: 1px solid rgba(7,86,184,.075); box-shadow: 0 0 0 42px transparent, 0 0 0 44px rgba(7,86,184,.075), 0 0 0 46px transparent, 0 0 0 86px transparent, 0 0 0 88px rgba(7,86,184,.06), 0 0 0 90px transparent, 0 0 0 132px transparent, 0 0 0 134px rgba(7,86,184,.045), 0 0 0 136px transparent; filter: blur(.2px); animation: hero-water-drift 18s ease-in-out infinite alternate; }
+.hero::after { inset: 10% -14% 20%; border: 18px solid transparent; border-top-color: rgba(7,86,184,.08); border-bottom-color: rgba(7,86,184,.055); filter: blur(16px); animation: hero-water-sheen 12s ease-in-out infinite alternate; }
+@keyframes hero-water-drift { from { transform: translate3d(-3%, 1%, 0) scale(1); } to { transform: translate3d(3%, -2%, 0) scale(1.08); } }
+@keyframes hero-water-sheen { from { transform: translateX(-7%) rotate(-2deg); opacity: .24; } to { transform: translateX(8%) rotate(2deg); opacity: .5; } }
 .portfolio-title > span:focus-within { z-index: 12; }
 [data-letter-index="0"] { --card-angle: -12deg; --card-y: 9%; --card-x: 10%; --card-layer: 3; }
 [data-letter-index="1"] { --card-angle: 7deg; --card-y: -13%; --card-layer: 2; }
@@ -104,8 +112,8 @@ main, .site-footer { position: relative; z-index: 1; }
 .detail-lines, .detail-copy-space { height: 170px; border-top: 1px solid var(--line); }
 @media (min-width: 1600px) { .portfolio-title { font-size: 224px; } .ice-stage { height: 800px; } }
 @media (min-width: 2100px) { .portfolio-title { font-size: 280px; } }
-@media (max-width: 1200px) { .portfolio-title { font-size: 128px; } .section-title, .detail-main h1 { font-size: 84px; } .ice-stage { height: 610px; } }
-@media (max-width: 900px) { .portfolio-title { font-size: 100px; } [data-view=list] .project-entries { grid-template-columns: repeat(3,minmax(0,1fr)); } }
+@media (max-width: 1200px) { .portfolio-title { font-size: clamp(112px, 13.5vw, 176px); } .section-title, .detail-main h1 { font-size: 84px; } .ice-stage { height: 610px; } }
+@media (max-width: 900px) { .portfolio-title { font-size: clamp(84px, 14.5vw, 132px); gap: 2px; } [data-view=list] .project-entries { grid-template-columns: repeat(3,minmax(0,1fr)); } }
 @media (max-width: 700px) {
   html { scroll-padding-top: 84px; }
   body.one-page .site-header { padding: 14px 5%; }
@@ -113,7 +121,10 @@ main, .site-footer { position: relative; z-index: 1; }
   .site-header nav a { text-align: left; }
   .site-header nav a[aria-current=location]::after { right: auto; width: 24px; }
   body.one-page .hero { min-height: 76svh; padding: 140px 5% 68px; gap: 44px; }
-  .portfolio-title { font-size: 62px; }
+  body.one-page .hero { overflow-x: hidden; }
+  .portfolio-title { width: 100%; font-size: clamp(48px, 16.8vw, 76px); gap: 1px; letter-spacing: -.05em; }
+  .portfolio-title > span, .portfolio-title > span:nth-child(n) { flex: 1 1 .58em; min-width: 0; }
+  .portfolio-title > span:has(.letter-flip.is-flipped) { flex-basis: .8em; }
   .hero-baseline { align-items: flex-start; gap: 24px; }
   .hero-actions { gap: 12px; flex-direction: column; }
   .hero-name { padding-top: 10px; font-size: 11px; }
@@ -123,6 +134,7 @@ main, .site-footer { position: relative; z-index: 1; }
   .section-topline { font-size: 10px; padding: 18px 0; }
   .experience-list { gap: 70px; padding-top: 48px; }
   .experience, .experience--reverse { display: flex; flex-direction: column; gap: 24px; align-items: stretch; }
+  .experience, .experience-copy, .experience-media { width: 100%; min-width: 0; }
   .experience--reverse .experience-copy, .experience--reverse .experience-media { order: initial; }
   .experience-copy { min-height: 100px; }
   .copy-space { height: 64px; margin-top: 18px; }
@@ -145,7 +157,8 @@ main, .site-footer { position: relative; z-index: 1; }
   .detail-main h1 { font-size: 48px; }
   .detail-grid { grid-template-columns: 1fr; gap: 32px; padding: 50px 0; }
 }
-@media (max-width: 430px) { .portfolio-title { font-size: 46px; } }
-@media (max-width: 360px) { .portfolio-title { font-size: 40px; } .section-title { font-size: 48px; } }
-@media (prefers-reduced-motion: reduce) { .letter-flip * { transition: none !important; } }
-html[data-motion=paused] .letter-flip * { transition: none !important; }
+@media (max-width: 430px) { .portfolio-title { font-size: clamp(42px, 15.8vw, 62px); } }
+@media (max-width: 360px) { .portfolio-title { font-size: 38px; } .section-title { font-size: 48px; } }
+@media (prefers-reduced-motion: reduce) { .letter-flip, .letter-flip * { transition: none !important; } .hero::before, .hero::after { animation: none !important; } }
+html[data-motion=paused] .letter-flip, html[data-motion=paused] .letter-flip * { transition: none !important; }
+html[data-motion=paused] .hero::before, html[data-motion=paused] .hero::after { animation-play-state: paused; }

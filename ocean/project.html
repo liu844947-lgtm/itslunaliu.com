@@ -1,15 +1,75 @@
 <!doctype html>
 <html lang="zh-CN">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Project — LIUYING</title><link rel="icon" href="data:,"><link rel="stylesheet" href="css/ocean.css"><link rel="stylesheet" href="css/motion.css"><link rel="stylesheet" href="css/long-page.css"></head>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>项目 — lunaliu</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="css/ocean.css">
+  <link rel="stylesheet" href="css/motion.css">
+  <link rel="stylesheet" href="css/long-page.css">
+  <link rel="stylesheet" href="css/content.css">
+  <link rel="stylesheet" href="css/figma-portfolio.css">
+</head>
 <body class="project-detail-page" data-project-detail>
-  <header class="site-header"><a class="wordmark" href="index.html#home">LIUYING</a><a class="detail-back" href="index.html#projects">← 返回项目</a></header>
-  <main id="main" class="detail-main"><p class="eyebrow">PROJECT / <span data-project-number>01</span></p><h1>PROJECT <span data-project-number>01</span></h1><div class="detail-placeholder" role="img" aria-label="项目主图留白"></div><section class="detail-grid"><div><p class="index-number" data-project-number>01</p><div class="detail-lines"></div></div><div class="detail-copy-space" aria-label="项目说明留白"></div></section></main>
-  <footer class="site-footer"><span>LIUYING / PROJECT DETAIL</span><a href="index.html#projects">返回项目总览 ↑</a><button class="motion-toggle" data-motion-toggle aria-pressed="false">暂停动效</button></footer>
-  <script>
-    const id = new URLSearchParams(location.search).get("id");
-    const safe = /^(0[1-5])$/.test(id || "") ? id : "01";
-    document.querySelectorAll("[data-project-number]").forEach((node) => node.textContent = safe);
-  </script>
-  <script defer src="js/site.js"></script><script defer src="js/motion.js"></script><script defer src="js/global-liquid.bundle.js"></script>
+  <a class="skip-link" href="#main">跳至正文</a>
+  <header class="site-header">
+    <a class="wordmark" href="index.html#home">lunaliu</a>
+    <a class="detail-back" href="index.html#projects">← 返回 PROJECTS</a>
+  </header>
+  <main id="main" class="detail-main">
+    <section class="case-hero" aria-labelledby="project-detail-title">
+      <div class="project-brand-backdrop" aria-hidden="true">LUNALIU</div>
+      <div class="case-hero__copy">
+        <p class="case-pill" data-project-pill>实习 · 数解</p>
+        <p class="case-highlight" data-project-highlight>把混乱的赛事节点收成可协作的一体化评审系统。</p>
+        <p class="case-english" data-project-english>BOCHUANGYUAN</p>
+        <h1 id="project-detail-title" data-project-title>博创园创业陪伴系统</h1>
+        <ul class="case-tags" data-project-tags aria-label="能力标签"></ul>
+      </div>
+      <div class="case-hero__media" data-project-cover>
+        <div class="case-cover-fallback" data-project-cover-fallback>专家评审端 · 产品主视觉待补截图</div>
+      </div>
+    </section>
+
+    <section class="case-story" aria-labelledby="story-title">
+      <h2 id="story-title" class="case-section-title"><span aria-hidden="true">|</span> 背景和动作</h2>
+      <p class="case-story__body" data-project-story></p>
+      <div class="case-links" data-project-links aria-label="体验入口"></div>
+    </section>
+
+    <section class="case-gallery" aria-labelledby="gallery-title">
+      <h2 id="gallery-title" class="case-section-title"><span aria-hidden="true">|</span> 我负责的部分</h2>
+      <div class="case-gallery__grid" data-project-gallery></div>
+    </section>
+
+    <section class="case-outcome" aria-labelledby="outcome-title">
+      <h2 id="outcome-title" class="case-section-title"><span aria-hidden="true">|</span> 目前的结果和迭代</h2>
+      <div class="case-outcome__grid">
+        <article>
+          <h3>结果</h3>
+          <p data-project-result></p>
+        </article>
+        <article>
+          <h3>迭代</h3>
+          <p data-project-iteration></p>
+        </article>
+      </div>
+    </section>
+
+    <p class="case-back-row">
+      <a class="case-back-link" href="index.html#projects">← 返回 PROJECTS</a>
+      <span class="case-number-meta">PROJECT / <span data-project-number>01</span></span>
+    </p>
+  </main>
+  <footer class="site-footer">
+    <span>lunaliu / PROJECT DETAIL</span>
+    <a href="index.html#projects">返回项目总览 ↑</a>
+    <button class="motion-toggle" data-motion-toggle aria-pressed="false">暂停动效</button>
+  </footer>
+  <script defer src="js/content-data.js?v=20260927b"></script>
+  <script defer src="js/project-detail.js?v=20260927b"></script>
+  <script defer src="js/site.js?v=20260927b"></script>
+  <script defer src="js/motion.js?v=20260927b"></script>
 </body>
 </html>

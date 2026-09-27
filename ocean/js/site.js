@@ -70,11 +70,54 @@
     const count = tiles.length;
     if (!count) return;
     let current = 0;
+    let leaveTimer = 0;
+
+    const contentProjects = Array.isArray(window.OceanContent?.projects)
+      ? window.OceanContent.projects
+      : [];
+    function hydrateProjectEntries() {
+      tiles.forEach((tile, index) => {
+        const project = contentProjects[index];
+        if (!project) return;
+        const title = tile.querySelector('[data-project-title]');
+        const summary = tile.querySelector('[data-project-summary]');
+        const kind = tile.querySelector('[data-project-kind]');
+        if (title) title.textContent = project.title;
+        if (summary) summary.textContent = project.summary;
+        if (kind) kind.textContent = project.pill || (project.kind === 'personal' ? '个人项目' : '实习项目');
+        tile.href = `project.html?id=${encodeURIComponent(project.id)}`;
+        tile.setAttribute('aria-label', `查看${project.title}`);
+      });
+      selectors.forEach((button, index) => {
+        const project = contentProjects[index];
+        if (!project) return;
+        button.textContent = project.shortTitle || project.title;
+        button.setAttribute('aria-label', `${project.title}${project.kind === 'personal' ? '个人项目' : '项目'}`);
+      });
+      projects.dataset.projectCount = String(count);
+      projects.querySelectorAll('[data-project-total]').forEach((node) => {
+        node.textContent = String(count).padStart(2, '0');
+      });
+    }
 
     function selectProject(value) {
       const parsed = Number(value);
       if (!Number.isFinite(parsed)) return;
-      current = ((Math.trunc(parsed) % count) + count) % count;
+      const previous = current;
+      const next = ((Math.trunc(parsed) % count) + count) % count;
+      const changed = next !== previous;
+      current = next;
+      if (changed) {
+        window.clearTimeout(leaveTimer);
+        projects.dataset.direction = current > previous ? 'next' : 'previous';
+        tiles.forEach((tile, index) => {
+          tile.classList.toggle('is-leaving', index === previous);
+          tile.classList.toggle('is-entering', index === current);
+        });
+        leaveTimer = window.setTimeout(() => {
+          tiles.forEach((tile) => tile.classList.remove('is-leaving', 'is-entering'));
+        }, 980);
+      }
       projects.dataset.current = String(current);
       tiles.forEach((tile, index) => tile.classList.toggle('is-current', index === current));
       selectors.forEach((button) => button.setAttribute('aria-pressed', String(Number(button.dataset.projectSelect) === current)));
@@ -93,9 +136,18 @@
       document.dispatchEvent(new CustomEvent('ocean:viewchange', { detail: { view } }));
     }
 
-    selectors.forEach((button) => button.addEventListener('click', () => selectProject(button.dataset.projectSelect)));
-    projects.querySelector('[data-project-prev]')?.addEventListener('click', () => selectProject(current - 1));
-    projects.querySelector('[data-project-next]')?.addEventListener('click', () => selectProject(current + 1));
+    selectors.forEach((button) => button.addEventListener('click', () => {
+      selectProject(button.dataset.projectSelect);
+      document.dispatchEvent(new CustomEvent('ocean:projectscroll', { detail: { index: current } }));
+    }));
+    projects.querySelector('[data-project-prev]')?.addEventListener('click', () => {
+      selectProject(current - 1);
+      document.dispatchEvent(new CustomEvent('ocean:projectscroll', { detail: { index: current } }));
+    });
+    projects.querySelector('[data-project-next]')?.addEventListener('click', () => {
+      selectProject(current + 1);
+      document.dispatchEvent(new CustomEvent('ocean:projectscroll', { detail: { index: current } }));
+    });
     viewButtons.forEach((button) => button.addEventListener('click', () => selectView(button.dataset.projectView)));
     document.addEventListener('ocean:projectrequest', (event) => selectProject(event.detail?.index));
 
@@ -110,6 +162,7 @@
         selectProject(current + (event.key === 'ArrowRight' ? 1 : -1));
       });
     }
+    hydrateProjectEntries();
     selectView(storage.get('view', 'gallery'));
     selectProject(storage.get('project', '0'));
   }

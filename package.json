@@ -3,7 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "test": "node --test tests/site-contract.test.mjs"
+    "test": "node --test tests/site-contract.test.mjs ocean/content.test.mjs ocean/one-page.test.mjs ocean/letters.test.mjs ocean/palette.test.mjs"
   },
   "dependencies": {
     "esbuild": "0.25.12",
