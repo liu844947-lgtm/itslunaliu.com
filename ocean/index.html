@@ -5,7 +5,7 @@
   <title>Portfolio — lunaliu</title>
   <link rel="icon" href="data:,">
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Rammetto+One&family=Roboto:wght@400;500;700&family=Zen+Kaku+Gothic+New:wght@500;700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/ocean.css"><link rel="stylesheet" href="css/motion.css"><link rel="stylesheet" href="css/long-page.css"><link rel="stylesheet" href="css/content.css"><link rel="stylesheet" href="css/figma-portfolio.css"><link rel="stylesheet" href="css/portfolio-home.css">
+  <link rel="stylesheet" href="css/ocean.css"><link rel="stylesheet" href="css/motion.css?v=20260927l"><link rel="stylesheet" href="css/long-page.css"><link rel="stylesheet" href="css/content.css"><link rel="stylesheet" href="css/figma-portfolio.css"><link rel="stylesheet" href="css/portfolio-home.css?v=20260927p">
 </head>
 <body data-page="home" data-figma-layout="169:2737" class="one-page">
 <a class="skip-link" href="#main">跳至正文</a>
@@ -22,14 +22,10 @@
       <img class="hero-cta__flower hero-cta__flower--bottom" src="assets/hero-flower.png" alt="">
     </a>
     <h1 class="portfolio-title" aria-label="PORTFOLIO"><span data-letter-index="0"><span class="letter-text">P</span></span><span data-letter-index="1"><span class="letter-text">O</span></span><span data-letter-index="2"><span class="letter-text">R</span></span><span data-letter-index="3"><span class="letter-text">T</span></span><span data-letter-index="4"><span class="letter-text">F</span></span><span data-letter-index="5"><span class="letter-text">O</span></span><span data-letter-index="6"><span class="letter-text">L</span></span><span data-letter-index="7"><span class="letter-text">I</span></span><span data-letter-index="8"><span class="letter-text">O</span></span></h1>
-    <div class="hero-copy" lang="ja">
-      <p class="hero-copy__jp">
-        <span class="hero-copy__line">これ<em>で</em>いい</span>
-        <span class="hero-copy__line">じゃなく</span>
-        <span class="hero-copy__line">これ<em>が</em>いい</span>
-      </p>
-      <p class="hero-copy__sub">Not good enough. But just right.</p>
-    </div>
+    <a class="hero-play" href="#projects" aria-label="播放作品集，前往 PROJECTS">
+      <span class="hero-play__triangle" aria-hidden="true"></span>
+      <span class="hero-play__label">PLAY</span>
+    </a>
   </section>
 
   <section id="internship" class="long-section internship-section" aria-labelledby="internship-title">
@@ -78,26 +74,38 @@
       <p class="section-kicker">PROFILE</p>
       <div class="about-portrait"><div class="portrait-slot"><img src="assets/profile-photo.jpg" alt="刘颖个人照片" width="640" height="800" loading="lazy" decoding="async"></div><div class="about-copy"><p class="index-number">lunaliu / AI PRODUCT</p><h3>面试官您好，我叫刘颖。</h3><p>本科就读于安徽建筑大学，正在应聘 AI 产品岗位。我关注用户问题、产品方案、AI 工作流和上线验证之间的连接。</p><p>建筑与设计训练让我习惯先走访、观察和整理问题，再把复杂信息组织成可执行的方案。</p></div></div>
       <div class="about-columns"><article><p class="index-number">01 / 能力</p><h3>从需求到可用产品</h3><ul><li>Codex、Cursor 辅助完成 7 套原型，并用 Vibe Coding 开发和部署 2 个 AI 工具。</li><li>用户调研、需求抽象、B 端定制化项目和 AI 工作流。</li><li>Figma 高保真原型、SQL、Python、RAG、Agent、Prompt 工程。</li></ul></article><article><p class="index-number">02 / 在校项目</p><h3>数据与空间分析</h3><p>作为负责人完成省级大创项目，搭建 GIS + AHP 选址评估模型，积累数据分析与多维度建模经验。</p></article></div>
-      <div class="about-study"><p class="index-number">03 / INTERESTS</p><h3>兴趣与创作</h3><p>素描与写生、游戏表情包、文创设计，以及把灵感做成可分享的小作品。</p><a class="sticker-entry" href="#stickers">浏览我的表情包 <span aria-hidden="true">↗</span></a></div>
     </div>
   </section>
-  <section id="contact" class="contact-section" aria-labelledby="contact-title"><div class="contact-arc" aria-hidden="true"></div><div class="contact-inner"><p class="eyebrow">CONTACT</p><h2 id="contact-title">一起把想法<br>变成产品。</h2><a href="mailto:hello@itslunaliu.com">hello@itslunaliu.com <span aria-hidden="true">↗</span></a><span class="contact-signature">LIU YING / 2026</span></div><div class="contact-character" aria-hidden="true">✦</div></section>
-  <section id="stickers" class="sticker-band" data-sticker-viewport aria-label="定制表情包">
-    <div class="sticker-band__head">
-      <p class="sticker-band__label">ILLUSTRATION / EMOTES</p>
-      <h2>定制表情包</h2>
-      <p class="sticker-band__copy">为游戏主播做角色与表情设计，从草图到透明底交付。下面是部分作品。</p>
-      <ul class="sticker-tags">
-        <li class="is-accent">Twitch Emotes</li>
-        <li>角色设计</li>
-        <li>表情语义</li>
-        <li>透明底交付</li>
-      </ul>
+  <section id="contact" class="contact-section" aria-labelledby="stickers-title">
+    <div id="stickers" class="sticker-band" data-sticker-viewport>
+      <div class="sticker-band__layout section-wrap">
+        <div class="sticker-band__head">
+          <h2 id="stickers-title" class="section-title">CREATIVE</h2>
+          <p class="section-kicker">ILLUSTRATION / EMOTES</p>
+          <p class="sticker-band__copy">在海外平台承接 Twitch 主播表情包定制，从角色 IP 设计、表情包定制到最终交付，独立完成全流程设计。深度对接海外创作者，熟悉其使用偏好与真实需求，具备需求落地的实操经验。</p>
+          <p class="sticker-band__copy sticker-band__copy--note">下面是我的部分作品展示。</p>
+          <ul class="sticker-tags">
+            <li class="sticker-tag is-accent" tabindex="0" data-preview="twitch">
+              Twitch Emotes
+              <span class="sticker-tag__cue" aria-hidden="true">↗</span>
+            </li>
+            <li class="sticker-tag" tabindex="0" data-preview="wenchuang">
+              文创设计
+              <span class="sticker-tag__cue" aria-hidden="true">↗</span>
+            </li>
+          </ul>
+        </div>
+        <aside class="sticker-preview-stage" aria-hidden="true">
+          <img class="sticker-preview-stage__image" data-preview-image="twitch" src="assets/creative/twitch-emotes-preview.jpg" alt="" width="1024" height="677" loading="lazy" decoding="async">
+          <img class="sticker-preview-stage__image" data-preview-image="wenchuang" src="assets/creative/wenchuang-preview.jpg" alt="" width="768" height="1024" loading="lazy" decoding="async">
+        </aside>
+      </div>
+      <div class="sticker-marquee">
+        <div data-sticker-track></div>
+      </div>
+      <p class="sticker-empty-copy">原创表情包作品入口</p>
     </div>
-    <div class="sticker-marquee" data-sticker-track></div>
-    <p class="sticker-empty-copy">原创表情包作品入口</p>
-    <button type="button" data-sticker-toggle data-pause-label="暂停" data-play-label="播放" hidden aria-pressed="false">暂停</button>
   </section>
 </main>
-<script defer src="js/content-data.js?v=20260927e"></script><script defer src="js/assets.js?v=20260927e"></script><script defer src="js/site.js?v=20260927e"></script><script defer src="js/long-page.js?v=20260927e"></script><script defer src="js/motion.js?v=20260927e"></script><script defer src="js/portfolio-home.js?v=20260927e"></script><script defer src="js/global-liquid.bundle.js?v=20260927e"></script>
+<script defer src="js/content-data.js?v=20260927e"></script><script defer src="js/assets.js?v=20260927l"></script><script defer src="js/site.js?v=20260927e"></script><script defer src="js/long-page.js?v=20260927e"></script><script defer src="js/motion.js?v=20260927l"></script><script defer src="js/portfolio-home.js?v=20260927j"></script><script defer src="js/global-liquid.bundle.js?v=20260927e"></script>
 </body></html>

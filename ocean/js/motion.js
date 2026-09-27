@@ -252,28 +252,40 @@
       }
       ripples = ripples.filter((ripple) => now - ripple.time < 520);
       context.clearRect(0, 0, width, height);
+      // Offset wake toward the stern so the trail sits behind the boat tip.
+      const sternWake = (point, previous) => {
+        const dx = point.x - previous.x;
+        const dy = point.y - previous.y;
+        const length = Math.hypot(dx, dy) || 1;
+        return {
+          x: point.x - (dx / length) * 18,
+          y: point.y - (dy / length) * 18 + 6,
+        };
+      };
       if (points.length > 1) {
         context.lineCap = "round";
         context.lineJoin = "round";
         for (let index = 1; index < points.length; index += 1) {
           const previous = points[index - 1];
           const point = points[index];
+          const from = sternWake(previous, points[Math.max(0, index - 2)] || previous);
+          const to = sternWake(point, previous);
           const age = (now - point.time) / TRAIL_AGE_MS;
           context.beginPath();
           const sway = Math.sin(index * 0.65 + now * 0.002) * (1 - age) * 8;
-          context.moveTo(previous.x, previous.y + sway);
-          context.quadraticCurveTo(point.x, point.y - sway, point.x, point.y);
-          context.strokeStyle = `rgba(17, 106, 248, ${Math.max(0, (1 - age) * 0.3)})`;
-          context.lineWidth = Math.max(0.7, (1 - age) * 7.5);
+          context.moveTo(from.x, from.y + sway);
+          context.quadraticCurveTo(to.x, to.y - sway, to.x, to.y);
+          context.strokeStyle = `rgba(17, 106, 248, ${Math.max(0, (1 - age) * 0.34)})`;
+          context.lineWidth = Math.max(0.7, (1 - age) * 8.5);
           context.stroke();
         }
       }
       ripples.forEach((ripple) => {
         const age = (now - ripple.time) / 520;
         context.beginPath();
-        context.ellipse(ripple.x, ripple.y, 3 + age * 18, 1.4 + age * 6, ripple.angle, 0, Math.PI * 2);
-        context.strokeStyle = `rgba(17, 106, 248, ${Math.max(0, (1 - age) * 0.18)})`;
-        context.lineWidth = Math.max(0.4, 0.9 - age * 0.5);
+        context.ellipse(ripple.x, ripple.y, 4 + age * 20, 1.6 + age * 7, ripple.angle, 0, Math.PI * 2);
+        context.strokeStyle = `rgba(17, 106, 248, ${Math.max(0, (1 - age) * 0.2)})`;
+        context.lineWidth = Math.max(0.4, 1 - age * 0.55);
         context.stroke();
       });
       if (points.length || ripples.length) frame = requestAnimationFrame(draw);
@@ -336,12 +348,19 @@
 
       const point = { x: event.clientX, y: event.clientY, time: performance.now() };
       if (!lastPoint || Math.hypot(point.x - lastPoint.x, point.y - lastPoint.y) > 3) {
-        if (lastPoint) {
-        }
         points.push(point);
         if (points.length > 24) points.shift();
         if (point.time - lastRippleTime > 140) {
-          ripples.push({ x: point.x - 3, y: point.y + 8, time: point.time, angle: 0 });
+          let wakeX = point.x - 10;
+          let wakeY = point.y + 14;
+          if (lastPoint) {
+            const dx = point.x - lastPoint.x;
+            const dy = point.y - lastPoint.y;
+            const length = Math.hypot(dx, dy) || 1;
+            wakeX = point.x - (dx / length) * 20;
+            wakeY = point.y - (dy / length) * 20 + 8;
+          }
+          ripples.push({ x: wakeX, y: wakeY, time: point.time, angle: 0 });
           lastRippleTime = point.time;
         }
         lastPoint = point;
@@ -642,45 +661,15 @@
     const originalTrackNodes = Array.from(track.childNodes);
     state.cleanups.push(() => track.replaceChildren(...originalTrackNodes));
 
-    const toggle = document.querySelector("[data-sticker-toggle]");
-    const toggleLabel = toggle?.querySelector("[data-sticker-toggle-label]") || toggle;
-    const toggleState = toggle ? {
-      hidden: toggle.hidden,
-      text: toggleLabel.textContent,
-      ariaPressed: toggle.getAttribute("aria-pressed"),
-    } : null;
-    if (toggle) toggle.hidden = true;
-    state.cleanups.push(() => {
-      if (!toggle || !toggleState) return;
-      toggle.hidden = toggleState.hidden;
-      toggleLabel.textContent = toggleState.text;
-      if (toggleState.ariaPressed === null) toggle.removeAttribute("aria-pressed");
-      else toggle.setAttribute("aria-pressed", toggleState.ariaPressed);
-    });
-
     const assets = Array.isArray(window.OceanAssets?.stickers)
       ? window.OceanAssets.stickers.filter((asset) => asset && typeof asset.src === "string" && asset.src.trim())
       : [];
     viewport.classList.toggle("is-empty", assets.length === 0);
     if (!assets.length) return;
 
-    let manuallyPaused = false;
-    const chinese = root.lang.toLowerCase().startsWith("zh");
-    const pauseLabel = toggle?.dataset.pauseLabel || toggleLabel?.textContent?.trim() || (chinese ? "暂停" : "Pause");
-    const playLabel = toggle?.dataset.playLabel || (chinese ? "播放" : "Play");
     function syncPausedState() {
-      const paused = manuallyPaused || !motionEnabled();
-      viewport.classList.toggle("is-paused", paused);
-      if (toggle) {
-        toggle.setAttribute("aria-pressed", String(manuallyPaused));
-        toggleLabel.textContent = manuallyPaused ? playLabel : pauseLabel;
-      }
+      viewport.classList.toggle("is-paused", !motionEnabled());
     }
-    function onToggle() {
-      manuallyPaused = !manuallyPaused;
-      syncPausedState();
-    }
-    if (toggle) listen(toggle, "click", onToggle);
     state.refreshers.push(syncPausedState);
     syncPausedState();
 
@@ -695,7 +684,6 @@
       if (!decodedAssets.length) {
         viewport.classList.add("is-empty");
         viewport.classList.remove("has-stickers");
-        if (toggle) toggle.hidden = true;
         return;
       }
       const makeSet = (decorative) => {
@@ -715,7 +703,6 @@
       track.replaceChildren(makeSet(false), makeSet(true));
       viewport.classList.remove("is-empty");
       viewport.classList.add("has-stickers");
-      if (toggle) toggle.hidden = false;
       syncPausedState();
     });
   }

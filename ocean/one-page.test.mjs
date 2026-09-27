@@ -15,8 +15,9 @@ for (const id of sections) {
 }
 assert.ok(!/精选项目|home-preview|preview-grid/.test(home), 'no duplicated selected-projects section');
 assert.match(home, /data-figma-layout="169:2737"/, 'home identifies the selected Figma layout');
-assert.ok(home.includes('hero-copy__jp'), 'home uses live Japanese typography for the Figma hero copy');
-assert.ok(home.includes('これ') && home.includes('じゃなく'), 'home keeps the Figma Japanese hero lines');
+assert.ok(home.includes('class="hero-play"'), 'home uses a PLAY control in the hero');
+assert.ok(home.includes('href="#projects"'), 'PLAY links into the projects section');
+assert.ok(!home.includes('hero-copy__jp'), 'Japanese hero copy is removed');
 assert.ok(!home.includes('assets/hero-japanese-copy.png'), 'home no longer uses a screenshot for Japanese hero copy');
 assert.ok(!home.includes('language-switch'), 'the Japanese hero artwork is not a language toggle');
 assert.ok(!home.includes('site-footer'), 'home footer is removed');

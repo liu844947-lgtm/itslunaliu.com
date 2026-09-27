@@ -275,45 +275,43 @@ body.one-page .letter-flip.is-flipped {
   padding-inline: 0;
 }
 
-.hero-copy {
+.hero-play {
   position: absolute;
-  right: max(24px, 4.5vw);
-  bottom: max(28px, 6vh);
-  width: min(42vw, 310px);
+  right: max(24px, 4vw);
+  bottom: max(28px, 5vh);
   z-index: 2;
-  margin: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 40px;
+  padding: 8px 16px 8px 14px;
   color: var(--portfolio-ink);
+  border: 1px solid #fff;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, .6);
+  backdrop-filter: blur(2px);
+  text-decoration: none;
+  transition: opacity .2s ease, background-color .2s ease;
 }
-
-.hero-copy__jp {
-  margin: 0;
-  color: var(--portfolio-ink);
-  font-family: var(--font-jp);
-  font-size: clamp(30px, 3.8vw, 58px);
-  font-weight: 900;
-  letter-spacing: .08em;
-  line-height: 1.12;
-}
-
-.hero-copy__line {
+.hero-play__triangle {
   display: block;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 5px 0 5px 8px;
+  border-color: transparent transparent transparent var(--portfolio-blue);
 }
-
-.hero-copy__jp em {
-  font-style: normal;
-  color: var(--portfolio-link);
-}
-
-.hero-copy__sub {
-  margin: clamp(10px, .9vw, 16px) 0 0;
-  color: var(--portfolio-gray);
+.hero-play__label {
   font-family: var(--font-en);
-  font-size: clamp(11px, 1.1094vw, 21.3px);
-  font-weight: 300;
-  letter-spacing: .43px;
-  line-height: 1.5;
-  white-space: normal;
-  max-width: 22ch;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: .7px;
+  line-height: 1;
+}
+.hero-play:hover,
+.hero-play:focus-visible {
+  opacity: .78;
+  background: rgba(255, 255, 255, .78);
 }
 
 .button, .button--solid, .button--ghost { color: var(--portfolio-link); }
@@ -836,8 +834,7 @@ body.one-page .project-case-list {
 }
 .about-columns { padding-bottom: clamp(84px, 10vw, 150px); }
 .about-copy .index-number,
-.about-columns .index-number,
-.about-study .index-number {
+.about-columns .index-number {
   color: var(--portfolio-link);
   font-family: var(--font-en);
   font-size: 16px;
@@ -846,8 +843,7 @@ body.one-page .project-case-list {
 }
 .about-copy p,
 .about-columns p,
-.about-columns li,
-.about-study p:not(.index-number) {
+.about-columns li {
   color: var(--portfolio-ink);
   font-family: var(--font-jp);
   font-size: 18.7px;
@@ -870,49 +866,44 @@ body.one-page .project-case-list {
   background: var(--portfolio-paper);
   border-top: 1px solid rgba(8, 112, 202, .12);
 }
+.sticker-band__layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(240px, .9fr);
+  gap: clamp(28px, 4vw, 56px);
+  align-items: center;
+  margin: 0 auto clamp(28px, 4vw, 48px);
+}
 .sticker-band__head {
-  width: min(calc(100% - 48px), 760px);
-  margin: 0 auto clamp(18px, 2vw, 28px);
-}
-.sticker-band__label {
-  margin: 0 0 12px;
-  color: var(--portfolio-blue);
-  font-family: var(--font-en);
-  font-size: 12px;
-  font-weight: 500;
-  letter-spacing: .16em;
-  text-transform: uppercase;
-}
-.sticker-band h2 {
   margin: 0;
-  color: var(--portfolio-ink);
-  font-family: var(--font-display);
-  font-size: clamp(36px, 4.2vw, 60px);
-  font-weight: 400;
-  line-height: 1.05;
 }
 .sticker-band__copy {
-  max-width: 62ch;
-  margin: 16px 0 0;
+  max-width: 52rem;
+  margin: 28px 0 0;
   color: var(--portfolio-ink);
   font-family: var(--font-jp);
-  font-size: 16px;
+  font-size: 18.7px;
   font-weight: 500;
-  line-height: 1.8;
+  letter-spacing: .933px;
+  line-height: 33.6px;
+}
+.sticker-band__copy--note {
+  margin-top: 12px;
 }
 .sticker-tags {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
-  margin: 16px 0 0;
+  gap: 10px;
+  margin: 28px 0 0;
   padding: 0;
   list-style: none;
 }
-.sticker-tags li {
+.sticker-tag {
+  position: relative;
   display: inline-flex;
   align-items: center;
+  flex: 0 0 auto;
   min-height: 36px;
-  padding: 6px 14px;
+  padding: 6px 16px;
   border: 1px solid rgba(8, 112, 202, .28);
   border-radius: 999px;
   color: var(--portfolio-blue);
@@ -921,18 +912,60 @@ body.one-page .project-case-list {
   font-size: 12px;
   font-weight: 500;
   letter-spacing: .04em;
+  white-space: nowrap;
+  cursor: pointer;
 }
-.sticker-tags .is-accent {
+.sticker-tag.is-accent {
   border-color: var(--portfolio-blue);
   color: #fff;
   background: var(--portfolio-blue);
 }
+.sticker-tag__cue {
+  position: static !important;
+  margin-left: 6px;
+  font-size: 12px;
+  line-height: 1;
+  opacity: .8;
+}
+.sticker-tag:hover .sticker-tag__cue,
+.sticker-tag:focus-within .sticker-tag__cue {
+  opacity: 1;
+}
+.sticker-preview-stage {
+  position: relative;
+  min-height: clamp(220px, 28vw, 340px);
+  pointer-events: none;
+}
+.sticker-preview-stage__image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 16px;
+  opacity: 0;
+  transform: translateY(8px) scale(.98);
+  transition: opacity .22s ease, transform .22s ease;
+  background: rgba(255, 255, 255, .96);
+  box-shadow: 0 16px 40px rgba(8, 48, 96, .18);
+}
+.sticker-band:has(.sticker-tag[data-preview="twitch"]:hover) .sticker-preview-stage__image[data-preview-image="twitch"],
+.sticker-band:has(.sticker-tag[data-preview="twitch"]:focus-within) .sticker-preview-stage__image[data-preview-image="twitch"],
+.sticker-band:has(.sticker-tag[data-preview="wenchuang"]:hover) .sticker-preview-stage__image[data-preview-image="wenchuang"],
+.sticker-band:has(.sticker-tag[data-preview="wenchuang"]:focus-within) .sticker-preview-stage__image[data-preview-image="wenchuang"] {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
 .sticker-marquee {
-  min-width: 0;
-  max-width: 100%;
+  width: 100%;
   margin-top: 8px;
-  -webkit-mask-image: linear-gradient(90deg, transparent, #000 3%, #000 97%, transparent);
-  mask-image: linear-gradient(90deg, transparent, #000 3%, #000 97%, transparent);
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent);
+}
+.sticker-marquee [data-sticker-track] {
+  display: flex;
+  width: max-content;
 }
 .sticker-band.is-empty {
   min-height: 0;
@@ -941,29 +974,76 @@ body.one-page .project-case-list {
   width: min(calc(100% - 48px), 760px);
   margin: 8px auto 20px;
 }
+.contact-section .sticker-band {
+  z-index: 2;
+  display: block;
+  grid-template-columns: none;
+  background: transparent;
+  border-top: 0;
+  color: #fff;
+  padding: 0;
+  overflow: visible;
+}
+.contact-section .section-title {
+  color: #fff;
+}
+.contact-section .section-kicker {
+  color: rgba(255, 255, 255, .78);
+}
+.contact-section .sticker-band__copy {
+  color: #fff;
+}
+.contact-section .sticker-band__copy--note {
+  opacity: .88;
+}
+.contact-section .sticker-tag {
+  border-color: rgba(255, 255, 255, .55);
+  color: #fff;
+  background: transparent;
+}
+.contact-section .sticker-tag.is-accent {
+  border-color: #fff;
+  color: var(--portfolio-blue);
+  background: #fff;
+}
+.contact-section .sticker-tag:hover,
+.contact-section .sticker-tag:focus-within {
+  border-color: #fff;
+  background: rgba(255, 255, 255, .14);
+}
+.contact-section .sticker-tag.is-accent:hover,
+.contact-section .sticker-tag.is-accent:focus-within {
+  background: #fff;
+}
+.contact-section .sticker-preview-stage__image {
+  background: rgba(255, 255, 255, .96);
+}
+.contact-section .sticker-band .sticker-empty-copy {
+  color: rgba(255, 255, 255, .72);
+}
+.contact-section .ocean-sticker {
+  width: clamp(96px, 9vw, 128px);
+  height: clamp(96px, 9vw, 128px);
+  background: transparent;
+}
+.contact-section .ocean-sticker-set {
+  gap: clamp(1.25rem, 3.5vw, 2.75rem);
+  padding-right: clamp(1.25rem, 3.5vw, 2.75rem);
+}
+.contact-section .sticker-marquee {
+  margin-top: clamp(28px, 4vw, 44px);
+}
 .contact-section {
   position: relative;
   isolation: isolate;
-  min-height: clamp(620px, 53vw, 1020px);
-  padding: clamp(210px, 16vw, 310px) max(24px, 8vw) 92px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  min-height: 0;
+  padding: clamp(56px, 7vw, 88px) 0 clamp(56px, 6vw, 80px);
   color: #fff;
   background: var(--portfolio-blue);
-  overflow: hidden;
-}
-/* Deep scoop into the blue field — Figma contact uses ~842px bottom radius on the prior panel. */
-.contact-arc {
-  position: absolute;
-  left: 50%;
-  top: 0;
-  z-index: 0;
-  width: 220vw;
-  height: min(70vw, 920px);
-  min-height: 320px;
-  transform: translate(-50%, -68%);
-  border-radius: 50%;
-  background: #fff;
-  pointer-events: none;
-  will-change: transform;
+  overflow: visible;
 }
 .contact-inner { position: relative; z-index: 2; max-width: 720px; }
 .contact-inner h2 { font-family: "Zen Kaku Gothic New", "Noto Sans SC", sans-serif; font-weight: 700; font-size: clamp(56px, 8vw, 138px); line-height: .92; }
@@ -1053,20 +1133,17 @@ body.one-page .site-footer { display: none !important; }
     aspect-ratio: auto;
     padding: 0 16px;
   }
-  .hero-copy {
+  .hero-play {
     right: 16px;
     bottom: max(20px, 3.5vh);
-    width: min(58vw, 220px);
+    min-height: 36px;
+    padding: 6px 12px 6px 10px;
   }
-  .hero-copy__jp {
-    font-size: clamp(24px, 7.6vw, 36px);
-    font-weight: 900;
-    letter-spacing: .05em;
+  .sticker-band__layout {
+    grid-template-columns: 1fr;
   }
-  .hero-copy__sub {
-    white-space: normal;
-    font-size: 12px;
-    max-width: 18ch;
+  .sticker-preview-stage {
+    min-height: 200px;
   }
   .portfolio-title {
     left: 16px;
@@ -1173,10 +1250,8 @@ body.one-page .site-footer { display: none !important; }
   .project-entry__summary { max-width: none; font-size: 14px; }
   .about-portrait { grid-template-columns: 1fr; gap: 42px; }
   .portrait-slot { aspect-ratio: 1.1; }
-  .sticker-band__head { width: min(calc(100% - 32px), 760px); }
-  .sticker-band h2 { font-size: clamp(36px, 10vw, 52px); }
-  .contact-section { min-height: 560px; padding: 170px 20px 54px; }
-  .contact-arc { top: 0; width: 240vw; height: 280px; transform: translate(-50%, -58%); }
+  .contact-section { min-height: 0; padding: 48px 0 56px; }
+  .contact-section .ocean-sticker { width: 88px; height: 88px; }
   .contact-character { top: 34px; width: 54px; height: 54px; font-size: 22px; }
   .contact-inner h2 { font-size: clamp(56px, 16vw, 96px); }
 }

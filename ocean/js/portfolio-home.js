@@ -89,36 +89,4 @@
     requestSync();
   }
 
-  // Contact scoop: deepen / slide the white arc as the section enters view.
-  const contact = document.querySelector('.contact-section');
-  const arc = document.querySelector('.contact-arc');
-  if (!contact || !arc) return;
-
-  const baseY = -68;
-  let arcTicking = false;
-
-  const updateArc = () => {
-    arcTicking = false;
-    if (reduced.matches || document.documentElement.dataset.motion === 'paused') {
-      arc.style.transform = `translate(-50%, ${baseY}%)`;
-      return;
-    }
-    const rect = contact.getBoundingClientRect();
-    const view = Math.max(window.innerHeight, 1);
-    const progress = Math.min(1, Math.max(0, (view * 0.85 - rect.top) / (view * 0.7)));
-    const y = baseY + progress * 10;
-    const scale = 1 + progress * 0.28;
-    arc.style.transform = `translate(-50%, ${y}%) scale(${scale})`;
-  };
-
-  const requestArc = () => {
-    if (arcTicking) return;
-    arcTicking = true;
-    requestAnimationFrame(updateArc);
-  };
-
-  window.addEventListener('scroll', requestArc, { passive: true });
-  window.addEventListener('resize', requestArc, { passive: true });
-  document.addEventListener('ocean:motionchange', requestArc);
-  updateArc();
 })();

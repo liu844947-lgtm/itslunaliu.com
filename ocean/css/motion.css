@@ -40,13 +40,14 @@ html:not(.ocean-motion-paused):not([data-motion="paused"]) .letter-asset-ready:f
 .ocean-cursor-trail {
   position: fixed;
   inset: 0 auto auto 0;
-  z-index: 2147483646;
   pointer-events: none;
 }
 
 .ocean-cursor-trail {
   width: 100vw;
   height: 100vh;
+  /* Wake sits under the boat so water reads behind the hull. */
+  z-index: 2147483645;
 }
 
 .ocean-paper-cursor {
@@ -56,6 +57,7 @@ html:not(.ocean-motion-paused):not([data-motion="paused"]) .letter-asset-ready:f
   transform-origin: 8px 8px;
   transition: opacity 100ms linear;
   will-change: transform;
+  z-index: 2147483646;
 }
 
 .ocean-paper-cursor.is-visible {
@@ -227,11 +229,9 @@ html.ocean-cursor-active body * {
 }
 
 [data-sticker-viewport].has-stickers [data-sticker-track] {
-  animation: ocean-sticker-drift 30s linear infinite;
+  animation: ocean-sticker-drift 36s linear infinite;
 }
 
-[data-sticker-viewport].has-stickers:hover [data-sticker-track],
-[data-sticker-viewport].has-stickers:focus-within [data-sticker-track],
 [data-sticker-viewport].is-paused [data-sticker-track],
 .ocean-motion-paused [data-sticker-track] {
   animation-play-state: paused;
