@@ -34,9 +34,48 @@
     }));
   }
 
+  const heroRoot = document.querySelector('[data-case-hero]');
+  const heroBg = document.querySelector('[data-project-hero-bg]');
+  const devicesRoot = document.querySelector('[data-project-devices]');
+  const laptopNode = document.querySelector('[data-device-laptop]');
+  const phoneNode = document.querySelector('[data-device-phone]');
   const coverRoot = document.querySelector('[data-project-cover]');
   const coverFallback = document.querySelector('[data-project-cover-fallback]');
-  if (coverRoot) {
+  const hasDevices = Boolean(project.devices?.laptop || project.devices?.phone);
+
+  if (heroRoot) {
+    heroRoot.classList.toggle('has-devices', hasDevices);
+  }
+  document.body.classList.toggle('has-case-devices', hasDevices);
+  if (heroBg) {
+    if (project.heroBg) {
+      heroBg.style.backgroundImage = `url("${project.heroBg}")`;
+    } else {
+      heroBg.removeAttribute('style');
+    }
+  }
+
+  if (hasDevices && devicesRoot) {
+    if (laptopNode && project.devices.laptop) {
+      laptopNode.src = project.devices.laptop;
+      laptopNode.alt = project.devices.laptopAlt || `${project.title} 桌面端`;
+      laptopNode.loading = 'eager';
+      laptopNode.hidden = false;
+    } else if (laptopNode) {
+      laptopNode.hidden = true;
+    }
+    if (phoneNode && project.devices.phone) {
+      phoneNode.src = project.devices.phone;
+      phoneNode.alt = project.devices.phoneAlt || `${project.title} 移动端`;
+      phoneNode.loading = 'eager';
+      phoneNode.hidden = false;
+    } else if (phoneNode) {
+      phoneNode.hidden = true;
+    }
+    devicesRoot.hidden = false;
+    if (coverFallback) coverFallback.hidden = true;
+  } else if (coverRoot) {
+    if (devicesRoot) devicesRoot.hidden = true;
     if (project.cover) {
       const img = document.createElement('img');
       img.src = project.cover;
@@ -44,6 +83,7 @@
       img.loading = 'eager';
       coverRoot.replaceChildren(img);
     } else if (coverFallback) {
+      coverFallback.hidden = false;
       coverFallback.textContent = project.coverLabel || '主视觉待补';
       coverRoot.replaceChildren(coverFallback);
     }

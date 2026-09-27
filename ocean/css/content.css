@@ -109,9 +109,87 @@
 }
 
 /* Project detail — ETOHA-inspired case layout */
-.project-detail-page .site-header {
-  max-width: 1200px;
+html:has(body.project-detail-page),
+body.project-detail-page {
+  overflow-x: clip;
 }
+.project-detail-page .detail-main {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  width: 100%;
+  max-width: none;
+  padding-top: 0;
+}
+.project-detail-page .case-hero {
+  width: 100%;
+  margin: 0;
+}
+.project-detail-page .case-story,
+.project-detail-page .case-gallery,
+.project-detail-page .case-outcome,
+.project-detail-page .case-back-row {
+  width: min(100% - 48px, 1200px);
+  margin-inline: auto;
+}
+
+/* Overlay header + pill nav (ETOHA-like) when device hero is on */
+body.has-case-devices .site-header--case {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 30;
+  width: 100%;
+  max-width: none;
+  padding: 28px clamp(24px, 4vw, 64px) 18px;
+  color: #fff;
+  background: transparent;
+  border-bottom: 0;
+  backdrop-filter: none;
+  box-shadow: none;
+}
+body.has-case-devices .site-header--case .wordmark {
+  color: #fff;
+  letter-spacing: .16em;
+}
+body.has-case-devices .case-nav {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 7px 7px 18px;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, .78);
+  border: 1px solid rgba(255, 255, 255, .95);
+  box-shadow: 0 10px 28px rgba(8, 40, 90, .12);
+}
+body.has-case-devices .case-nav a {
+  display: inline-flex;
+  align-items: center;
+  min-width: 0;
+  min-height: 36px;
+  padding: 6px 14px 5px;
+  border-radius: 9999px;
+  color: #2a2a2a;
+  font-size: 12px;
+  letter-spacing: .08em;
+  font-weight: 600;
+}
+body.has-case-devices .case-nav a.nav-cta {
+  color: #fff;
+  background: #116af8;
+  padding-inline: 16px;
+}
+body:not(.has-case-devices) .case-nav {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+body:not(.has-case-devices) .case-nav .nav-cta {
+  color: #fff;
+  background: #116af8;
+  border-radius: 9999px;
+  padding: 8px 14px;
+}
+
 .case-hero {
   position: relative;
   display: grid;
@@ -124,12 +202,43 @@
   background: linear-gradient(160deg, #0b4f9c 0%, #086be6 48%, #5aa7ff 100%);
   color: #f5faff;
 }
-.case-hero .project-brand-backdrop {
-  inset: 18% -10vw auto;
-  color: rgba(255, 255, 255, .08);
+.case-hero.has-devices {
+  background: #0a2048;
+  min-height: min(100svh, 960px);
+  align-items: end;
+  padding-top: clamp(120px, 16vh, 168px);
+  padding-bottom: clamp(48px, 7vh, 88px);
+  color: #f5faff;
 }
+.case-hero.has-devices h1,
+.case-hero.has-devices .case-highlight,
+.case-hero.has-devices .case-english {
+  color: #f5faff;
+}
+.case-hero__waterfall {
+  position: absolute;
+  inset: -22% -14%;
+  background: center / cover no-repeat;
+  transform: rotate(-2deg) scale(1.1);
+  opacity: .55;
+  filter: brightness(.55) saturate(.85);
+  pointer-events: none;
+  z-index: 0;
+}
+.case-hero__veil {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(6, 16, 40, .82) 0%, rgba(6, 18, 44, .62) 38%, rgba(8, 22, 52, .38) 66%, rgba(8, 24, 56, .28) 100%),
+    linear-gradient(180deg, rgba(4, 12, 32, .35) 0%, transparent 42%, rgba(4, 12, 32, .45) 100%);
+  pointer-events: none;
+  z-index: 0;
+}
+.case-hero:not(.has-devices) .case-hero__waterfall,
+.case-hero:not(.has-devices) .case-hero__veil { display: none; }
 .case-hero__copy,
 .case-hero__media { position: relative; z-index: 1; }
+.case-hero.has-devices .project-brand-backdrop { display: none; }
 .case-pill {
   display: inline-flex;
   margin: 0 0 18px;
@@ -161,6 +270,17 @@
   font-weight: 500;
   letter-spacing: -.04em;
 }
+.case-hero.has-devices h1,
+body.project-detail-page .case-hero.has-devices h1 {
+  max-width: 100%;
+  width: auto;
+  margin: 0 0 20px;
+  font-size: clamp(22px, 2.35vw, 34px);
+  line-height: 1.15;
+  font-weight: 600;
+  letter-spacing: -.02em;
+  white-space: nowrap;
+}
 .case-tags {
   display: flex;
   flex-wrap: wrap;
@@ -181,12 +301,67 @@
   display: grid;
   place-items: center;
 }
-.case-hero__media img,
-.case-hero__media video {
+.case-hero__media > img,
+.case-hero__media > video {
   width: min(100%, 520px);
   max-height: 420px;
   object-fit: contain;
   filter: drop-shadow(0 24px 48px rgba(7, 40, 90, .35));
+}
+.case-devices {
+  position: relative;
+  width: min(100%, 680px);
+  aspect-ratio: 16 / 11;
+  min-height: 280px;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  outline: 0;
+  overflow: visible;
+}
+.case-devices[hidden] { display: none !important; }
+.case-devices__laptop,
+.case-devices__phone {
+  position: absolute;
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: none;
+  max-height: none;
+  object-fit: contain;
+  background: transparent;
+  border: 0;
+  /* soft blue shadow — avoid harsh black edge from PNG shadow + CSS stack */
+  filter: drop-shadow(0 22px 40px rgba(4, 18, 48, .34));
+  pointer-events: none;
+  user-select: none;
+}
+.case-devices__laptop {
+  left: 0;
+  top: 6%;
+  width: 88%;
+  z-index: 1;
+}
+.case-devices__phone {
+  right: 0;
+  top: 22%;
+  width: 27%;
+  z-index: 2;
+}
+.case-hero.has-devices .case-cover-fallback { display: none; }
+
+/* Footer: no dark rim / edge against hero or page */
+body.project-detail-page .site-footer {
+  border: 0;
+  border-top: 0;
+  box-shadow: none;
+  outline: 0;
+  background: #fff;
+  color: var(--figma-ink, #343434);
+}
+body.has-case-devices .site-footer {
+  border-top: 0;
+  background: #fff;
 }
 .case-cover-fallback,
 .case-gallery__placeholder {
@@ -340,7 +515,22 @@
     min-height: 0;
     padding-top: 36px;
   }
+  .case-hero.has-devices { min-height: 0; }
   .case-hero__media { min-height: 220px; }
+  .case-devices {
+    width: min(100%, 420px);
+    aspect-ratio: 5 / 4;
+    margin-inline: auto;
+  }
+  .case-devices__laptop { width: 88%; top: 4%; }
+  .case-devices__phone { width: 30%; top: 14%; right: 2%; }
+  body.has-case-devices .case-nav a { padding-inline: 10px; font-size: 11px; }
+  .case-hero.has-devices { padding-top: 108px; }
+  .case-hero.has-devices h1,
+  body.project-detail-page .case-hero.has-devices h1 {
+    font-size: clamp(18px, 5.2vw, 26px);
+    white-space: normal;
+  }
   .case-gallery__grid,
   .case-outcome__grid { grid-template-columns: 1fr; }
   .case-back-row { flex-direction: column; align-items: flex-start; }

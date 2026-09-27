@@ -36,7 +36,9 @@ assert.ok(!home.includes('experience-media'), 'internship is text-only without m
 const detail = await readFile(resolve(root, 'project.html'), 'utf8');
 assert.ok(detail.includes('index.html#projects'), 'detail returns to the project section');
 assert.ok(detail.includes('data-project-detail'), 'detail template has project identity');
-assert.ok(detail.includes('class="project-brand-backdrop" aria-hidden="true">LUNALIU</div>'), 'detail has independent LUNALIU background');
+assert.ok(detail.includes('data-case-hero'), 'detail uses case-hero template');
+assert.ok(detail.includes('data-project-devices'), 'detail supports device mockup stage');
+assert.ok(!detail.includes('class="project-brand-backdrop"'), 'detail no longer uses LUNALIU backdrop watermark');
 for (const heading of ['背景和动作', '我负责的部分', '目前的结果和迭代']) {
   assert.ok(detail.includes(heading), `detail has ${heading} module`);
 }

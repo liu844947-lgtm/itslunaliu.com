@@ -30,6 +30,11 @@ for (const hook of [
 ]) {
   assert.match(detail, new RegExp(hook));
 }
-assert.match(detail, /class="project-brand-backdrop"[^>]*aria-hidden="true"[^>]*>LUNALIU<\/div>/);
+assert.match(detail, /data-case-hero/);
+assert.match(detail, /data-project-devices/);
+assert.doesNotMatch(detail, /class="project-brand-backdrop"/);
 assert.match(detail, />lunaliu</);
+assert.match(data, /heroBg:\s*'assets\/projects\/bochuangyuan\//);
+assert.match(data, /device-laptop\.png/);
+assert.match(data, /device-phone\.png/);
 console.log('content registry and detail contract passed');

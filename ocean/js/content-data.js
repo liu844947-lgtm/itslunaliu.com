@@ -56,7 +56,14 @@
         tags: ['B 端工作台', 'AI 辅助评审', '原型设计', '赛事工单', '可体验'],
         summary: '从创业者报名到专家评审和后台维护的一体化创业陪伴系统。',
         cover: '',
-        coverLabel: '专家评审端 · 产品主视觉待补截图',
+        coverLabel: '专家评审端 · PC / 移动双端样机',
+        heroBg: 'assets/projects/bochuangyuan/hero-waterfall-bg.png',
+        devices: {
+          laptop: 'assets/projects/bochuangyuan/device-laptop.png',
+          laptopAlt: '评审端项目详情 · 桌面端',
+          phone: 'assets/projects/bochuangyuan/device-phone.png',
+          phoneAlt: '评审端项目详情 · 移动端'
+        },
         story: '研博创业青年填报商业计划书时，原流程耗时长、操作繁琐且难外部导入；专家评审缺少 AI 辅助，评分维度与赛事节点也不清晰。我将报名、预审、专家分配、多轮评审到入选公示等 8 大节点收成赛事工单，并独立负责专家端 PC / 移动产品设计与 AI 辅助评审机制，让评审主路径和异常分支都能落到可验收的交互与 Prompt 规则上。',
         links: [
           { label: '后台管理端', href: 'https://bcyht.sudoxai.com' },
@@ -64,8 +71,8 @@
           { label: '评审端', href: 'https://bcyps.sudoxai.com' }
         ],
         gallery: [
-          { title: '专家评审工作台', caption: '覆盖工作台、评审列表、评审工作台、消息、个人中心与组员管理。', src: '', note: '截图待补 · 面试可演示评审端' },
-          { title: 'AI 辅助评审', caption: '将评审维度、参考分、置信度与风险核查写成可执行 Prompt，并保留专家追问与人工兜底。', src: '', note: '截图待补' },
+          { title: '专家评审工作台', caption: '覆盖工作台、评审列表、评审工作台、消息、个人中心与组员管理。', src: 'assets/projects/bochuangyuan/device-laptop.png', note: '' },
+          { title: '移动端评审详情', caption: '申报书阅读、明审模式与打分批注入口，适配专家移动场景。', src: 'assets/projects/bochuangyuan/device-phone.png', note: '' },
           { title: '赛事工单 8 节点', caption: '重构专家库与赛事节点，统一角色权限与全生命周期状态流转。', src: '', note: '流程示意待补' },
           { title: '三端体验入口', caption: '后台 / 创业端 / 评审端均可在线体验（口令面试提供）。', src: '', note: '体验链接见上方' }
         ],

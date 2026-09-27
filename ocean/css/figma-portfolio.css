@@ -32,8 +32,16 @@ body.project-detail-page .site-header {
   border-bottom: 1px solid rgba(52,52,52,.1);
   backdrop-filter: blur(14px);
 }
+/* Device-case hero: transparent overlay header (ETOHA-like), see content.css */
+body.project-detail-page.has-case-devices .site-header {
+  background: transparent;
+  border-bottom: 0;
+  backdrop-filter: none;
+  box-shadow: none;
+}
 body.one-page .site-header .wordmark,
 body.project-detail-page .site-header .wordmark { color: var(--figma-blue); letter-spacing: .18em; }
+body.project-detail-page.has-case-devices .site-header .wordmark { color: #fff; }
 body.one-page .site-header nav {
   gap: 9px;
   padding: 7px 7px 7px 20px;
@@ -341,7 +349,8 @@ body.one-page .site-footer,
 body.project-detail-page .site-footer { width: 100%; max-width: none; padding: 24px max(24px, 4vw); color: var(--figma-ink); background: var(--figma-white); }
 
 /* Detail pages inherit the same blue/white hierarchy. */
-.project-detail-page .detail-main { width: min(100% - 48px, var(--figma-max)); max-width: var(--figma-max); padding-top: 150px; }
+.project-detail-page .detail-main { width: 100%; max-width: none; padding-top: 0; }
+.project-detail-page:not(.has-case-devices) .detail-main { width: min(100% - 48px, var(--figma-max)); max-width: var(--figma-max); padding-top: 150px; }
 .project-detail-hero { min-height: 650px; }
 .project-detail-hero .project-brand-backdrop { inset: 35% -4vw auto; color: rgba(8,112,202,.1); }
 .project-detail-hero h1 { max-width: 12ch; color: var(--figma-ink); font-size: clamp(58px, 8vw, 142px); font-weight: 700; }
