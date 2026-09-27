@@ -83,8 +83,56 @@
   opacity: .65;
 }
 .project-art--loom { background: #efe8ff; }
-.project-art--scout { background: #e4f3ea; }
-.project-art--travel { background: #fff1df; }
+.project-art--scout { background: #dceef8; }
+.project-art--travel { background: #e7f2fb; }
+.project-art--devices,
+.project-art--photo {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(120% 90% at 70% 20%, rgba(255, 255, 255, .55), transparent 55%),
+    linear-gradient(160deg, #d7ebfb 0%, #b9d9f5 48%, #9cc8ef 100%);
+  border-radius: 0;
+}
+.project-art--devices::before,
+.project-art--devices::after,
+.project-art--photo::before,
+.project-art--photo::after { display: none; }
+.project-art__laptop,
+.project-art__phone,
+.project-art__shot {
+  position: absolute;
+  display: block;
+  object-fit: contain;
+  pointer-events: none;
+  user-select: none;
+}
+.project-art__laptop {
+  left: 4%;
+  top: 10%;
+  width: 78%;
+  filter: drop-shadow(0 16px 28px rgba(8, 40, 90, .22));
+  z-index: 1;
+}
+.project-art__phone {
+  right: 6%;
+  top: 22%;
+  width: 24%;
+  filter: drop-shadow(0 14px 22px rgba(8, 40, 90, .24));
+  z-index: 2;
+}
+.project-art__shot {
+  inset: 10% 8% 8%;
+  width: auto;
+  height: auto;
+  max-width: 84%;
+  max-height: 82%;
+  margin: auto;
+  filter: drop-shadow(0 18px 32px rgba(8, 40, 90, .2));
+  z-index: 1;
+}
+.project-art--scout { background: linear-gradient(160deg, #d9eef8 0%, #c5e3f4 55%, #aed6ef 100%); }
+.project-art--travel { background: linear-gradient(160deg, #e2f0fa 0%, #d0e5f5 55%, #b8d6ef 100%); }
 .about-copy { min-height: 0; }
 .about-copy .index-number { margin-bottom: 22px; }
 .about-columns { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(30px, 9vw, 140px); padding: 0 0 100px; }
@@ -248,8 +296,10 @@ body:not(.has-case-devices) .case-nav .nav-cta {
   font-size: 12px;
   letter-spacing: .08em;
 }
+.case-pill[hidden],
+.case-english[hidden] { display: none !important; }
 .case-highlight {
-  max-width: 28ch;
+  max-width: 32ch;
   margin: 0 0 18px;
   font-size: clamp(18px, 2.2vw, 28px);
   line-height: 1.35;
@@ -274,13 +324,15 @@ body:not(.has-case-devices) .case-nav .nav-cta {
 body.project-detail-page .case-hero.has-devices h1 {
   max-width: 100%;
   width: auto;
-  margin: 0 0 20px;
-  font-size: clamp(22px, 2.35vw, 34px);
-  line-height: 1.15;
+  margin: 0 0 22px;
+  font-size: clamp(48px, 7vw, 88px);
+  line-height: .98;
   font-weight: 600;
-  letter-spacing: -.02em;
+  letter-spacing: -.04em;
   white-space: nowrap;
 }
+body.hide-case-footer .site-footer,
+.site-footer[hidden] { display: none !important; }
 .case-tags {
   display: flex;
   flex-wrap: wrap;
@@ -303,10 +355,23 @@ body.project-detail-page .case-hero.has-devices h1 {
 }
 .case-hero__media > img,
 .case-hero__media > video {
-  width: min(100%, 520px);
-  max-height: 420px;
+  width: min(100%, 560px);
+  max-height: 440px;
   object-fit: contain;
+  border-radius: 4px;
   filter: drop-shadow(0 24px 48px rgba(7, 40, 90, .35));
+}
+.case-hero:not(.has-devices) {
+  background:
+    radial-gradient(90% 80% at 78% 18%, rgba(255, 255, 255, .22), transparent 55%),
+    linear-gradient(160deg, #0b4f9c 0%, #086be6 48%, #5aa7ff 100%);
+}
+.case-hero:not(.has-devices) .case-hero__media {
+  padding: 18px;
+  border-radius: 28px;
+  background: rgba(255, 255, 255, .12);
+  border: 1px solid rgba(255, 255, 255, .28);
+  backdrop-filter: blur(6px);
 }
 .case-devices {
   position: relative;
@@ -461,6 +526,25 @@ body.has-case-devices .site-footer {
   line-height: 1.7;
   opacity: .86;
 }
+.case-gallery__grid.is-text-only {
+  gap: clamp(16px, 2.5vw, 28px);
+}
+.case-gallery__item.is-text-only {
+  gap: 10px;
+  padding: 22px 0 8px;
+  align-content: start;
+}
+.case-gallery__item.is-text-only h3 {
+  margin: 0;
+  font-size: clamp(20px, 2.2vw, 28px);
+  letter-spacing: -.02em;
+}
+.case-gallery__item.is-text-only p {
+  max-width: 48ch;
+  font-size: 15px;
+  line-height: 1.8;
+  opacity: .9;
+}
 .case-outcome__grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -528,7 +612,7 @@ body.has-case-devices .site-footer {
   .case-hero.has-devices { padding-top: 108px; }
   .case-hero.has-devices h1,
   body.project-detail-page .case-hero.has-devices h1 {
-    font-size: clamp(18px, 5.2vw, 26px);
+    font-size: clamp(36px, 11vw, 56px);
     white-space: normal;
   }
   .case-gallery__grid,

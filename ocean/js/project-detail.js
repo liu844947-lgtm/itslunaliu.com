@@ -15,14 +15,49 @@
   };
 
   setText('[data-project-number]', project.id);
-  setText('[data-project-pill]', project.pill || (project.kind === 'personal' ? '个人项目' : '实习项目'));
   setText('[data-project-highlight]', project.highlight || project.summary || '');
-  setText('[data-project-english]', project.englishTitle || project.shortTitle || '');
   setText('[data-project-title]', project.title);
   setText('[data-project-story]', project.story || project.background || '');
   setText('[data-project-result]', project.result || '');
   setText('[data-project-iteration]', project.iteration || '');
   document.title = `${project.title} — lunaliu`;
+
+  const pillNode = document.querySelector('[data-project-pill]');
+  if (pillNode) {
+    const hidePill = project.hidePill || !project.pill;
+    if (hidePill) {
+      pillNode.hidden = true;
+      pillNode.textContent = '';
+    } else {
+      pillNode.hidden = false;
+      pillNode.textContent = project.pill;
+    }
+  }
+
+  const englishNode = document.querySelector('[data-project-english]');
+  if (englishNode) {
+    const hideEnglish = project.hideEnglish || !project.englishTitle;
+    if (hideEnglish) {
+      englishNode.hidden = true;
+      englishNode.textContent = '';
+    } else {
+      englishNode.hidden = false;
+      englishNode.textContent = project.englishTitle;
+    }
+  }
+
+  const footers = document.querySelectorAll('.site-footer');
+  if (project.hideFooter) {
+    document.body.classList.add('hide-case-footer');
+    footers.forEach((node) => {
+      node.hidden = true;
+    });
+  } else {
+    document.body.classList.remove('hide-case-footer');
+    footers.forEach((node) => {
+      node.hidden = false;
+    });
+  }
 
   const tagsNode = document.querySelector('[data-project-tags]');
   if (tagsNode) {
@@ -117,14 +152,16 @@
   const galleryNode = document.querySelector('[data-project-gallery]');
   if (galleryNode) {
     const items = Array.isArray(project.gallery) ? project.gallery : [];
+    const textOnly = Boolean(project.galleryTextOnly);
+    galleryNode.classList.toggle('is-text-only', textOnly);
     galleryNode.replaceChildren(...items.map((item) => {
       const article = document.createElement('article');
-      article.className = 'case-gallery__item';
+      article.className = 'case-gallery__item' + (textOnly ? ' is-text-only' : '');
       const title = document.createElement('h3');
       title.textContent = item.title || '';
       article.appendChild(title);
 
-      if (item.src) {
+      if (!textOnly && item.src) {
         const figure = document.createElement('figure');
         const media = document.createElement(item.type === 'video' ? 'video' : 'img');
         media.src = item.src;
@@ -137,7 +174,7 @@
         }
         figure.appendChild(media);
         article.appendChild(figure);
-      } else {
+      } else if (!textOnly && !item.src) {
         const placeholder = document.createElement('div');
         placeholder.className = 'case-gallery__placeholder';
         placeholder.textContent = item.note || '素材待补';

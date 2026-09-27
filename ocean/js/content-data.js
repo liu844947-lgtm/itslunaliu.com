@@ -47,17 +47,21 @@
       {
         id: '01',
         slug: 'bochuangyuan',
-        title: '博创园创业陪伴系统',
+        title: '博创园',
         shortTitle: '博创园',
-        englishTitle: 'BOCHUANGYUAN',
+        englishTitle: '',
         kind: 'internship',
-        pill: '实习 · 数解',
-        highlight: '把混乱的赛事节点收成可协作的一体化评审系统，让专家能在 AI 辅助下完成判断而不是被流程拖住。',
+        pill: '',
+        highlight: '面向创业群体，搭建覆盖报名、专家评审与后台管理的一体化赛事系统',
         tags: ['B 端工作台', 'AI 辅助评审', '原型设计', '赛事工单', '可体验'],
         summary: '从创业者报名到专家评审和后台维护的一体化创业陪伴系统。',
         cover: '',
         coverLabel: '专家评审端 · PC / 移动双端样机',
         heroBg: 'assets/projects/bochuangyuan/hero-waterfall-bg.png',
+        hidePill: true,
+        hideEnglish: true,
+        hideFooter: true,
+        galleryTextOnly: true,
         devices: {
           laptop: 'assets/projects/bochuangyuan/device-laptop.png',
           laptopAlt: '评审端项目详情 · 桌面端',
@@ -71,10 +75,10 @@
           { label: '评审端', href: 'https://bcyps.sudoxai.com' }
         ],
         gallery: [
-          { title: '专家评审工作台', caption: '覆盖工作台、评审列表、评审工作台、消息、个人中心与组员管理。', src: 'assets/projects/bochuangyuan/device-laptop.png', note: '' },
-          { title: '移动端评审详情', caption: '申报书阅读、明审模式与打分批注入口，适配专家移动场景。', src: 'assets/projects/bochuangyuan/device-phone.png', note: '' },
-          { title: '赛事工单 8 节点', caption: '重构专家库与赛事节点，统一角色权限与全生命周期状态流转。', src: '', note: '流程示意待补' },
-          { title: '三端体验入口', caption: '后台 / 创业端 / 评审端均可在线体验（口令面试提供）。', src: '', note: '体验链接见上方' }
+          { title: '专家评审工作台', caption: '覆盖工作台、评审列表、评审工作台、消息、个人中心与组员管理。' },
+          { title: '移动端评审详情', caption: '申报书阅读、明审模式与打分批注入口，适配专家移动场景。' },
+          { title: '赛事工单 8 节点', caption: '重构专家库与赛事节点，统一角色权限与全生命周期状态流转。' },
+          { title: '三端体验入口', caption: '后台 / 创业端 / 评审端均可在线体验（口令面试提供）。' }
         ],
         result: '专家端完成 PC + 移动端产品设计并跟进至上线；AI 评审机制保留专家终裁。创业者端与后台侧通过测试与工单重构形成可运营闭环。',
         iteration: '后续可加强评审质量评测集、Badcase 回归，以及专家端移动场景下的效率指标监控。',
@@ -152,6 +156,7 @@
         summary: '个人项目：输入研究问题，跨平台抓取用户反馈，输出带原话证据的结构化报告。',
         cover: 'assets/projects/scoutai/scoutai-macbook-base.png',
         coverLabel: 'ScoutAI 网页端 Demo',
+        heroBg: '',
         story: '用户反馈分散在 Twitter、Reddit、B 站、YouTube 等平台，手工抓取清洗常耗数天，报告又常缺少可追溯原话。ScoutAI 从研究问题出发，自动生成中英关键词、跨平台采集与清洗，并输出带样本引用的结构化报告；支持基于证据继续追问。暑假作品，部分平台爬取可能已失效，建议以录屏与现存页面为准。',
         links: [
           { label: '在线体验', href: 'https://www.scoutai.sudoxai.com/' }
