@@ -124,16 +124,33 @@
     }
   }
 
+  const experienceSection = document.querySelector('[data-project-experience]');
+  const authNode = document.querySelector('[data-project-experience-auth]');
   const linksNode = document.querySelector('[data-project-links]');
+  const links = Array.isArray(project.links) ? project.links.filter((item) => item?.href) : [];
+  const auth = project.experienceAuth;
+  const hasExperience = links.length > 0;
+
+  if (experienceSection) {
+    experienceSection.hidden = !hasExperience;
+  }
+
+  if (authNode) {
+    if (auth?.phone && auth?.code) {
+      authNode.hidden = false;
+      authNode.textContent = `登录账号 ${auth.phone} · 验证码 ${auth.code}`;
+    } else {
+      authNode.hidden = true;
+      authNode.textContent = '';
+    }
+  }
+
   if (linksNode) {
-    const links = Array.isArray(project.links) ? project.links.filter((item) => item?.href) : [];
-    if (!links.length) {
+    if (!hasExperience) {
       linksNode.hidden = true;
+      linksNode.replaceChildren();
     } else {
       linksNode.hidden = false;
-      const note = document.createElement('p');
-      note.className = 'case-links__note';
-      note.textContent = '体验入口（登录信息面试提供，不在站内展示）';
       const list = document.createElement('ul');
       links.forEach((link) => {
         const item = document.createElement('li');
@@ -145,7 +162,7 @@
         item.appendChild(anchor);
         list.appendChild(item);
       });
-      linksNode.replaceChildren(note, list);
+      linksNode.replaceChildren(list);
     }
   }
 

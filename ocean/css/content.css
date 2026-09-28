@@ -94,6 +94,38 @@
     linear-gradient(160deg, #d7ebfb 0%, #b9d9f5 48%, #9cc8ef 100%);
   border-radius: 0;
 }
+.project-entry--minimal .project-art--devices {
+  background: transparent !important;
+}
+.project-entry--minimal .project-art__laptop {
+  left: 0;
+  bottom: 0;
+  top: auto;
+  width: 92%;
+  height: auto;
+  max-width: 96%;
+  max-height: 100%;
+  object-position: left bottom;
+  object-fit: contain;
+  transform: none;
+  filter: drop-shadow(0 16px 28px rgba(8, 40, 90, .18));
+  z-index: 1;
+}
+.project-entry--minimal .project-art__phone {
+  left: 60%;
+  right: auto;
+  bottom: 0;
+  top: auto;
+  width: 28%;
+  height: auto;
+  max-width: 30%;
+  max-height: 82%;
+  object-position: left bottom;
+  object-fit: contain;
+  transform: none;
+  filter: drop-shadow(0 14px 22px rgba(8, 40, 90, .2));
+  z-index: 2;
+}
 .project-art--devices::before,
 .project-art--devices::after,
 .project-art--photo::before,
@@ -133,6 +165,53 @@
 }
 .project-art--scout { background: linear-gradient(160deg, #d9eef8 0%, #c5e3f4 55%, #aed6ef 100%); }
 .project-art--travel { background: linear-gradient(160deg, #e2f0fa 0%, #d0e5f5 55%, #b8d6ef 100%); }
+.project-art--cutout {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: clamp(16px, 3vw, 32px) clamp(20px, 4vw, 40px);
+  background: transparent !important;
+  overflow: visible;
+}
+.project-art--cutout::before,
+.project-art--cutout::after { display: none !important; }
+.project-art--cutout .project-art__shot {
+  position: relative;
+  inset: auto;
+  width: auto;
+  height: auto;
+  max-width: min(94%, 620px);
+  max-height: min(78%, 400px);
+  margin: auto;
+  object-fit: contain;
+  transform: none;
+  transform-origin: center center;
+  filter: drop-shadow(0 18px 32px rgba(8, 40, 90, .18));
+}
+.project-art--phones.project-art--cutout {
+  align-items: center;
+  justify-content: center;
+  padding: clamp(12px, 2vw, 24px) clamp(16px, 3vw, 28px);
+}
+.project-art__phone-group {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(6px, 1.2vw, 12px);
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+  transform: none;
+}
+.project-art__phone-shot {
+  display: block;
+  width: clamp(64px, 10vw, 104px);
+  height: auto;
+  aspect-ratio: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 16px 20px rgba(8, 40, 90, 0.18));
+}
 .about-copy { min-height: 0; }
 .about-copy .index-number { margin-bottom: 22px; }
 .about-columns { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(30px, 9vw, 140px); padding: 0 0 100px; }
@@ -143,18 +222,8 @@
 .sticker-empty-copy { margin: 0; font-size: 13px; letter-spacing: .08em; }
 .sticker-band.has-stickers .sticker-empty-copy { display: none; }
 
-/* Internship: text-only stack */
-.internship-section .experience,
-.internship-section .experience--reverse {
-  display: block;
-  grid-template-columns: none;
-}
+/* Internship cards sit beside portrait (layout in portfolio-home.css) */
 .internship-section .experience-media { display: none; }
-.internship-section .experience-copy {
-  max-width: 72ch;
-  min-height: 0;
-  padding: 8px 0 0;
-}
 
 /* Project detail — ETOHA-inspired case layout */
 html:has(body.project-detail-page),
@@ -176,6 +245,7 @@ body.project-detail-page {
 .project-detail-page .case-story,
 .project-detail-page .case-gallery,
 .project-detail-page .case-outcome,
+.project-detail-page .case-experience,
 .project-detail-page .case-back-row {
   width: min(100% - 48px, 1200px);
   margin-inline: auto;
@@ -303,10 +373,10 @@ body:not(.has-case-devices) .case-nav .nav-cta {
 }
 .case-hero.has-devices {
   background: #0a2048;
-  min-height: min(100svh, 960px);
+  min-height: min(80svh, 768px);
   align-items: end;
-  padding-top: clamp(120px, 16vh, 168px);
-  padding-bottom: clamp(48px, 7vh, 88px);
+  padding-top: clamp(108px, 14vh, 148px);
+  padding-bottom: clamp(40px, 6vh, 72px);
   color: #f5faff;
 }
 .case-hero.has-devices h1,
@@ -612,6 +682,20 @@ body.has-case-devices .site-footer {
   font-size: 12px;
   letter-spacing: .08em;
   opacity: .7;
+}
+.case-experience {
+  padding-top: clamp(24px, 4vw, 48px);
+  padding-bottom: clamp(24px, 4vw, 48px);
+}
+.case-experience[hidden] { display: none !important; }
+.case-links__credentials {
+  margin: 0 0 18px;
+  font-size: 15px;
+  line-height: 1.7;
+  opacity: .82;
+}
+body.has-case-devices .case-links__credentials {
+  color: var(--figma-ink, #343434);
 }
 .case-links ul {
   display: flex;

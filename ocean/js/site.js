@@ -71,10 +71,17 @@
     if (!count) return;
     let current = 0;
     let leaveTimer = 0;
+    const PROJECT_TRANSITION_MS_NEXT = 1100;
+    const PROJECT_TRANSITION_MS_PREVIOUS = 560;
 
     const contentProjects = Array.isArray(window.OceanContent?.projects)
       ? window.OceanContent.projects
       : [];
+    function projectHref(project) {
+      if (project.caseStudyUrl) return project.caseStudyUrl;
+      return `project.html?id=${encodeURIComponent(project.id)}`;
+    }
+
     function hydrateProjectEntries() {
       tiles.forEach((tile, index) => {
         const project = contentProjects[index];
@@ -82,16 +89,48 @@
         const title = tile.querySelector('[data-project-title]');
         const summary = tile.querySelector('[data-project-summary]');
         const kind = tile.querySelector('[data-project-kind]');
+        const date = tile.querySelector('[data-project-date]');
+        const number = tile.querySelector('.project-entry__number');
+        const art = tile.querySelector('.project-art');
+        const shot = tile.querySelector('.project-art__shot');
+        const minimal = Boolean(project.entryMinimal);
+        const cutout = Boolean(project.entryPhotoCutout);
+        const cornerTitle = Boolean(project.entryTitleCorner || project.entryPhotoCutout);
+        tile.classList.toggle('project-entry--minimal', minimal);
+        tile.classList.toggle('project-entry--corner-title', cornerTitle && !minimal);
+        art?.classList.toggle('project-art--cutout', cutout);
         if (title) title.textContent = project.title;
-        if (summary) summary.textContent = project.summary;
-        if (kind) kind.textContent = project.pill || (project.kind === 'personal' ? '个人项目' : '实习项目');
-        tile.href = `project.html?id=${encodeURIComponent(project.id)}`;
+        if (summary) {
+          summary.textContent = project.summary || '';
+          summary.hidden = false;
+        }
+        if (kind) {
+          kind.textContent = project.pill || (project.kind === 'personal' ? '个人项目' : '实习项目');
+          kind.hidden = true;
+        }
+        if (number) number.hidden = true;
+        if (date) {
+          const period = project.entryPeriod || '';
+          date.textContent = period;
+          date.hidden = !period;
+          const match = period.match(/(\d{4})\.(\d{2})/);
+          if (match) date.dateTime = `${match[1]}-${match[2]}`;
+        }
+        const heroSrc = project.entryHero || project.cover;
+        if (shot && heroSrc) shot.src = heroSrc;
+        tile.href = projectHref(project);
         tile.setAttribute('aria-label', `查看${project.title}`);
       });
       selectors.forEach((button, index) => {
         const project = contentProjects[index];
         if (!project) return;
-        button.textContent = project.shortTitle || project.title;
+        const name = button.querySelector('.project-selectors__name');
+        const sub = button.querySelector('.project-selectors__sub');
+        const no = button.querySelector('.project-selectors__no');
+        if (no) no.textContent = String(index + 1).padStart(2, '0');
+        if (name) name.textContent = project.englishTitle || project.shortTitle || project.title;
+        else button.textContent = project.englishTitle || project.shortTitle || project.title;
+        if (sub) sub.textContent = project.navLabel || project.shortTitle || project.title;
         button.setAttribute('aria-label', `${project.title}${project.kind === 'personal' ? '个人项目' : '项目'}`);
       });
       projects.dataset.projectCount = String(count);
@@ -100,32 +139,63 @@
       });
     }
 
-    function selectProject(value) {
+    function selectProject(value, options = {}) {
       const parsed = Number(value);
       if (!Number.isFinite(parsed)) return;
+      const source = options.source || 'direct';
       const previous = current;
       const next = ((Math.trunc(parsed) % count) + count) % count;
       const changed = next !== previous;
       current = next;
-      if (changed) {
-        window.clearTimeout(leaveTimer);
-        projects.dataset.direction = current > previous ? 'next' : 'previous';
-        tiles.forEach((tile, index) => {
-          tile.classList.toggle('is-leaving', index === previous);
-          tile.classList.toggle('is-entering', index === current);
-        });
-        leaveTimer = window.setTimeout(() => {
-          tiles.forEach((tile) => tile.classList.remove('is-leaving', 'is-entering'));
-        }, 980);
-      }
       projects.dataset.current = String(current);
-      tiles.forEach((tile, index) => tile.classList.toggle('is-current', index === current));
       selectors.forEach((button) => button.setAttribute('aria-pressed', String(Number(button.dataset.projectSelect) === current)));
       projects.querySelectorAll('[data-project-current]').forEach((node) => {
         node.textContent = String(current + 1).padStart(2, '0');
       });
       storage.set('project', current);
-      document.dispatchEvent(new CustomEvent('ocean:projectchange', { detail: { index: current } }));
+      const direction = changed ? (current > previous ? 'next' : 'previous') : undefined;
+      document.dispatchEvent(new CustomEvent('ocean:projectchange', {
+        detail: { index: current, source, changed, direction },
+      }));
+
+      if (!changed) {
+        tiles.forEach((tile, index) => tile.classList.toggle('is-current', index === current));
+        return;
+      }
+
+      window.clearTimeout(leaveTimer);
+      const backward = current < previous;
+      projects.dataset.direction = backward ? 'previous' : 'next';
+      projects.classList.add('is-project-transitioning');
+
+      tiles.forEach((tile, index) => {
+        tile.classList.remove('is-leaving', 'is-entering');
+        if (index !== current && index !== previous) tile.classList.remove('is-current');
+      });
+
+      tiles[previous]?.classList.remove('is-current');
+      tiles[previous]?.classList.add('is-leaving');
+      tiles[current]?.classList.remove('is-current');
+      tiles[current]?.classList.add('is-entering');
+
+      const startEnter = () => {
+        tiles[current]?.classList.add('is-current');
+      };
+      if (backward) {
+        window.requestAnimationFrame(startEnter);
+      } else {
+        window.requestAnimationFrame(() => {
+          window.requestAnimationFrame(startEnter);
+        });
+      }
+
+      leaveTimer = window.setTimeout(() => {
+        tiles.forEach((tile, index) => {
+          tile.classList.remove('is-leaving', 'is-entering');
+          tile.classList.toggle('is-current', index === current);
+        });
+        projects.classList.remove('is-project-transitioning');
+      }, backward ? PROJECT_TRANSITION_MS_PREVIOUS : PROJECT_TRANSITION_MS_NEXT);
     }
 
     function selectView(value) {
@@ -137,19 +207,18 @@
     }
 
     selectors.forEach((button) => button.addEventListener('click', () => {
-      selectProject(button.dataset.projectSelect);
-      document.dispatchEvent(new CustomEvent('ocean:projectscroll', { detail: { index: current } }));
+      selectProject(button.dataset.projectSelect, { source: 'select' });
     }));
     projects.querySelector('[data-project-prev]')?.addEventListener('click', () => {
-      selectProject(current - 1);
-      document.dispatchEvent(new CustomEvent('ocean:projectscroll', { detail: { index: current } }));
+      selectProject(current - 1, { source: 'select' });
     });
     projects.querySelector('[data-project-next]')?.addEventListener('click', () => {
-      selectProject(current + 1);
-      document.dispatchEvent(new CustomEvent('ocean:projectscroll', { detail: { index: current } }));
+      selectProject(current + 1, { source: 'select' });
     });
     viewButtons.forEach((button) => button.addEventListener('click', () => selectView(button.dataset.projectView)));
-    document.addEventListener('ocean:projectrequest', (event) => selectProject(event.detail?.index));
+    document.addEventListener('ocean:projectrequest', (event) => {
+      selectProject(event.detail?.index, { source: event.detail?.source || 'scroll' });
+    });
 
     const stage = projects.querySelector('[data-ice-stage], [data-liquid-stage]');
     if (stage) {

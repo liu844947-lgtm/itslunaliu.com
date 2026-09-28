@@ -1,92 +1,138 @@
 (() => {
   'use strict';
 
-  const nodes = [...document.querySelectorAll('.reveal')];
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
 
-  if (nodes.length) {
-    const showAll = () => nodes.forEach((node) => node.classList.add('is-visible'));
-    if (reduced.matches || !('IntersectionObserver' in window)) {
-      showAll();
-    } else {
-      const observer = new IntersectionObserver((entries, instance) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
-          entry.target.classList.add('is-visible');
-          instance.unobserve(entry.target);
-        });
-      }, { rootMargin: '0px 0px -10% 0px', threshold: .12 });
-
-      nodes.forEach((node, index) => {
-        node.style.transitionDelay = `${Math.min(index % 3, 2) * 70}ms`;
-        observer.observe(node);
-      });
-
-      const motionListener = () => {
-        if (document.documentElement.dataset.motion === 'paused') showAll();
-      };
-      document.addEventListener('ocean:motionchange', motionListener);
-      window.addEventListener('pagehide', () => {
-        observer.disconnect();
-        document.removeEventListener('ocean:motionchange', motionListener);
-      }, { once: true });
-    }
-  }
-
-  // ETOHA-style pinned projects: stage stays fixed; scroll/click flips the right card.
   const section = document.querySelector('[data-project-pin]');
   const projectsRoot = document.querySelector('[data-projects-root]');
-  if (section && projectsRoot) {
-    const pages = Math.max(1, Number(section.dataset.projectPages || projectsRoot.dataset.projectCount || 3));
-    section.style.setProperty('--project-pages', String(pages));
-    const desktopPin = window.matchMedia('(min-width: 761px)');
-    let lockScroll = false;
-    let lastIndex = -1;
-    let ticking = false;
+  if (!section || !projectsRoot) return;
 
-    const pinEnabled = () => desktopPin.matches;
+  const pages = Math.max(1, Number(section.dataset.projectPages || projectsRoot.dataset.projectCount || 3));
+  section.style.setProperty('--project-pages', String(pages));
 
-    const indexFromScroll = () => {
-      const travel = Math.max(section.offsetHeight - window.innerHeight, 1);
-      const progress = Math.min(1, Math.max(0, -section.getBoundingClientRect().top / travel));
-      return Math.min(pages - 1, Math.max(0, Math.floor(progress * pages + 1e-4)));
-    };
+  const desktopPin = window.matchMedia('(min-width: 761px)');
+  let userSelectUntil = 0;
+  let lastIndex = -1;
+  let ticking = false;
+  let stepUntil = 0;
+  let touchY = null;
 
-    const syncFromScroll = () => {
-      ticking = false;
-      if (!pinEnabled() || lockScroll) return;
+  const pinEnabled = () => desktopPin.matches && !reduced.matches;
+
+  const travel = () => Math.max(section.offsetHeight - window.innerHeight, 1);
+
+  const indexFromScroll = () => {
+    const progress = Math.min(1, Math.max(0, -section.getBoundingClientRect().top / travel()));
+    if (pages <= 1) return 0;
+    return Math.min(pages - 1, Math.max(0, Math.round(progress * (pages - 1))));
+  };
+
+  const slotTop = (index) => {
+    const next = Math.min(pages - 1, Math.max(0, Number(index) || 0));
+    if (pages <= 1) return section.offsetTop;
+    return section.offsetTop + (next / (pages - 1)) * travel();
+  };
+
+  const isPinned = () => {
+    const rect = section.getBoundingClientRect();
+    return rect.top <= 1 && rect.bottom >= window.innerHeight - 1;
+  };
+
+  const showIndex = (index, source) => {
+    const next = Math.min(pages - 1, Math.max(0, index));
+    if (next === lastIndex && source !== 'select') return;
+    lastIndex = next;
+    document.dispatchEvent(new CustomEvent('ocean:projectrequest', { detail: { index: next, source } }));
+  };
+
+  const holdSlot = (index) => {
+    window.scrollTo({ top: slotTop(index), behavior: 'auto' });
+  };
+
+  const stepPinned = (dir) => {
+    if (!pinEnabled() || !isPinned() || !dir) return false;
+    const index = lastIndex < 0 ? indexFromScroll() : lastIndex;
+    if (dir > 0 && index >= pages - 1) return false;
+    if (dir < 0 && index <= 0) return false;
+    if (Date.now() < stepUntil) return true;
+    stepUntil = Date.now() + (dir < 0 ? 560 : 1080);
+    const next = index + dir;
+    holdSlot(next);
+    showIndex(next, 'scroll');
+    return true;
+  };
+
+  const syncFromScroll = () => {
+    ticking = false;
+    if (!pinEnabled()) return;
+    if (Date.now() < userSelectUntil || Date.now() < stepUntil) return;
+    if (!isPinned()) {
       const index = indexFromScroll();
-      if (index === lastIndex) return;
+      if (section.getBoundingClientRect().top > 1 && section.getBoundingClientRect().bottom < window.innerHeight) return;
+      if (index !== lastIndex) showIndex(index, 'scroll');
+      return;
+    }
+    const index = indexFromScroll();
+    if (lastIndex < 0) {
       lastIndex = index;
-      document.dispatchEvent(new CustomEvent('ocean:projectrequest', { detail: { index, source: 'scroll' } }));
-    };
+      return;
+    }
+    if (index === lastIndex) return;
+    if (Math.abs(index - lastIndex) > 1) {
+      const next = lastIndex + Math.sign(index - lastIndex);
+      holdSlot(next);
+      showIndex(next, 'scroll');
+      return;
+    }
+    showIndex(index, 'scroll');
+  };
 
-    const requestSync = () => {
-      if (ticking) return;
-      ticking = true;
-      requestAnimationFrame(syncFromScroll);
-    };
+  const requestSync = () => {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(syncFromScroll);
+  };
 
-    const scrollToIndex = (index) => {
-      if (!pinEnabled()) return;
-      const next = Math.min(pages - 1, Math.max(0, Number(index) || 0));
-      lockScroll = true;
-      lastIndex = next;
-      const travel = Math.max(section.offsetHeight - window.innerHeight, 1);
-      const top = section.offsetTop + ((next + 0.45) / pages) * travel;
-      window.scrollTo({ top, behavior: reduced.matches ? 'auto' : 'smooth' });
-      window.setTimeout(() => {
-        lockScroll = false;
-      }, reduced.matches ? 40 : 780);
-    };
+  window.addEventListener('scroll', requestSync, { passive: true });
+  window.addEventListener('resize', requestSync, { passive: true });
+  desktopPin.addEventListener('change', requestSync);
 
-    window.addEventListener('scroll', requestSync, { passive: true });
-    window.addEventListener('resize', requestSync, { passive: true });
-    desktopPin.addEventListener('change', requestSync);
-    document.addEventListener('ocean:projectscroll', (event) => {
-      scrollToIndex(event.detail?.index);
-    });
-    requestSync();
-  }
+  window.addEventListener('wheel', (event) => {
+    if (!pinEnabled() || !isPinned()) return;
+    const dir = event.deltaY > 0 ? 1 : event.deltaY < 0 ? -1 : 0;
+    if (!dir) return;
+    if (!stepPinned(dir) && Date.now() >= stepUntil) return;
+    if (Date.now() < stepUntil || (dir > 0 && lastIndex < pages - 1) || (dir < 0 && lastIndex > 0)) {
+      event.preventDefault();
+    }
+  }, { passive: false });
 
+  window.addEventListener('touchstart', (event) => {
+    touchY = event.touches[0]?.clientY ?? null;
+  }, { passive: true });
+
+  window.addEventListener('touchmove', (event) => {
+    if (!pinEnabled() || !isPinned() || touchY == null) return;
+    const y = event.touches[0]?.clientY;
+    if (!Number.isFinite(y)) return;
+    const delta = touchY - y;
+    if (Math.abs(delta) < 28) return;
+    const dir = delta > 0 ? 1 : -1;
+    const held = stepPinned(dir);
+    if (held) event.preventDefault();
+    touchY = y;
+  }, { passive: false });
+
+  document.addEventListener('ocean:projectchange', (event) => {
+    const index = Number(event.detail?.index);
+    const source = event.detail?.source || 'direct';
+    if (!Number.isFinite(index)) return;
+    lastIndex = index;
+    if (source === 'select' && pinEnabled()) {
+      userSelectUntil = Date.now() + (event.detail?.direction === 'previous' ? 560 : 1100);
+      if (isPinned() || section.getBoundingClientRect().top < window.innerHeight * 0.35) holdSlot(index);
+    }
+  });
+
+  requestSync();
 })();

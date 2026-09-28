@@ -46,8 +46,27 @@
   const sections = [...document.querySelectorAll('main > section[id]')];
   const links = [...document.querySelectorAll('#primary-nav a[href^="#"]')];
   const header = document.querySelector('.site-header');
+  const nav = document.getElementById('primary-nav');
   const darkIds = new Set(['projects', 'contact']);
+  let navThemeTick = false;
+
+  function navOverDarkBackground() {
+    if (!nav) return false;
+    const rect = nav.getBoundingClientRect();
+    if (rect.width < 1 || rect.height < 1) return false;
+    const x = Math.min(window.innerWidth - 2, Math.max(2, rect.left + rect.width * 0.55));
+    const y = Math.min(window.innerHeight - 2, Math.max(2, rect.top + rect.height * 0.5));
+    const prevVisibility = nav.style.visibility;
+    nav.style.visibility = 'hidden';
+    const hit = document.elementFromPoint(x, y);
+    nav.style.visibility = prevVisibility;
+    const section = hit?.closest('main > section[id], section[id]');
+    if (section?.id) return darkIds.has(section.id);
+    return false;
+  }
+
   const updateCurrent = () => {
+    navThemeTick = false;
     const midpoint = window.scrollY + window.innerHeight * .3;
     let current = sections[0]?.id;
     for (const section of sections) if (section.offsetTop <= midpoint) current = section.id;
@@ -55,9 +74,16 @@
       if (link.hash === `#${current}`) link.setAttribute('aria-current', 'location');
       else link.removeAttribute('aria-current');
     });
-    if (header) header.dataset.onDark = darkIds.has(current) ? 'true' : 'false';
+    if (header) header.dataset.onDark = navOverDarkBackground() ? 'true' : 'false';
   };
-  window.addEventListener('scroll', updateCurrent, { passive: true });
-  window.addEventListener('resize', updateCurrent, { passive: true });
+
+  const requestNavThemeUpdate = () => {
+    if (navThemeTick) return;
+    navThemeTick = true;
+    window.requestAnimationFrame(updateCurrent);
+  };
+
+  window.addEventListener('scroll', requestNavThemeUpdate, { passive: true });
+  window.addEventListener('resize', requestNavThemeUpdate, { passive: true });
   updateCurrent();
 })();

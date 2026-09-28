@@ -1,0 +1,325 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ScoutAI 用户自调研系统 | Case Study</title>
+  <link rel="icon" href="data:,">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Zen+Kaku+Gothic+New:wght@500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/reveal.css?v=20260928e">
+  <link rel="stylesheet" href="../../css/case-study-shared.css?v=20260928h">
+  <link rel="stylesheet" href="../../css/case-study-scout.css?v=20260928e">
+</head>
+<body class="case-study-page">
+
+  <header class="site-header site-header--case">
+    <a class="wordmark" href="../../index.html#home">lunaliu</a>
+    <nav class="case-nav" aria-label="项目页导航">
+      <a href="../../index.html#internship">INTERNSHIP</a>
+      <a href="../../index.html#projects">PROJECTS</a>
+      <a class="nav-cta" href="../../index.html#about">ABOUT ME <span aria-hidden="true">→</span></a>
+    </nav>
+  </header>
+
+  <main>
+    <!-- ===== HERO ===== -->
+    <section class="case-hero" id="overview">
+      <div class="hero-copy">
+        <a class="crumb" href="../../index.html#projects">← Back to Projects</a>
+        <p class="section-label">01 · 产品概况</p>
+        <div class="chips">
+          <span class="chip">跨平台调研</span>
+          <span class="chip">用户反馈分析</span>
+          <span class="chip">潜在机会发现</span>
+        </div>
+        <h1>ScoutAI</h1>
+        <p class="subtitle">用户自调研系统</p>
+        <p class="summary">输入一个研究问题，系统自动生成关键词、抓取跨平台用户反馈、清洗数据，并输出带原话证据的结构化用户研究报告。</p>
+        <div class="facts" aria-label="项目信息">
+          <div class="fact"><strong>目标用户</strong><span>产品经理：竞品分析、用户需求挖掘</span></div>
+          <div class="fact"><strong>我的角色</strong><span>产品定义 / AI 交互 / 界面设计 / Demo 落地</span></div>
+          <div class="fact"><strong>当前成果</strong><span>网页端 Demo / 跨平台抓取 / 数据清洗与报告输出</span></div>
+          <div class="fact"><strong>核心能力</strong><span>可追溯原话引用 / AI 追问 / 结构化报告导出</span></div>
+        </div>
+      </div>
+      <div class="hero-media">
+        <img src="../../assets/case-studies/scoutai-macbook-base.png" alt="ScoutAI 黑色 MacBook 样机">
+      </div>
+    </section>
+
+    <!-- ===== BODY ===== -->
+    <div class="case-layout">
+      <aside class="case-index" aria-label="案例章节导航">
+        <nav>
+          <a href="#overview" data-anchor="overview"><span>01</span>产品概况</a>
+          <a href="#problem" data-anchor="problem"><span>02</span>用户痛点</a>
+          <a href="#solution" data-anchor="solution"><span>03</span>产品方案</a>
+          <a href="#demo" data-anchor="demo"><span>04</span>DEMO 展示</a>
+          <a href="#design" data-anchor="design"><span>05</span>关键设计</a>
+          <a href="#report" data-anchor="report"><span>06</span>报告结构</a>
+          <a href="#testing" data-anchor="testing"><span>07</span>测试与迭代</a>
+        </nav>
+      </aside>
+
+      <div class="case-body">
+
+        <!-- ===== 02 用户痛点 ===== -->
+        <section class="case-section" id="problem">
+          <header class="section-head">
+            <span class="number">02</span>
+            <h2>用户痛点</h2>
+          </header>
+          <p class="lead">设计机会：把"散落的声音"转化为"带证据链的判断"，让研究结论经得起追问。</p>
+          <div class="pain-points-grid">
+            <article class="pain-card reveal" data-index="01">
+              <h3>调研碎片化</h3>
+              <p>用户反馈分散在不同平台、不同语言、不同语境里，产品判断很难从单一平台得出。Twitter、Reddit、B 站、YouTube 各自形成信息孤岛。</p>
+            </article>
+            <article class="pain-card reveal reveal-delay-1" data-index="02">
+              <h3>手工整理成本高</h3>
+              <p>抓取、筛选、清洗、归类都需要大量人工时间，一个课题往往耗时 3-5 天，调研周期被严重拉长，难以快速验证假设。</p>
+            </article>
+            <article class="pain-card reveal reveal-delay-2" data-index="03">
+              <h3>结论不可追溯</h3>
+              <p>很多调研报告只剩一句总结，缺少原始用户数据支撑。向团队汇报时难以回答"证据在哪""谁说的""在哪个平台"，缺乏说服力。</p>
+            </article>
+            <article class="pain-card reveal reveal-delay-3" data-index="04">
+              <h3>先验偏见干扰</h3>
+              <p>手工总结时容易注入主观判断，选择性关注符合预期的反馈，忽略真实用户表达中的反常识信号，导致错过关键洞察。</p>
+            </article>
+          </div>
+        </section>
+
+        <!-- ===== 03 产品方案 ===== -->
+        <section class="case-section" id="solution">
+          <header class="section-head">
+            <span class="number">03</span>
+            <h2>产品方案</h2>
+          </header>
+          <div class="cards-3">
+            <article class="card reveal">
+              <h3>关键词生成</h3>
+              <p>用于抓 B 站中文关键词和国外网站英文关键词。AI 提取 2-4 个短词，补充人群，并扩展同义词 / 近义词。</p>
+            </article>
+            <article class="card reveal reveal-delay-1">
+              <h3>多平台抓取</h3>
+              <p>Twitter 和 YouTube 利用 API 抓取，Reddit / Bilibili 利用爬虫抓取，以获得上千条真实用户数据。</p>
+            </article>
+            <article class="card reveal reveal-delay-2">
+              <h3>清洗与报告</h3>
+              <p>去掉表情、短句、垃圾内容，统计词频 Top 10，并为核心观点附上用户原话。</p>
+            </article>
+          </div>
+          <div class="image-row">
+            <figure class="image-panel reveal">
+              <img src="../../assets/case-studies/scoutai-new-research.png" alt="ScoutAI 新建调研页">
+            </figure>
+            <figure class="image-panel reveal reveal-delay-1">
+              <img src="../../assets/case-studies/scoutai-agent-done.png" alt="ScoutAI Agent 分析完成页">
+            </figure>
+            <figure class="image-panel reveal reveal-delay-2">
+              <img src="../../assets/case-studies/scoutai-report-detail.png" alt="ScoutAI 报告详情页">
+            </figure>
+          </div>
+        </section>
+
+        <!-- ===== 04 DEMO 展示 ===== -->
+        <section class="case-section" id="demo">
+          <header class="section-head">
+            <span class="number">04</span>
+            <h2>DEMO 展示</h2>
+          </header>
+          <div class="demo-container">
+            <div class="demo-bilibili">
+              <iframe
+                src="https://player.bilibili.com/player.html?bvid=BV1PVEd62Evs&page=1&high_quality=1&danmaku=0&autoplay=0"
+                title="ScoutAI 产品交互演示"
+                allowfullscreen="true"
+                scrolling="no"
+                frameborder="0"
+                sandbox="allow-top-navigation allow-same-origin allow-forms allow-scripts allow-popups allow-popups-to-escape-sandbox">
+              </iframe>
+            </div>
+            <div class="demo-info reveal reveal-delay-1">
+              <h3>产品交互演示</h3>
+              <p>从输入研究问题开始，完整展示 ScoutAI 自动生成关键词、跨平台抓取用户反馈、清洗数据并输出结构化研究报告的全流程。视频时长约 3 分钟。</p>
+              <div class="demo-meta">
+                <span>⏱ 3 min</span>
+                <span>📱 产品流程</span>
+                <span>🎯 端到端体验</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ===== 05 关键设计 ===== -->
+        <section class="case-section" id="design">
+          <header class="section-head">
+            <span class="number">05</span>
+            <h2>关键设计</h2>
+          </header>
+          <div class="cards-3">
+            <article class="card reveal">
+              <h3>关键词生成模块</h3>
+              <p>理解问题意图，确认主研究范围，补充次要关键词，并确认关键词之间的关系。AI 自动提取 2-4 个短词、补充人群标签、扩展同义词与近义词，确保跨平台搜索覆盖面。</p>
+            </article>
+            <article class="card reveal reveal-delay-1">
+              <h3>可溯源设计</h3>
+              <p>每条结论至少引用 2-3 条来自不同平台的用户原话，原始数据带有原帖子链接，可跳转平台验证真实性，让调研结果经得起汇报时的追问。</p>
+            </article>
+            <article class="card reveal reveal-delay-2">
+              <h3>可追问 AI</h3>
+              <p>基于已采集证据继续提问，快速定位关键评论与结论依据。用户追问"为什么得出这个结论""有没有反例"时，系统可按关键词和样本来源检索回应。</p>
+            </article>
+          </div>
+          <div class="image-row">
+            <figure class="image-panel no-preview reveal">
+              <img src="../../assets/case-studies/scoutai-keywords.png" alt="ScoutAI 关键词生成模块">
+            </figure>
+            <figure class="image-panel no-preview reveal reveal-delay-1">
+              <img src="../../assets/case-studies/scoutai-traceable.png" alt="ScoutAI 可溯源原话引用">
+            </figure>
+            <figure class="image-panel no-preview reveal reveal-delay-2">
+              <img src="../../assets/case-studies/scoutai-followup.png" alt="ScoutAI 可追问 AI">
+            </figure>
+          </div>
+          <div class="flow" aria-label="ScoutAI 关键流程" style="margin-top: 36px;">
+            <div class="flow-node"><small>01</small>输入研究问题</div>
+            <div class="flow-node"><small>02</small>AI 生成关键词</div>
+            <div class="flow-node"><small>03</small>跨平台抓取反馈</div>
+            <div class="flow-node"><small>04</small>清洗与聚类</div>
+            <div class="flow-node"><small>05</small>输出可追溯报告</div>
+            <div class="flow-node"><small>06</small>继续 AI 追问</div>
+          </div>
+        </section>
+
+        <!-- ===== 06 报告结构 ===== -->
+        <section class="case-section" id="report">
+          <header class="section-head">
+            <span class="number">06</span>
+            <h2>报告结构</h2>
+          </header>
+          <div style="display: grid; grid-template-columns: 0.55fr auto 1.45fr; gap: 0; align-items: center; min-height: 420px;">
+            <!-- 左侧目录 -->
+            <div style="display: flex; flex-direction: column; gap: 10px; padding: 20px 24px;">
+              <article class="card reveal" style="min-height:unset; padding:14px 18px;">
+                <h3 style="font-size:15px; margin-bottom:4px;">报告概况</h3>
+                <p style="font-size:13px; margin:0;">研究问题、关键词、数据来源与样本量总览</p>
+              </article>
+              <article class="card reveal reveal-delay-1" style="min-height:unset; padding:14px 18px;">
+                <h3 style="font-size:15px; margin-bottom:4px;">核心结论</h3>
+                <p style="font-size:13px; margin:0;">高频痛点词云、主题聚类与关键发现</p>
+              </article>
+              <article class="card reveal reveal-delay-2" style="min-height:unset; padding:14px 18px;">
+                <h3 style="font-size:15px; margin-bottom:4px;">用户情绪与态度分析</h3>
+                <p style="font-size:13px; margin:0;">情感分布、口碑趋势与正负面归因</p>
+              </article>
+              <article class="card reveal reveal-delay-3" style="min-height:unset; padding:14px 18px;">
+                <h3 style="font-size:15px; margin-bottom:4px;">用户画像</h3>
+                <p style="font-size:13px; margin:0;">典型用户角色、行为特征与使用场景</p>
+              </article>
+              <article class="card reveal reveal-delay-4" style="min-height:unset; padding:14px 18px;">
+                <h3 style="font-size:15px; margin-bottom:4px;">产品机会与建议</h3>
+                <p style="font-size:13px; margin:0;">基于证据的改进方向与优先级排序</p>
+              </article>
+              <article class="card reveal reveal-delay-5" style="min-height:unset; padding:14px 18px;">
+                <h3 style="font-size:15px; margin-bottom:4px;">附录：样本引用与原始数据</h3>
+                <p style="font-size:13px; margin:0;">每条结论的用户原话、平台来源与链接</p>
+              </article>
+            </div>
+            <!-- 箭头 -->
+            <div style="display: grid; place-items: center; padding: 0 10px;">
+              <span style="font-size: 48px; color: var(--pink-deep); font-weight: 900; transition: transform 0.3s ease;">→</span>
+            </div>
+            <!-- 右侧报告图片 -->
+            <figure class="image-panel no-preview reveal reveal-delay-2" style="min-height: 400px;">
+              <img src="../../assets/case-studies/scoutai-report-structure.png" alt="ScoutAI 报告结构示意图">
+            </figure>
+          </div>
+        </section>
+
+        <!-- ===== 07 测试与迭代 ===== -->
+        <section class="case-section" id="testing">
+          <header class="section-head">
+            <span class="number">07</span>
+            <h2>测试与迭代</h2>
+          </header>
+          <!-- Problem 1 -->
+          <div style="display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 14px; margin-bottom: 28px;">
+            <article class="card reveal">
+              <h3>跨平台抓取不稳定</h3>
+              <p style="margin-bottom: 16px;">Twitter / YouTube / Reddit / Bilibili 在接口限制、反爬策略、关键词命中率上表现不一致，导致同一课题下不同平台返回数据量波动较大。</p>
+              <p style="margin-bottom: 8px; font-size: 12px; color: var(--pink-deep); font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase;">影响结果</p>
+              <p style="margin-bottom: 16px; font-size: 13px; color: var(--text);">数据量不稳定会影响报告覆盖度，部分结论可能出现平台样本偏向，进而影响用户对报告可信度的判断。</p>
+              <p style="margin-bottom: 8px; font-size: 12px; color: var(--green); font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase;">迭代方向</p>
+              <p style="font-size: 13px; color: var(--text);">建立抓取监控与降级机制：记录成功率、有效样本数和失败原因；失败时自动切换备用关键词、降低抓取深度，或提示补充数据源。</p>
+            </article>
+            <article class="card reveal reveal-delay-1">
+              <h3>AI 追问还不够基于证据</h3>
+              <p style="margin-bottom: 16px;">当前 AI Agent 能围绕报告继续回答问题，但追问主要依赖大模型总结，容易泛化，不能稳定定位到具体用户原话和样本来源。</p>
+              <p style="margin-bottom: 8px; font-size: 12px; color: var(--pink-deep); font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase;">影响结果</p>
+              <p style="margin-bottom: 16px; font-size: 13px; color: var(--text);">用户追问"为什么得出这个结论""有没有反例""某类用户具体怎么说"时，系统需要更强的证据检索能力。</p>
+              <p style="margin-bottom: 8px; font-size: 12px; color: var(--green); font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase;">迭代方向</p>
+              <p style="font-size: 13px; color: var(--text);">引入 RAG 机制：将评论、帖子、视频评论切分为可检索语料库，让二次问答先检索原始样本再生成回答，并附平台、原文和链接。</p>
+            </article>
+          </div>
+          <p class="status-note reveal">迭代优先级：先解决抓取稳定性（影响数据基础），再引入 RAG 增强追问能力（提升体验上限），最终将调研流程标准化为可复用的 Agent 模板。</p>
+        </section>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- ===== Image Hover Preview ===== -->
+  <div class="img-preview" id="imgPreview" aria-hidden="true">
+    <img id="imgPreviewImg" src="" alt="预览">
+  </div>
+
+  <footer class="page-footer">
+    <span>ScoutAI · Case Study</span>
+    <a href="../../index.html#projects">返回作品集 Projects ↗</a>
+  </footer>
+
+  <script>
+    // ===== 侧边栏导航高亮 =====
+    const anchors = document.querySelectorAll("[data-anchor]");
+    const sections = document.querySelectorAll(".case-section, #overview");
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        anchors.forEach((anchor) => {
+          anchor.classList.toggle("active", anchor.dataset.anchor === entry.target.id);
+        });
+      });
+    }, { threshold: 0.22, rootMargin: "-80px 0px -60% 0px" });
+    sections.forEach((section) => observer.observe(section));
+
+    // ===== Image Hover Preview =====
+    const imgPreview = document.getElementById("imgPreview");
+    const imgPreviewImg = document.getElementById("imgPreviewImg");
+    document.querySelectorAll(".image-panel:not(.no-preview) img").forEach((img) => {
+      const panel = img.closest(".image-panel");
+      panel.addEventListener("mouseenter", () => {
+        imgPreviewImg.src = img.src;
+        imgPreview.classList.add("show");
+      });
+      panel.addEventListener("mousemove", (e) => {
+        const pw = imgPreview.offsetWidth || 480;
+        if (e.clientX + pw + 40 > window.innerWidth) {
+          imgPreview.style.left = (e.clientX - pw - 20) + "px";
+        } else {
+          imgPreview.style.left = (e.clientX + 20) + "px";
+        }
+        imgPreview.style.top = (e.clientY - 20) + "px";
+      });
+      panel.addEventListener("mouseleave", () => {
+        imgPreview.classList.remove("show");
+      });
+    });
+  </script>
+  <script defer src="../../js/reveal.js?v=20260928e"></script>
+
+</body>
+</html>

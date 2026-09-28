@@ -1,0 +1,64 @@
+/* Shared case-study chrome — capsule nav (matches project detail page) */
+.case-study-page .site-header--case {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  padding: 22px clamp(20px, 4vw, 56px);
+  border-bottom: 0;
+  background: transparent;
+  backdrop-filter: none;
+  pointer-events: none;
+}
+
+.case-study-page .site-header--case .wordmark {
+  display: none;
+}
+
+.case-study-page .site-header--case .case-nav {
+  pointer-events: auto;
+}
+
+.case-study-page .case-nav {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 6px 6px 18px;
+  border: 1px solid #fff;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.72);
+  box-shadow: 0 8px 24px rgba(8, 107, 230, 0.08);
+}
+
+.case-study-page .case-nav a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 36px;
+  padding: 6px 14px 5px;
+  border-radius: 9999px;
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.case-study-page .case-nav a:hover {
+  color: var(--pink-deep);
+}
+
+.case-study-page .case-nav .nav-cta {
+  color: #fff;
+  background: var(--pink-deep);
+  padding: 8px 14px;
+}
+
+.case-study-page .case-nav .nav-cta span {
+  margin-left: 4px;
+}

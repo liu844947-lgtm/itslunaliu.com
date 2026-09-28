@@ -4,17 +4,17 @@
   <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Portfolio — lunaliu</title>
   <link rel="icon" href="data:,">
-  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Rammetto+One&family=Roboto:wght@400;500;700&family=Zen+Kaku+Gothic+New:wght@500;700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/ocean.css"><link rel="stylesheet" href="css/motion.css?v=20260927l"><link rel="stylesheet" href="css/long-page.css"><link rel="stylesheet" href="css/content.css?v=20260927f"><link rel="stylesheet" href="css/figma-portfolio.css?v=20260927f"><link rel="stylesheet" href="css/portfolio-home.css?v=20260927x">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Rammetto+One&family=Roboto:wght@400;500;700&family=Libre+Baskerville:wght@400;700&family=Zen+Kaku+Gothic+New:wght@500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/ocean.css"><link rel="stylesheet" href="css/motion.css?v=20260927l"><link rel="stylesheet" href="css/long-page.css"><link rel="stylesheet" href="css/reveal.css?v=20260928e"><link rel="stylesheet" href="css/content.css?v=20260928ab"><link rel="stylesheet" href="css/figma-portfolio.css?v=20260927f"><link rel="stylesheet" href="css/portfolio-home.css?v=20260928ag">
 </head>
 <body data-page="home" data-figma-layout="169:2737" class="one-page">
 <a class="skip-link" href="#main">跳至正文</a>
-<header class="site-header">
-  <a class="wordmark" href="#home">lunaliu</a>
+<header class="site-header site-header--nav-only">
   <nav id="primary-nav" aria-label="Primary navigation"><a href="#internship">INTERNSHIP</a><a href="#projects">PROJECTS</a><a class="nav-cta" href="#about">ABOUT ME <span aria-hidden="true">→</span></a></nav>
 </header>
 <main id="main">
   <section id="home" class="hero" aria-label="首页">
+    <a class="hero-wordmark" href="#home">lunaliu</a>
     <a class="hero-cta" href="mailto:hello@itslunaliu.com" aria-label="联系刘颖">
       <img class="hero-cta__balloon" src="assets/hero-cta-balloon.png" alt="">
       <span class="hero-cta__text">Hi,我是刘颖</span><span class="hero-cta__arrow" aria-hidden="true">↗</span>
@@ -22,64 +22,181 @@
       <img class="hero-cta__flower hero-cta__flower--bottom" src="assets/hero-flower.png" alt="">
     </a>
     <h1 class="portfolio-title" aria-label="PORTFOLIO"><span data-letter-index="0"><span class="letter-text">P</span></span><span data-letter-index="1"><span class="letter-text">O</span></span><span data-letter-index="2"><span class="letter-text">R</span></span><span data-letter-index="3"><span class="letter-text">T</span></span><span data-letter-index="4"><span class="letter-text">F</span></span><span data-letter-index="5"><span class="letter-text">O</span></span><span data-letter-index="6"><span class="letter-text">L</span></span><span data-letter-index="7"><span class="letter-text">I</span></span><span data-letter-index="8"><span class="letter-text">O</span></span></h1>
-    <a class="hero-play" href="#projects" aria-label="播放作品集，前往 PROJECTS">
+    <button type="button" class="hero-play" data-letter-play aria-label="播放 PORTFOLIO 字母翻转">
       <span class="hero-play__triangle" aria-hidden="true"></span>
       <span class="hero-play__label">PLAY</span>
-    </a>
+    </button>
   </section>
 
-  <section id="internship" class="long-section internship-section" aria-labelledby="internship-title">
-    <div class="section-wrap">
-      <h2 id="internship-title" class="section-title figma-display-title">INTERNSHIP</h2>
-      <p class="section-kicker">WORKS</p>
-      <div class="experience-list">
-        <article class="experience reveal"><div class="experience-copy"><span class="index-number">01 / 北京数解科技 · 2026.06–2026.09</span><h3>AI 产品实习生</h3><p>博创园、留学 Agent 等 B 端 AI 产品线：需求拆解、原型设计与落地跟进，7 套原型，深度参与博创园上线。</p></div></article>
-        <article class="experience reveal"><div class="experience-copy"><span class="index-number">02 / 快乐学教育集团 · 2025.12–2026.01</span><h3>AI 产品助理 · 拍照搜题 MVP</h3><p>机构内嵌拍照搜题 MVP 0→1：调研、PRD、Prompt 与评测闭环，400+ 用户，合格率 98%。</p></div></article>
+  <section id="directory" class="directory-section" aria-label="目录">
+    <div class="directory-shell">
+      <div class="directory-copy">
+        <div class="directory-intro">
+          <h2 class="directory-name reveal">刘颖</h2>
+          <div class="directory-pills reveal reveal-delay-1">
+            <span class="directory-pill directory-pill--solid">AI 产品</span>
+            <span class="directory-pill directory-pill--line">合肥 · Remote</span>
+          </div>
+          <p class="directory-bio reveal reveal-delay-2">你好呀！我叫刘颖，我的性格开朗，对新事物持开放和学习的态度，乐于探索和实践。我对 AI 抱有浓厚的兴趣，一直在学习中，这里是我的个人网站，记录了我的学习和探索成果。</p>
+        </div>
+        <nav class="directory-nav" aria-label="页面目录">
+          <a class="directory-nav__item reveal" href="#internship"><span>01</span><strong>INTERNSHIP</strong></a>
+          <a class="directory-nav__item reveal reveal-delay-1" href="#projects"><span>02</span><strong>PROJECTS</strong></a>
+          <a class="directory-nav__item reveal reveal-delay-2" href="#about"><span>03</span><strong>ABOUT ME</strong></a>
+          <a class="directory-nav__item reveal reveal-delay-3" href="#contact"><span>04</span><strong>CREATIVE</strong></a>
+        </nav>
+        <div class="directory-links reveal">
+          <a href="mailto:hello@itslunaliu.com">Contact <span aria-hidden="true">↗</span></a>
+          <span class="directory-links__pending" title="简历稍后补充">Resume <span aria-hidden="true">↗</span></span>
+        </div>
+      </div>
+      <div class="directory-photo reveal reveal-delay-1">
+        <img src="assets/profile-photo.jpg" alt="刘颖个人照片" width="640" height="800" loading="lazy" decoding="async">
       </div>
     </div>
   </section>
 
-  <section id="projects" class="long-section projects-section" aria-labelledby="projects-title" data-project-pin data-project-pages="5">
+  <section id="internship" class="long-section internship-section" aria-labelledby="internship-title">
+    <div class="section-wrap">
+      <h2 id="internship-title" class="section-title figma-display-title reveal">INTERNSHIP</h2>
+      <p class="section-kicker reveal reveal-delay-1">WORKS</p>
+      <div class="internship-layout internship-layout--cards-only">
+        <div class="experience-list">
+          <article class="experience reveal"><div class="experience-copy"><span class="index-number">01 / 北京数解科技 · 2026.06–2026.09</span><h3>AI 产品实习生</h3><p>博创园、留学 Agent 等 B 端 AI 产品线：需求拆解、原型设计与落地跟进，7 套原型，深度参与博创园上线。</p></div></article>
+          <article class="experience reveal"><div class="experience-copy"><span class="index-number">02 / 快乐学教育集团 · 2025.12–2026.01</span><h3>AI 产品助理 · 拍照搜题 MVP</h3><p>机构内嵌拍照搜题 MVP 0→1：调研、PRD、Prompt 与评测闭环，400+ 用户，合格率 98%。</p></div></article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects" class="long-section projects-section reveal" aria-labelledby="projects-title" data-project-pin data-project-pages="4">
     <div class="projects-stage">
       <div class="project-brand-backdrop" aria-hidden="true">LUNALIU</div>
-      <div class="project-browser" data-projects-root data-project-count="5" data-view="gallery" data-current="0">
+      <div class="project-browser" data-projects-root data-project-count="4" data-view="gallery" data-current="0">
         <div class="project-layout">
-          <aside class="project-index">
+          <aside class="project-index reveal">
             <h2 id="projects-title" class="section-title project-index__title">PROJECTS</h2>
             <p class="project-index__kicker">SERVICE</p>
             <div class="project-selectors" aria-label="选择项目">
-              <button type="button" data-project-select="0" aria-label="博创园项目" aria-pressed="true">博创园</button>
-              <button type="button" data-project-select="1" aria-label="来华留学项目" aria-pressed="false">来华留学</button>
-              <button type="button" data-project-select="2" aria-label="电商详情页个人项目" aria-pressed="false">电商详情页</button>
-              <button type="button" data-project-select="3" aria-label="ScoutAI 个人项目" aria-pressed="false">ScoutAI</button>
-              <button type="button" data-project-select="4" aria-label="旅游 Agent 个人项目" aria-pressed="false">旅游 Agent</button>
+              <button type="button" data-project-select="0" aria-label="博创园创业陪伴系统" aria-pressed="true"><span class="project-selectors__no">01</span><span class="project-selectors__copy"><span class="project-selectors__name">BOCHUANGYUAN</span><span class="project-selectors__sub">博创园创业陪伴系统</span></span></button>
+              <button type="button" data-project-select="1" aria-label="来华留学销售Agent客服" aria-pressed="false"><span class="project-selectors__no">02</span><span class="project-selectors__copy"><span class="project-selectors__name">LIUXUE AGENT</span><span class="project-selectors__sub">来华留学销售Agent客服</span></span></button>
+              <button type="button" data-project-select="2" aria-label="小迹 · AI 旅行 Agent个人项目" aria-pressed="false"><span class="project-selectors__no">03</span><span class="project-selectors__copy"><span class="project-selectors__name">TRAVEL AGENT</span><span class="project-selectors__sub">旅游 Agent</span></span></button>
+              <button type="button" data-project-select="3" aria-label="ScoutAI 用户自调研系统" aria-pressed="false"><span class="project-selectors__no">04</span><span class="project-selectors__copy"><span class="project-selectors__name">SCOUTAI</span><span class="project-selectors__sub">用户自调研系统</span></span></button>
             </div>
-            <p class="project-index__meta"><span data-project-current>01</span> / <span data-project-total>05</span></p>
+            <p class="project-index__meta"><span data-project-current>01</span> / <span data-project-total>04</span></p>
           </aside>
-          <div class="project-case-list" data-project-stage>
-            <a class="project-entry is-current" data-project-index="0" href="project.html?id=01" aria-label="查看博创园"><span class="project-entry__number">01</span><div class="project-art project-art--devices" aria-hidden="true"><img class="project-art__laptop" src="assets/projects/bochuangyuan/device-laptop.png" alt="" width="960" height="600" loading="lazy" decoding="async"><img class="project-art__phone" src="assets/projects/bochuangyuan/device-phone.png" alt="" width="240" height="480" loading="lazy" decoding="async"></div><div class="project-entry__copy"><span class="project-entry__kind" data-project-kind>实习 · 数解</span><span class="project-entry__title" data-project-title>博创园</span><span class="project-entry__summary" data-project-summary>面向创业群体，搭建覆盖报名、专家评审与后台管理的一体化赛事系统。</span><span class="project-entry__open">查看案例 <span aria-hidden="true">↗</span></span></div></a>
-            <a class="project-entry" data-project-index="1" href="project.html?id=02" aria-label="查看来华留学销售 AI Agent"><span class="project-entry__number">02</span><div class="project-art project-art--sales" aria-hidden="true"><span class="art-window"><i></i><i></i><i></i><b>留学咨询工作台</b><small>客户画像　AI 对话　跟进记录</small></span><span class="art-chat">你好，想了解<br>来华留学申请</span></div><div class="project-entry__copy"><span class="project-entry__kind" data-project-kind>实习 · 数解</span><span class="project-entry__title" data-project-title>来华留学销售 AI Agent</span><span class="project-entry__summary" data-project-summary>连接多平台客户信息与销售工作台，支持符合个人品牌语气的 AI 客服工作流。</span><span class="project-entry__open">查看案例 <span aria-hidden="true">↗</span></span></div></a>
-            <a class="project-entry" data-project-index="2" href="project.html?id=03" aria-label="查看电商详情页生成"><span class="project-entry__number">03</span><div class="project-art project-art--loom" aria-hidden="true"><span class="art-window"><i></i><i></i><i></i><b>详情页生成</b><small>输入　生成　预览</small></span><span class="art-stamp">LOOM</span></div><div class="project-entry__copy"><span class="project-entry__kind" data-project-kind>个人项目</span><span class="project-entry__title" data-project-title>电商详情页生成</span><span class="project-entry__summary" data-project-summary>个人项目：在线生成电商详情页，支持登录体验完整流程。</span><span class="project-entry__open">查看案例 <span aria-hidden="true">↗</span></span></div></a>
-            <a class="project-entry" data-project-index="3" href="project.html?id=04" aria-label="查看 ScoutAI 用户自调研系统"><span class="project-entry__number">04</span><div class="project-art project-art--photo project-art--scout" aria-hidden="true"><img class="project-art__shot" src="assets/projects/scoutai/scoutai-macbook-base.png" alt="" width="1200" height="750" loading="lazy" decoding="async"></div><div class="project-entry__copy"><span class="project-entry__kind" data-project-kind>个人项目</span><span class="project-entry__title" data-project-title>ScoutAI 用户自调研系统</span><span class="project-entry__summary" data-project-summary>个人项目：输入研究问题，跨平台抓取用户反馈，输出带原话证据的结构化报告。</span><span class="project-entry__open">查看案例 <span aria-hidden="true">↗</span></span></div></a>
-            <a class="project-entry" data-project-index="4" href="project.html?id=05" aria-label="查看小迹 AI 旅行 Agent"><span class="project-entry__number">05</span><div class="project-art project-art--photo project-art--travel" aria-hidden="true"><img class="project-art__shot" src="assets/projects/shared/travel-route-detail.jpg" alt="" width="1200" height="750" loading="lazy" decoding="async"></div><div class="project-entry__copy"><span class="project-entry__kind" data-project-kind>个人项目</span><span class="project-entry__title" data-project-title>小迹 · AI 旅行 Agent</span><span class="project-entry__summary" data-project-summary>个人项目：帮助用户明确旅行需求、生成个性化路线，并通过地图验证与持续调整形成行程。</span><span class="project-entry__open">查看案例 <span aria-hidden="true">↗</span></span></div></a>
+          <div class="project-case-list reveal reveal-delay-1" data-project-stage>
+            <a class="project-entry project-entry--minimal is-current" data-project-index="0" href="project.html?id=01" aria-label="查看博创园"><time class="project-entry__date" data-project-date datetime="2026-06">2026.06</time><div class="project-art project-art--devices" aria-hidden="true"><div class="project-art__device-group"><img class="project-art__laptop" src="assets/projects/bochuangyuan/device-laptop-cutout.png?v=20260928o" alt="" width="1468" height="892" loading="lazy" decoding="async"><img class="project-art__phone" src="assets/projects/bochuangyuan/device-phone-cutout.png?v=20260928o" alt="" width="394" height="848" loading="lazy" decoding="async"></div></div><div class="project-entry__copy"><div class="project-entry__lead"><span class="project-entry__title" data-project-title>博创园</span><span class="project-entry__summary" data-project-summary>从创业者报名到专家评审和后台维护的一体化创业陪伴系统。</span></div><span class="project-entry__open">view</span></div></a>
+            <a class="project-entry" data-project-index="1" href="project.html?id=02" aria-label="查看来华留学销售 AI Agent"><time class="project-entry__date" data-project-date datetime="2026-06">2026.06</time><div class="project-art project-art--sales" aria-hidden="true"><span class="art-window"><i></i><i></i><i></i><b>留学咨询工作台</b><small>客户画像　AI 对话　跟进记录</small></span><span class="art-chat">你好，想了解<br>来华留学申请</span></div><div class="project-entry__copy"><div class="project-entry__lead"><span class="project-entry__title" data-project-title>来华留学销售 AI Agent</span><span class="project-entry__summary" data-project-summary>连接多平台客户信息与销售工作台，支持符合个人品牌语气的 AI 客服工作流。</span></div><span class="project-entry__open">view</span></div></a>
+            <a class="project-entry project-entry--corner-title" data-project-index="2" href="projects/travel-agent/index.html" aria-label="查看小迹 AI 旅行 Agent"><time class="project-entry__date" data-project-date datetime="2025-08">2025.08</time><div class="project-art project-art--phones project-art--travel project-art--cutout" aria-hidden="true"><div class="project-art__phone-group"><img class="project-art__phone-shot" src="assets/case-studies/travel-route-detail.png" alt="" width="184" height="380" loading="lazy" decoding="async"><img class="project-art__phone-shot" src="assets/case-studies/travel-home.png" alt="" width="184" height="380" loading="lazy" decoding="async"><img class="project-art__phone-shot" src="assets/case-studies/travel-ai-optimize.png" alt="" width="184" height="380" loading="lazy" decoding="async"></div></div><div class="project-entry__copy"><div class="project-entry__lead"><span class="project-entry__title" data-project-title>小迹 · AI 旅行 Agent</span><span class="project-entry__summary" data-project-summary>帮助用户明确旅行需求、生成个性化路线，并通过地图验证与持续调整形成行程。</span></div><span class="project-entry__open">view</span></div></a>
+            <a class="project-entry project-entry--corner-title" data-project-index="3" href="projects/scout-ai/index.html" aria-label="查看 ScoutAI 用户自调研系统"><time class="project-entry__date" data-project-date datetime="2025-08">2025.08</time><div class="project-art project-art--photo project-art--scout project-art--cutout" aria-hidden="true"><img class="project-art__shot" src="assets/case-studies/scoutai-macbook-base.png" alt="" width="1200" height="750" loading="lazy" decoding="async"></div><div class="project-entry__copy"><div class="project-entry__lead"><span class="project-entry__title" data-project-title>ScoutAI 用户自调研系统</span><span class="project-entry__summary" data-project-summary>输入研究问题，跨平台抓取用户反馈，输出带原话证据的结构化报告。</span></div><span class="project-entry__open">view</span></div></a>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <section id="about" class="long-section about-section" aria-labelledby="about-title">
+  <section id="about" class="long-section about-section about-section--profile-board" aria-labelledby="about-title">
     <div class="section-wrap">
-      <h2 id="about-title" class="section-title">ABOUT ME</h2>
-      <p class="section-kicker">PROFILE</p>
-      <div class="about-portrait"><div class="portrait-slot"><img src="assets/profile-photo.jpg" alt="刘颖个人照片" width="640" height="800" loading="lazy" decoding="async"></div><div class="about-copy"><p class="index-number">lunaliu / AI PRODUCT</p><h3>面试官您好，我叫刘颖。</h3><p>本科就读于安徽建筑大学，正在应聘 AI 产品岗位。我关注用户问题、产品方案、AI 工作流和上线验证之间的连接。</p><p>建筑与设计训练让我习惯先走访、观察和整理问题，再把复杂信息组织成可执行的方案。</p></div></div>
-      <div class="about-columns"><article><p class="index-number">01 / 能力</p><h3>从需求到可用产品</h3><ul><li>Codex、Cursor 辅助完成 7 套原型，并用 Vibe Coding 开发和部署 2 个 AI 工具。</li><li>用户调研、需求抽象、B 端定制化项目和 AI 工作流。</li><li>Figma 高保真原型、SQL、Python、RAG、Agent、Prompt 工程。</li></ul></article><article><p class="index-number">02 / 在校项目</p><h3>数据与空间分析</h3><p>作为负责人完成省级大创项目，搭建 GIS + AHP 选址评估模型，积累数据分析与多维度建模经验。</p></article></div>
+      <h2 id="about-title" class="section-title reveal">ABOUT ME</h2>
+      <p class="section-kicker reveal reveal-delay-1">PROFILE</p>
+      <div class="about-board">
+      <div class="about-board__grid">
+        <div class="about-board__col about-board__col--left">
+          <section class="about-block reveal" aria-labelledby="about-edu-title">
+            <header class="about-block__head">
+              <span class="about-block__num" aria-hidden="true">01</span>
+              <h3 id="about-edu-title" class="about-block__title">教育背景</h3>
+            </header>
+            <article class="about-edu-card">
+              <span class="about-edu-card__date">2022.09 – 2027.06</span>
+              <h4 class="about-edu-card__school">安徽建筑大学</h4>
+              <p class="about-edu-card__meta">城乡规划 / GPA 3.7/5（前 20%）</p>
+            </article>
+          </section>
+          <section class="about-block reveal reveal-delay-1" aria-labelledby="about-lang-title">
+            <header class="about-block__head">
+              <span class="about-block__num" aria-hidden="true">02</span>
+              <h3 id="about-lang-title" class="about-block__title">语言</h3>
+            </header>
+            <ul class="about-timeline">
+              <li>英语六级</li>
+              <li>普通话二级乙等</li>
+            </ul>
+          </section>
+          <section class="about-block reveal reveal-delay-2" aria-labelledby="about-award-title">
+            <header class="about-block__head">
+              <span class="about-block__num" aria-hidden="true">03</span>
+              <h3 id="about-award-title" class="about-block__title">奖项</h3>
+            </header>
+            <ul class="about-timeline">
+              <li>大创项目国家二级</li>
+              <li>2024 / 2025 年校二等奖学金</li>
+              <li>第十六届安徽省大学生 GIS 应用技能大赛二等奖</li>
+              <li>2023 / 2024 年校三等奖学金</li>
+            </ul>
+          </section>
+        </div>
+        <div class="about-board__col about-board__col--right">
+          <section class="about-block reveal" aria-labelledby="about-skill-title">
+            <header class="about-block__head">
+              <span class="about-block__num" aria-hidden="true">04</span>
+              <h3 id="about-skill-title" class="about-block__title">个人能力</h3>
+            </header>
+            <div class="about-skill-stack">
+              <article class="about-skill-card reveal reveal-delay-1">
+                <div class="about-skill-card__head">
+                  <h4>AI 产品设计</h4>
+                  <span class="about-skill-card__gems" aria-hidden="true"><i></i><i></i><i></i></span>
+                </div>
+                <div class="about-skill-card__tags">
+                  <span class="about-skill-tag">需求分析</span>
+                  <span class="about-skill-tag">用户流程</span>
+                  <span class="about-skill-tag">PRD</span>
+                  <span class="about-skill-tag">Prompt 设计</span>
+                  <span class="about-skill-tag">场景建模</span>
+                  <span class="about-skill-tag">Agent 工作流</span>
+                  <span class="about-skill-tag">评测与迭代</span>
+                </div>
+              </article>
+              <article class="about-skill-card reveal reveal-delay-2">
+                <div class="about-skill-card__head">
+                  <h4>原型与落地</h4>
+                  <span class="about-skill-card__gems" aria-hidden="true"><i></i><i></i><i></i></span>
+                </div>
+                <div class="about-skill-card__tags">
+                  <span class="about-skill-tag">Figma</span>
+                  <span class="about-skill-tag">Cursor</span>
+                  <span class="about-skill-tag">XMind</span>
+                  <span class="about-skill-tag">Echarts</span>
+                  <span class="about-skill-tag">Excel</span>
+                  <span class="about-skill-tag">Python 基础</span>
+                  <span class="about-skill-tag">SQL 基础</span>
+                </div>
+              </article>
+              <article class="about-skill-card reveal reveal-delay-3">
+                <div class="about-skill-card__head">
+                  <h4>跨学科优势</h4>
+                  <span class="about-skill-card__gems" aria-hidden="true"><i></i><i></i><i></i></span>
+                </div>
+                <div class="about-skill-card__tags">
+                  <span class="about-skill-tag">用户调研</span>
+                  <span class="about-skill-tag">空间分析</span>
+                  <span class="about-skill-tag">复杂系统拆解</span>
+                  <span class="about-skill-tag">可视化表达</span>
+                </div>
+              </article>
+            </div>
+          </section>
+        </div>
+      </div>
+      </div>
     </div>
   </section>
-  <section id="contact" class="contact-section" aria-labelledby="stickers-title">
+  <section id="contact" class="contact-section reveal" aria-labelledby="stickers-title">
     <div id="stickers" class="sticker-band" data-sticker-viewport>
       <div class="sticker-band__layout section-wrap">
-        <div class="sticker-band__head">
+        <div class="sticker-band__head reveal">
           <h2 id="stickers-title" class="section-title">CREATIVE</h2>
           <p class="sticker-band__copy">在海外平台承接 Twitch 主播表情包定制，从角色 IP 设计、表情包定制到最终交付，独立完成全流程设计。深度对接海外创作者，熟悉其使用偏好与真实需求，具备需求落地的实操经验。</p>
           <p class="sticker-band__copy sticker-band__copy--note">下面是我的部分作品展示。</p>
@@ -94,7 +211,7 @@
             </li>
           </ul>
         </div>
-        <aside class="sticker-preview-stage" aria-hidden="true">
+        <aside class="sticker-preview-stage reveal reveal-delay-1" aria-hidden="true">
           <img class="sticker-preview-stage__image" data-preview-image="twitch" src="assets/creative/twitch-emotes-preview.jpg" alt="" width="1024" height="677" loading="lazy" decoding="async">
           <img class="sticker-preview-stage__image" data-preview-image="wenchuang" src="assets/creative/wenchuang-preview.jpg" alt="" width="768" height="1024" loading="lazy" decoding="async">
         </aside>
@@ -106,5 +223,5 @@
     </div>
   </section>
 </main>
-<script defer src="js/content-data.js?v=20260927e"></script><script defer src="js/assets.js?v=20260927l"></script><script defer src="js/site.js?v=20260927e"></script><script defer src="js/long-page.js?v=20260927e"></script><script defer src="js/motion.js?v=20260927l"></script><script defer src="js/portfolio-home.js?v=20260927j"></script><script defer src="js/global-liquid.bundle.js?v=20260927e"></script>
+<script defer src="js/content-data.js?v=20260928y"></script><script defer src="js/assets.js?v=20260927l"></script><script defer src="js/reveal.js?v=20260928e"></script><script defer src="js/site.js?v=20260928ad"></script><script defer src="js/long-page.js?v=20260928t"></script><script defer src="js/motion.js?v=20260928j"></script><script defer src="js/portfolio-home.js?v=20260928ad"></script><script defer src="js/global-liquid.bundle.js?v=20260927e"></script>
 </body></html>

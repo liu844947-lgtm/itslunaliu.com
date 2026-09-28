@@ -74,9 +74,10 @@
       title.classList.toggle("is-letter-collage", on);
     };
 
-    // First time the title enters view: flip all letters once together, then return.
-    const playIntroOnce = () => {
-      if (!ready || !visible || introPlayed || introRunning || !controls.length) return;
+    // Flip all PORTFOLIO letters once, then return (intro + PLAY button).
+    const playLetters = ({ force = false } = {}) => {
+      if (!ready || !controls.length || introRunning) return;
+      if (!force && (!visible || introPlayed)) return;
       if (!motionEnabled()) {
         introPlayed = true;
         return;
@@ -92,6 +93,16 @@
         introRunning = false;
       }, 1600);
     };
+
+    const playIntroOnce = () => playLetters({ force: false });
+
+    const playButton = document.querySelector("[data-letter-play], .hero-play");
+    if (playButton) {
+      listen(playButton, "click", (event) => {
+        event.preventDefault();
+        playLetters({ force: true });
+      });
+    }
 
     const refresh = () => {
       if (!ready) return;

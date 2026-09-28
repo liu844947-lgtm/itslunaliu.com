@@ -1,0 +1,386 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI Travel Agent | Case Study</title>
+  <link rel="icon" href="data:,">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Zen+Kaku+Gothic+New:wght@500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/reveal.css?v=20260928e">
+  <link rel="stylesheet" href="../../css/case-study-shared.css?v=20260928h">
+  <link rel="stylesheet" href="../../css/case-study-travel.css?v=20260928i">
+</head>
+<body class="case-study-page">
+
+  <header class="site-header site-header--case">
+    <a class="wordmark" href="../../index.html#home">lunaliu</a>
+    <nav class="case-nav" aria-label="项目页导航">
+      <a href="../../index.html#internship">INTERNSHIP</a>
+      <a href="../../index.html#projects">PROJECTS</a>
+      <a class="nav-cta" href="../../index.html#about">ABOUT ME <span aria-hidden="true">→</span></a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="case-hero" id="overview">
+      <div class="hero-copy">
+        <p class="section-label">01 · 产品概览</p>
+        <h1>小迹</h1>
+        <p class="subtitle">从模糊想法到完整路线的个性化 AI 旅行规划助手</p>
+        <p class="summary">面向旅行规划场景，小迹通过对话帮助用户梳理旅行需求，并根据用户偏好生成个性化路线。方案生成后，用户仍可继续与 AI 协作调整行程，直到获得更适合自己的旅行计划。</p>
+        <p class="case-period">2026.05 – 2026.06</p>
+        <div class="chips">
+          <span class="chip">工作流</span>
+          <span class="chip">双路径规划</span>
+          <span class="chip">个性化生成</span>
+          <span class="chip">持续调整</span>
+        </div>
+      </div>
+      <div class="hero-media" aria-label="小迹核心体验界面">
+        <div class="phone-placeholder-group">
+          <img class="phone-shot" src="../../assets/case-studies/travel-route-detail.png" alt="小迹地图行程页面">
+          <img class="phone-shot" src="../../assets/case-studies/travel-home.png" alt="小迹首页">
+          <img class="phone-shot" src="../../assets/case-studies/travel-ai-optimize.png" alt="小迹 AI 优化行程页面">
+        </div>
+      </div>
+    </section>
+
+    <div class="case-layout">
+      <aside class="case-index" aria-label="案例章节导航">
+        <p class="index-label">Case Contents</p>
+        <nav>
+          <a href="#overview" data-anchor="overview"><span>01</span>产品概览</a>
+          <a href="#problem" data-anchor="problem"><span>02</span>用户问题</a>
+          <a href="#competition" data-anchor="competition"><span>03</span>竞品分析</a>
+          <a href="#solution" data-anchor="solution"><span>04</span>产品方案</a>
+          <a href="#experience" data-anchor="experience"><span>05</span>用户核心体验</a>
+          <a href="#sequence" data-anchor="sequence"><span>06</span>时序图</a>
+          <a href="#workflow" data-anchor="workflow"><span>07</span>工作流</a>
+          <a href="#preference" data-anchor="preference"><span>08</span>旅行灵魂</a>
+          <a href="#demo" data-anchor="demo"><span>09</span>DEMO 展示</a>
+          <a href="#testing" data-anchor="testing"><span>10</span>测试</a>
+        </nav>
+      </aside>
+
+      <div class="case-body">
+        <section class="case-section" id="problem">
+          <header class="section-head">
+            <span class="number">02</span>
+            <h2>用户痛点</h2>
+          </header>
+          <p class="lead">旅行计划不是一次输入生成答案，而是边探索、边判断、边修改的过程。</p>
+          <div class="pain-grid">
+            <article class="pain-card" data-index="01"><div class="pain-icon"></div><h3>需求在探索中形成</h3><p>用户最初往往只知道"想出去玩"或"想轻松一点"，需要在浏览内容中逐步明确目的地、景点、节奏与偏好。</p></article>
+            <article class="pain-card" data-index="02"><div class="pain-icon"></div><h3>攻略信息分散</h3><p>景点种草、攻略内容、地图位置与路线安排散落在不同平台，用户必须反复切换并手动整理。</p></article>
+            <article class="pain-card" data-index="03"><div class="pain-icon"></div><h3>通用 AI 缺少个性化</h3><p>传统 LLM 可以快速生成路线，但结果容易偏大众化，难以体现节奏、兴趣与同行需求。</p></article>
+            <article class="pain-card" data-index="04"><div class="pain-icon"></div><h3>生成结果难验证、难修改</h3><p>大段文字方案难以看到地点与路线关系，也难以只修改某一天或某一个地点。</p></article>
+          </div>
+        </section>
+
+        <section class="case-section" id="competition">
+          <header class="section-head">
+            <span class="number">03</span>
+            <h2>竞品分析</h2>
+          </header>
+          <div class="competitor-visual-grid">
+            <article class="competitor-card">
+              <div class="competitor-shot"><img src="../../assets/case-studies/xiaohongshu.jpg" alt="小红书页面截图"></div>
+              <div class="competitor-copy"><small>内容攻略平台</small><h3>小红书</h3><p>提供真实灵感与经验内容，但路线整理、地点验证与日程安排仍依赖用户手动完成。</p></div>
+            </article>
+            <article class="competitor-card">
+              <div class="competitor-shot"><img src="../../assets/case-studies/wanderlog.jpg" alt="Wanderlog 页面截图"></div>
+              <div class="competitor-copy"><small>行程规划工具</small><h3>Wanderlog</h3><p>地图、清单和行程组织能力较完整，但需要用户先明确需求，AI 个性化规划较弱。</p></div>
+            </article>
+            <article class="competitor-card">
+              <div class="competitor-shot"><img src="../../assets/case-studies/yuanzhou-track.jpg" alt="圆周轨迹页面截图"></div>
+              <div class="competitor-copy"><small>行程记录工具</small><h3>圆周旅迹</h3><p>适合记录与组织行程，但更偏“行程容器”，对模糊需求澄清与偏好理解有限。</p></div>
+            </article>
+            <article class="competitor-card">
+              <div class="competitor-shot"><img src="../../assets/case-studies/doubao.png" alt="豆包页面截图"></div>
+              <div class="competitor-copy"><small>通用 AI 对话</small><h3>通用 LLM</h3><p>可以快速生成文字行程，但缺少地图验证、结构化编辑与稳定的个性化偏好记忆。</p></div>
+            </article>
+          </div>
+          <div class="status-note">PRODUCT OPPORTUNITY：不是替代攻略内容，也不是再做一个行程清单工具，而是补足“需求澄清 - 个性化生成 - 地图验证 - 持续调整”这一段决策链路。</div>
+        </section>
+
+        <section class="case-section" id="solution">
+          <header class="section-head">
+            <span class="number">04</span>
+            <h2>产品方案</h2>
+          </header>
+          <div class="solution-map">
+            <article class="solution-row">
+              <div class="solution-problem"><span class="solution-kicker">USER PROBLEM</span><h3>不知道自己真正想要什么</h3><p>旅行需求在探索中形成，用户需要被引导，而不是直接填写完整答案。</p></div>
+              <div class="solution-arrow">→</div>
+              <div class="solution-response"><span class="solution-kicker">DESIGN RESPONSE</span><h3>AI 对话梳理需求</h3><p>通过问答逐步确认目的地、天数、预算、同行人和偏好。</p></div>
+            </article>
+            <article class="solution-row">
+              <div class="solution-problem"><span class="solution-kicker">USER PROBLEM</span><h3>目标明确时不想长对话</h3><p>部分用户已知道目的地和日期，希望更快进入生成结果。</p></div>
+              <div class="solution-arrow">→</div>
+              <div class="solution-response"><span class="solution-kicker">DESIGN RESPONSE</span><h3>直接填写快速生成</h3><p>提供结构化表单入口，快速提交旅行信息并生成路线。</p></div>
+            </article>
+            <article class="solution-row">
+              <div class="solution-problem"><span class="solution-kicker">USER PROBLEM</span><h3>通用生成结果偏大众化</h3><p>同一目的地的路线常常相似，难体现用户节奏与兴趣差异。</p></div>
+              <div class="solution-arrow">→</div>
+              <div class="solution-response"><span class="solution-kicker">DESIGN RESPONSE</span><h3>偏好标签参与生成</h3><p>用旅行人格和偏好标签参与路线生成，提升个性化稳定性。</p></div>
+            </article>
+            <article class="solution-row">
+              <div class="solution-problem"><span class="solution-kicker">USER PROBLEM</span><h3>文字行程难验证、难局部修改</h3><p>用户难判断地点关系，也不想为了改一天重生成整份方案。</p></div>
+              <div class="solution-arrow">→</div>
+              <div class="solution-response"><span class="solution-kicker">DESIGN RESPONSE</span><h3>地图验证 + 持续调整</h3><p>展示点位与路线关系，并支持 AI 调整和手动编辑。</p></div>
+            </article>
+          </div>
+          <div class="core-flow" aria-label="产品方案流程">
+            <div class="flow-node"><small>01</small>模糊想法 / 明确需求</div>
+            <div class="flow-node"><small>02</small>对话梳理 / 直接填写</div>
+            <div class="flow-node"><small>03</small>偏好生成路线</div>
+            <div class="flow-node"><small>04</small>地图查看安排</div>
+            <div class="flow-node"><small>05</small>AI 优化 / 手动编辑</div>
+          </div>
+        </section>
+
+        <section class="case-section" id="experience">
+          <header class="section-head">
+            <span class="number">05</span>
+            <h2>用户核心体验</h2>
+          </header>
+          <div class="experience-mini-grid">
+            <article class="experience-mini"><h3>开始规划</h3><p>首页明确 AI 旅行规划能力，引导用户选择规划方式。</p></article>
+            <article class="experience-mini"><h3>双路径输入</h3><p>想法不清晰走 AI 对话，需求明确则直接填写信息。</p></article>
+            <article class="experience-mini"><h3>生成与验证</h3><p>结合偏好生成每日安排，并通过地图查看点位与路线。</p></article>
+            <article class="experience-mini"><h3>调整并保存</h3><p>支持 AI 优化或手动编辑，最终保存为可查看行程。</p></article>
+          </div>
+          <div class="screen-board" aria-label="小迹两排页面流程">
+            <figure class="screen-shot"><div class="screen-shot-media"><img src="../../assets/case-studies/travel-home.png" alt="首页"></div><strong>00 首页</strong><span></span></figure>
+            <figure class="screen-shot"><div class="screen-shot-media"><img src="../../assets/case-studies/travel-plan-mode.png" alt="规划选择"></div><strong>01 规划选择</strong><span></span></figure>
+            <div class="path-choice">
+              <div class="path-group">
+                <div class="path-title">路径 A 想法不清晰</div>
+                <figure class="screen-shot"><div class="screen-shot-media"><img src="../../assets/case-studies/travel-ai-chat.png" alt="AI 需求沟通"></div><strong>02 AI 需求沟通</strong><span></span></figure>
+              </div>
+              <div class="path-group">
+                <div class="path-title">路径 B 需求已明确</div>
+                <figure class="screen-shot"><div class="screen-shot-media"><img src="../../assets/case-studies/travel-form.png" alt="直接填写"></div><strong>03 直接填写</strong><span></span></figure>
+              </div>
+            </div>
+            <figure class="screen-shot"><div class="screen-shot-media"><img src="../../assets/case-studies/travel-requirements.png" alt="需求确认"></div><strong>04 需求确认</strong><span></span></figure>
+            <figure class="screen-shot"><div class="screen-shot-media"><img src="../../assets/case-studies/travel-generating.png" alt="生成中"></div><strong>05 生成中</strong><span></span></figure>
+            <figure class="screen-shot"><div class="screen-shot-media"><img src="../../assets/case-studies/travel-route-detail.png" alt="行程详情"></div><strong>06 行程详情</strong><span></span></figure>
+            <figure class="screen-shot"><div class="screen-shot-media"><img src="../../assets/case-studies/travel-ai-optimize.png" alt="AI 优化"></div><strong>07 AI 优化</strong><span></span></figure>
+            <figure class="screen-shot"><div class="screen-shot-media"><img src="../../assets/case-studies/travel-manual-edit.png" alt="手动编辑"></div><strong>08 手动编辑</strong><span></span></figure>
+            <figure class="screen-shot"><div class="screen-shot-media"><img src="../../assets/case-studies/travel-list.png" alt="行程保存"></div><strong>09 行程保存</strong><span></span></figure>
+          </div>
+        </section>
+
+        <section class="case-section" id="sequence">
+          <header class="section-head">
+            <span class="number">06</span>
+            <h2>时序图</h2>
+          </header>
+          <p class="lead">从用户输入到局部调整，明确 DeepSeek 模块与高德地图之间的调用关系。</p>
+          <div class="sequence-diagram sequence-map" aria-label="小迹 DeepSeek 与高德地图调用时序图">
+            <div class="sequence-map-inner">
+              <div class="seq-role" style="left: 0;">用户</div>
+              <div class="seq-role" style="left: 184px;">前端页面</div>
+              <div class="seq-role" style="left: 368px;">需求解析<br>DeepSeek</div>
+              <div class="seq-role" style="left: 552px;">行程生成<br>DeepSeek</div>
+              <div class="seq-role" style="left: 736px;">高德地图</div>
+              <div class="seq-role" style="left: 920px;">局部调整<br>DeepSeek</div>
+
+              <div class="seq-lifeline" style="left: 74px;"></div>
+              <div class="seq-lifeline" style="left: 258px;"></div>
+              <div class="seq-lifeline" style="left: 442px;"></div>
+              <div class="seq-lifeline" style="left: 626px;"></div>
+              <div class="seq-lifeline" style="left: 810px;"></div>
+              <div class="seq-lifeline" style="left: 994px;"></div>
+
+              <div class="seq-msg" style="left: 74px; top: 88px; width: 184px;"><span>输入想法 / 填写信息</span></div>
+              <div class="seq-msg" style="left: 258px; top: 138px; width: 184px;"><span>需求内容 + 偏好标签</span></div>
+              <div class="seq-msg reverse" style="left: 258px; top: 188px; width: 184px;"><span>结构化需求字段</span></div>
+              <div class="seq-msg" style="left: 258px; top: 248px; width: 368px;"><span>确认需求 + 旅行偏好</span></div>
+              <div class="seq-msg" style="left: 626px; top: 308px; width: 184px;"><span>地点 / 路线字段</span></div>
+              <div class="seq-msg reverse" style="left: 258px; top: 368px; width: 552px;"><span>点位与线路结果</span></div>
+              <div class="seq-msg adjust" style="left: 258px; top: 438px; width: 736px;"><span>局部修改指令</span></div>
+              <div class="seq-msg adjust reverse" style="left: 810px; top: 488px; width: 184px;"><span>更新后的行程</span></div>
+              <div class="seq-msg reverse" style="left: 74px; top: 526px; width: 184px;"><span>展示结果 / 保存</span></div>
+              <div class="seq-pill">AI 调整路径</div>
+            </div>
+            <p class="sequence-caption">AI 调整路径：用户在已有行程上提出局部修改，前端携带当前方案与修改指令调用 DeepSeek，返回更新后的局部行程，再同步到地图与日程展示。</p>
+          </div>
+        </section>
+
+        <section class="case-section" id="workflow">
+          <header class="section-head">
+            <span class="number">07</span>
+            <h2>工作流</h2>
+          </header>
+          <p class="lead">用户描述想法 → LLM 理解需求 → 个性化生成 → 地图验证与 Tips → 持续调整。</p>
+          <div class="agent-flow" aria-label="Agent 工作流">
+            <div class="flow-node"><small>01 输入</small>目的地 / 天数 / 同行人 / 预算 / 偏好标签 / 修改指令</div>
+            <div class="flow-node"><small>02 理解需求</small>将自然语言转为旅行需求 JSON</div>
+            <div class="flow-node"><small>03 生成路线</small>每日主题 / 地点列表 / 推荐理由 / 时间安排</div>
+            <div class="flow-node"><small>04 地图验证</small>高德地图点位与线路，Tavily + LLM Tips</div>
+            <div class="flow-node"><small>05 局部调整</small>保留偏好语境，更新相关日程</div>
+          </div>
+          <div class="cards-3" style="margin-top: 34px;">
+            <article class="card"><h3>需求解析模块</h3><p>将用户自然语言和偏好标签转成结构化旅行需求 JSON。</p></article>
+            <article class="card"><h3>行程生成模块</h3><p>根据需求 JSON 与 POI / 地图信息，生成 Day-by-Day 行程。</p></article>
+            <article class="card"><h3>局部调整模块</h3><p>根据当前方案和修改指令，输出更新后的局部行程。</p></article>
+          </div>
+        </section>
+
+        <section class="case-section" id="preference">
+          <header class="section-head">
+            <span class="number">08</span>
+            <h2>旅行灵魂测试设计</h2>
+          </header>
+          <p class="lead">20 题 / 约 3 分钟，从 6 个维度生成 16 种旅行人格，路线与标签会参与不同旅行人格的个性化路线定制。</p>
+          <div style="display: grid; grid-template-columns: 1fr 1.2fr; gap: 24px; align-items: stretch;">
+            <!-- 左侧：6 个维度卡片 -->
+            <div class="preference-grid" style="grid-template-columns: 1fr 1fr; gap: 10px; align-content: center;">
+              <article class="dimension"><strong>⏱ 节奏感</strong><p>每日景点数量与停留时长</p></article>
+              <article class="dimension"><strong>📋 规划感</strong><p>时间颗粒度与自由活动比例</p></article>
+              <article class="dimension"><strong>🎯 兴趣重心</strong><p>自然 / 城市 / 文化 / 美食 / 拍照</p></article>
+              <article class="dimension"><strong>👥 同行倾向</strong><p>独行 / 朋友 / 情侣 / 家庭</p></article>
+              <article class="dimension"><strong>🧭 探索偏好</strong><p>经典 / 小众 / 热门</p></article>
+              <article class="dimension"><strong>💰 消费观</strong><p>性价比 / 均衡 / 舒适</p></article>
+            </div>
+            <!-- 右侧：2 个页面截图 -->
+            <div class="placeholder-row" style="position: relative; grid-template-columns: 1fr 1fr; gap: 12px; align-items: stretch;">
+              <figure class="image-panel" style="border-radius: 18px; min-height: unset;"><img src="../../assets/case-studies/travel-quiz.png" alt="旅行灵魂测试页" style="max-height:420px;"><figcaption style="text-align:center; margin-top:8px; color:var(--green-deep); font-size:11px; font-weight:700;">测试页面</figcaption></figure>
+              <figure class="image-panel" style="border-radius: 18px; min-height: unset;"><img src="../../assets/case-studies/travel-quiz-result.png" alt="旅行灵魂测试结果页" style="max-height:420px;"><figcaption style="text-align:center; margin-top:8px; color:var(--green-deep); font-size:11px; font-weight:700;">测试结果</figcaption></figure>
+              <span style="position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); display: grid; place-items: center; width: 36px; height: 36px; border-radius: 50%; background: var(--green-deep); color: var(--white); font-size: 18px; box-shadow: 0 4px 16px rgba(0,57,31,0.3); z-index: 5;">→</span>
+            </div>
+          </div>
+          <p class="status-note" style="margin-top: 34px;">测试中生成 16 种旅行人格——如城市考古家（文化经典/计划型）、出片收集员（视觉导向/探索型）、胃袋探险家（饮食中心/松弛型）、安稳旅行家（舒适导向/规划型）等，路线与标签共同参与不同人格的个性化定制。</p>
+        </section>
+
+        <section class="case-section" id="demo">
+          <header class="section-head">
+            <span class="number">09</span>
+            <h2>DEMO 展示</h2>
+          </header>
+          <p class="lead">从首页选择规划方式，到 AI 生成个性化路线、地图查看、手动编辑调整，再到最终保存行程的全流程演示。</p>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+            <div class="demo-bilibili">
+              <iframe
+                src="https://player.bilibili.com/player.html?bvid=BV1PVEd62ExE&page=1&high_quality=1&danmaku=0&autoplay=0"
+                title="小迹 产品交互演示"
+                allowfullscreen="true"
+                scrolling="no"
+                frameborder="0"
+                sandbox="allow-top-navigation allow-same-origin allow-forms allow-scripts allow-popups allow-popups-to-escape-sandbox">
+              </iframe>
+            </div>
+            <div style="display: flex; flex-direction: column; justify-content: center; gap: 14px; padding: 10px 0;">
+              <h3 style="margin: 0; color: var(--green-deep); font-size: 20px;">小迹 · 产品交互演示</h3>
+              <p style="margin: 0; color: var(--text); font-size: 14px; line-height: 1.8;">从首页进入规划选择，AI 对话梳理需求或直接填写旅行信息，系统自动生成每日路线并通过地图验证点位关系，最后支持 AI 优化或手动编辑保存为最终行程。视频时长约 3 分钟。</p>
+              <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px;">
+                <span style="display: inline-flex; padding: 5px 13px; border-radius: 999px; font-size: 12px; font-weight: 700; background: var(--pink-soft); color: var(--pink-deep);">⏱ 3 min</span>
+                <span style="display: inline-flex; padding: 5px 13px; border-radius: 999px; font-size: 12px; font-weight: 700; background: var(--green-soft); color: var(--green-deep);">📱 端到端体验</span>
+                <span style="display: inline-flex; padding: 5px 13px; border-radius: 999px; font-size: 12px; font-weight: 700; background: var(--gold-soft); color: var(--gold);">🎯 全流程 Demo</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="case-section" id="testing">
+          <header class="section-head">
+            <span class="number">10</span>
+            <h2>测试验证：个性化路线是否成立</h2>
+          </header>
+          <p class="status-note">在同一目的地与相同时长下，仅改变旅行人格与偏好输入，观察 AI 生成结果是否真正体现用户差异。</p>
+          <div class="pain-grid" style="margin-bottom: 30px;">
+            <article class="pain-card persona-card">
+              <div class="pain-icon" style="display:none;"></div>
+              <h3>城市考古家</h3>
+              <p style="font-size: 12px; opacity: 0.65; margin-bottom: 8px;">文化经典 / 计划型</p>
+              <p>优先外滩、上海博物馆、豫园等文化经典，每天 2-3 个核心点，步行量适中，午间可休息。外滩夜景选择傍晚蓝调时段拍摄。</p>
+            </article>
+            <article class="pain-card persona-card">
+              <div class="pain-icon" style="display:none;"></div>
+              <h3>出片收集员</h3>
+              <p style="font-size: 12px; opacity: 0.65; margin-bottom: 8px;">视觉导向 / 探索型</p>
+              <p>优先黄金/蓝调时段，D1 经典天际线（外滩日落夜景），D2 街区光影（武康路-安福路-豫园），D3 高空滨水（上海中心-滨江）。</p>
+            </article>
+            <article class="pain-card persona-card">
+              <div class="pain-icon" style="display:none;"></div>
+              <h3>胃袋探险家</h3>
+              <p style="font-size: 12px; opacity: 0.65; margin-bottom: 8px;">饮食中心 / 松弛型</p>
+              <p>每日以美食节点为骨架，D1 外滩夜景与豫园老字号，D2 武康路文艺街区与田子坊，D3 老城厢市井与甜品收尾。全程地铁+短途步行。</p>
+            </article>
+            <article class="pain-card persona-card">
+              <div class="pain-icon" style="display:none;"></div>
+              <h3>安稳旅行家</h3>
+              <p style="font-size: 12px; opacity: 0.65; margin-bottom: 8px;">舒适导向 / 规划型</p>
+              <p>每日 2-3 个点，预留午休，避免长步行。外滩夜景必去，上海博物馆预约免排队，豫园和武康路经典且设施友好。</p>
+            </article>
+          </div>
+          <div class="table-scroll">
+            <table class="test-table">
+              <thead><tr><th>评价项</th><th>城市考古家</th><th>出片收集员</th><th>胃袋探险家</th><th>安稳旅行家</th></tr></thead>
+              <tbody>
+                <tr><th>偏好匹配度 1-5</th><td>4</td><td>4</td><td>4</td><td>4</td></tr>
+                <tr><th>节奏符合度 1-5</th><td>4</td><td>4</td><td>3</td><td>4</td></tr>
+                <tr><th>路线合理性 1-5</th><td>4</td><td>3</td><td>3</td><td>3</td></tr>
+                <tr><th>推荐理由是否体现偏好</th><td>文化路线明确</td><td>光影与拍摄节点突出</td><td>美食节点丰富</td><td>景点少、休息与交通提醒</td></tr>
+                <tr><th>主要问题</th><td>部分热门景点混入</td><td>D2 跨区跳转需优化</td><td>节点过密</td><td>步行与换乘约束不够</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </div>    </div>
+  </main>
+
+  <footer class="page-footer">
+    <span>AI Travel Agent · Case Study</span>
+    <a href="../../index.html#projects">返回作品集 Projects ↗</a>
+  </footer>
+
+  <!-- ===== Hover Tooltip Preview ===== -->
+  <div class="tooltip-preview" id="tooltip" aria-hidden="true">
+    <img id="tooltip-img" src="" alt="预览">
+  </div>
+
+  <script>
+    const anchors = document.querySelectorAll("[data-anchor]");
+    const sections = document.querySelectorAll(".case-section, #overview");
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        anchors.forEach((link) => {
+          link.classList.toggle("active", link.dataset.anchor === entry.target.id);
+        });
+      });
+    }, { rootMargin: "-18% 0px -65% 0px", threshold: 0.01 });
+
+    sections.forEach((section) => observer.observe(section));
+
+    // ===== Hover Tooltip: follow mouse with 3x preview =====
+    const tooltip = document.getElementById("tooltip");
+    const tooltipImg = document.getElementById("tooltip-img");
+    let activeImg = null;
+
+    document.querySelectorAll(".competitor-shot img").forEach((img) => {
+      const container = img.closest(".competitor-shot");
+      container.addEventListener("mouseenter", () => {
+        activeImg = img;
+        tooltipImg.src = img.src;
+        tooltip.classList.add("show");
+      });
+      container.addEventListener("mousemove", (e) => {
+        tooltip.style.left = (e.clientX + 20) + "px";
+        tooltip.style.top = (e.clientY - 20) + "px";
+      });
+      container.addEventListener("mouseleave", () => {
+        activeImg = null;
+        tooltip.classList.remove("show");
+      });
+    });
+  </script>
+  <script defer src="../../js/reveal.js?v=20260928e"></script>
+
+</body>
+</html>
