@@ -5,6 +5,10 @@
   const BOOT_WORD = "lunaliu";
   root.dataset.oceanBoot = "loading";
 
+  function delay(ms) {
+    return new Promise((resolve) => window.setTimeout(resolve, ms));
+  }
+
   function loadImage(src) {
     return new Promise((resolve) => {
       const image = new Image();
@@ -33,27 +37,23 @@
     });
   }
 
-  function runTypewriter(screen, target) {
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  function runTypewriter(screen, target, intervalMs) {
     if (!target) return Promise.resolve();
-    if (reduced) {
-      target.textContent = BOOT_WORD;
-      screen?.classList.add("is-typing-complete");
-      return Promise.resolve();
-    }
+    screen?.classList.add("is-typing");
+    target.textContent = "";
 
     return new Promise((resolve) => {
-      target.textContent = "";
       let index = 0;
       const step = () => {
         if (index >= BOOT_WORD.length) {
+          screen?.classList.remove("is-typing");
           screen?.classList.add("is-typing-complete");
-          window.setTimeout(resolve, 180);
+          resolve();
           return;
         }
         target.textContent += BOOT_WORD[index];
         index += 1;
-        window.setTimeout(step, 88);
+        window.setTimeout(step, intervalMs);
       };
       step();
     });
@@ -63,17 +63,31 @@
     const screen = document.querySelector(".ocean-boot-screen");
     const typeTarget = document.querySelector("[data-boot-typewriter]");
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const timeoutMs = reduced ? 4000 : 12000;
-    const tasks = [
+    const pauseMs = reduced ? 900 : 3000;
+    const typeIntervalMs = reduced ? 70 : 165;
+    const holdAfterTypeMs = reduced ? 500 : 900;
+    const timeoutMs = reduced ? 6000 : 16000;
+
+    const assetLoad = Promise.allSettled([
       Promise.allSettled(criticalAssets().map(loadImage)),
       waitForLettersReady(),
-      runTypewriter(screen, typeTarget),
-    ];
-    if (document.fonts?.ready) tasks.push(document.fonts.ready);
-    await Promise.race([
-      Promise.allSettled(tasks),
-      new Promise((resolve) => setTimeout(resolve, timeoutMs)),
+      document.fonts?.ready ?? Promise.resolve(),
     ]);
+
+    await delay(pauseMs);
+    if (reduced) {
+      if (typeTarget) typeTarget.textContent = BOOT_WORD;
+      screen?.classList.add("is-typing-complete");
+    } else {
+      await runTypewriter(screen, typeTarget, typeIntervalMs);
+    }
+    await delay(holdAfterTypeMs);
+
+    await Promise.race([
+      assetLoad,
+      delay(timeoutMs),
+    ]);
+
     root.dataset.oceanBoot = "ready";
     document.dispatchEvent(new CustomEvent("ocean:bootready"));
   }

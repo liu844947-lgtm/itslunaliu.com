@@ -1775,13 +1775,17 @@ body.one-page .project-art--sales {
   position: fixed;
   inset: 0;
   z-index: 9998;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 2px;
+  display: grid;
+  place-items: center;
   background: var(--portfolio-blue, #086be6);
   color: #fff;
   transition: opacity .45s ease;
+}
+.ocean-boot-screen__line {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  min-height: clamp(2.4rem, 5vw, 3.4rem);
 }
 .ocean-boot-screen__word {
   font-family: "Rammetto One", Bahnschrift, sans-serif;
@@ -1789,14 +1793,20 @@ body.one-page .project-art--sales {
   letter-spacing: .08em;
   text-transform: lowercase;
   opacity: .92;
-  min-height: 1.2em;
+  min-width: 0;
 }
 .ocean-boot-screen__cursor {
-  width: 3px;
-  height: clamp(1.6rem, 4vw, 2.6rem);
-  border-radius: 999px;
-  background: rgba(255, 255, 255, .88);
-  animation: boot-cursor-blink 1s step-end infinite;
+  flex: 0 0 auto;
+  width: 4px;
+  height: clamp(1.75rem, 4.2vw, 2.75rem);
+  margin-top: .08em;
+  border-radius: 2px;
+  background: #fff;
+  box-shadow: 0 0 12px rgba(255, 255, 255, .45);
+  animation: boot-cursor-blink .85s step-end infinite;
+}
+.ocean-boot-screen.is-typing .ocean-boot-screen__cursor {
+  animation: boot-cursor-blink .85s step-end infinite;
 }
 .ocean-boot-screen.is-typing-complete .ocean-boot-screen__cursor {
   opacity: 0;
