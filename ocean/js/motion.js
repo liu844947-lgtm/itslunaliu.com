@@ -78,7 +78,7 @@
     // Flip all PORTFOLIO letters once, then return (intro + PLAY button).
     const playLetters = ({ force = false } = {}) => {
       if (!ready || !controls.length || introRunning) return;
-      if (!force && (!visible || introPlayed)) return;
+      if (!force && (!visible || introPlayed || !bootReady())) return;
       if (!motionEnabled()) {
         introPlayed = true;
         return;
@@ -94,6 +94,8 @@
         introRunning = false;
       }, 1600);
     };
+
+    const bootReady = () => root.dataset.oceanBoot === "ready";
 
     const playIntroOnce = () => playLetters({ force: false });
 
@@ -122,6 +124,7 @@
     }, { threshold: 0.25 });
     observer.observe(title);
     state.refreshers.push(refresh);
+    listen(document, "ocean:bootready", refresh);
     state.cleanups.push(() => {
       observer.disconnect();
       clearTimers();
@@ -685,38 +688,27 @@
     state.refreshers.push(syncPausedState);
     syncPausedState();
 
-    Promise.allSettled(assets.map((asset) => decodeImage(asset.src.trim()).then((image) => ({
-      image,
-      alt: typeof asset.alt === "string" ? asset.alt : "",
-    })))).then((results) => {
-      if (!state.initialized || state.generation !== generation || !track.isConnected) return;
-      const decodedAssets = results
-        .filter((result) => result.status === "fulfilled")
-        .map((result) => result.value);
-      if (!decodedAssets.length) {
-        viewport.classList.add("is-empty");
-        viewport.classList.remove("has-stickers");
-        return;
-      }
-      const makeSet = (decorative) => {
-        const set = document.createElement("div");
-        set.className = "ocean-sticker-set";
-        if (decorative) set.setAttribute("aria-hidden", "true");
-        decodedAssets.forEach((asset) => {
-          const image = document.createElement("img");
-          image.className = "ocean-sticker";
-          image.src = asset.image.currentSrc || asset.image.src;
-          image.alt = decorative ? "" : asset.alt;
-          image.draggable = false;
-          set.append(image);
-        });
-        return set;
-      };
-      track.replaceChildren(makeSet(false), makeSet(true));
-      viewport.classList.remove("is-empty");
-      viewport.classList.add("has-stickers");
-      syncPausedState();
-    });
+    const makeSet = (decorative) => {
+      const set = document.createElement("div");
+      set.className = "ocean-sticker-set";
+      if (decorative) set.setAttribute("aria-hidden", "true");
+      assets.forEach((asset) => {
+        const image = document.createElement("img");
+        image.className = "ocean-sticker";
+        image.src = asset.src.trim();
+        image.alt = decorative ? "" : (typeof asset.alt === "string" ? asset.alt : "");
+        image.loading = decorative ? "lazy" : "eager";
+        image.decoding = "async";
+        image.draggable = false;
+        set.append(image);
+      });
+      return set;
+    };
+
+    track.replaceChildren(makeSet(false), makeSet(true));
+    viewport.classList.remove("is-empty");
+    viewport.classList.add("has-stickers");
+    syncPausedState();
   }
 
   function refreshMotion() {
@@ -771,9 +763,18 @@
   }
 
   window.OceanMotion = { init, destroy };
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", init, { once: true });
+
+  function startMotion() {
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", init, { once: true });
+    } else {
+      init();
+    }
+  }
+
+  if (window.OceanBoot?.whenReady) {
+    window.OceanBoot.whenReady(startMotion);
   } else {
-    init();
+    startMotion();
   }
 }());

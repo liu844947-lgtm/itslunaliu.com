@@ -1771,6 +1771,23 @@ body.one-page .project-art--sales {
   font-weight: 500;
   line-height: 1.2;
 }
+.ocean-boot-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
+  display: grid;
+  place-items: center;
+  background: var(--portfolio-blue, #086be6);
+  color: #fff;
+  transition: opacity .45s ease;
+}
+.ocean-boot-screen__word {
+  font-family: "Rammetto One", Bahnschrift, sans-serif;
+  font-size: clamp(2rem, 5vw, 3.25rem);
+  letter-spacing: .08em;
+  text-transform: lowercase;
+  opacity: .92;
+}
 .about-portrait { padding: clamp(72px, 10vw, 144px) 0 clamp(92px, 11vw, 168px); }
 .portrait-slot { background: var(--portfolio-blue); }
 .sticker-band {
@@ -1895,6 +1912,26 @@ body.one-page .project-art--sales {
 .sticker-marquee [data-sticker-track] {
   display: flex;
   width: max-content;
+  animation: sticker-marquee 48s linear infinite;
+}
+.ocean-sticker-set {
+  display: flex;
+  align-items: center;
+  flex: 0 0 auto;
+}
+.ocean-sticker {
+  display: block;
+  width: clamp(72px, 7vw, 104px);
+  height: clamp(72px, 7vw, 104px);
+  object-fit: contain;
+  flex: 0 0 auto;
+}
+.sticker-band.is-paused .sticker-marquee [data-sticker-track] {
+  animation-play-state: paused;
+}
+@keyframes sticker-marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
 }
 .sticker-band.is-empty {
   min-height: 0;

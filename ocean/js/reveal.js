@@ -88,9 +88,17 @@
     });
   }
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initReveal, { once: true });
+  function startReveal() {
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initReveal, { once: true });
+    } else {
+      initReveal();
+    }
+  }
+
+  if (window.OceanBoot?.whenReady) {
+    window.OceanBoot.whenReady(startReveal);
   } else {
-    initReveal();
+    startReveal();
   }
 })();
