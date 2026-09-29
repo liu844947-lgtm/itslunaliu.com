@@ -12,6 +12,51 @@
     }
   };
 
+  function initContactCard() {
+    const card = document.querySelector('[data-contact-card]');
+    const openers = [...document.querySelectorAll('[data-contact-open]')];
+    if (!card || !openers.length) return;
+
+    const panel = card.querySelector('[role="dialog"]');
+    const closers = [...card.querySelectorAll('[data-contact-close]')];
+    const closeButton = card.querySelector('.contact-card__close');
+    let lastFocus = null;
+
+    function open() {
+      lastFocus = document.activeElement;
+      card.hidden = false;
+      requestAnimationFrame(() => {
+        card.classList.add('is-open');
+        card.setAttribute('aria-hidden', 'false');
+      });
+      document.body.classList.add('contact-card-open');
+      closeButton?.focus();
+    }
+
+    function close() {
+      card.classList.remove('is-open');
+      card.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('contact-card-open');
+      window.setTimeout(() => {
+        if (!card.classList.contains('is-open')) card.hidden = true;
+      }, 240);
+      if (lastFocus && typeof lastFocus.focus === 'function') lastFocus.focus();
+    }
+
+    openers.forEach((opener) => opener.addEventListener('click', (event) => {
+      event.preventDefault();
+      open();
+    }));
+    closers.forEach((closer) => closer.addEventListener('click', close));
+    panel?.addEventListener('click', (event) => event.stopPropagation());
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && card.classList.contains('is-open')) {
+        event.preventDefault();
+        close();
+      }
+    });
+  }
+
   function init() {
     if (document.body.dataset.oceanReady) return;
     document.body.dataset.oceanReady = 'true';
@@ -61,6 +106,8 @@
     }));
     reduced.addEventListener('change', updateMotion);
     updateMotion();
+
+    initContactCard();
 
     const projects = document.querySelector('[data-projects-root]');
     if (!projects) return;

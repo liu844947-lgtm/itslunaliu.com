@@ -96,34 +96,35 @@
 }
 .project-entry--minimal .project-art--devices {
   background: transparent !important;
+  overflow: visible !important;
 }
 .project-entry--minimal .project-art__laptop {
   left: 0;
   bottom: 0;
   top: auto;
-  width: 92%;
+  width: 88%;
   height: auto;
-  max-width: 96%;
+  max-width: 88%;
   max-height: 100%;
   object-position: left bottom;
   object-fit: contain;
   transform: none;
-  filter: drop-shadow(0 16px 28px rgba(8, 40, 90, .18));
+  filter: none;
   z-index: 1;
 }
 .project-entry--minimal .project-art__phone {
-  left: 60%;
+  left: 56%;
   right: auto;
   bottom: 0;
   top: auto;
-  width: 28%;
+  width: 26%;
   height: auto;
-  max-width: 30%;
-  max-height: 82%;
+  max-width: 28%;
+  max-height: 70%;
   object-position: left bottom;
   object-fit: contain;
   transform: none;
-  filter: drop-shadow(0 14px 22px rgba(8, 40, 90, .2));
+  filter: none;
   z-index: 2;
 }
 .project-art--devices::before,
@@ -179,10 +180,10 @@
 .project-art--cutout .project-art__shot {
   position: relative;
   inset: auto;
-  width: auto;
+  width: min(90%, 540px);
   height: auto;
-  max-width: min(94%, 620px);
-  max-height: min(78%, 400px);
+  max-width: none;
+  max-height: clamp(240px, 36vw, 360px);
   margin: auto;
   object-fit: contain;
   transform: none;
@@ -242,6 +243,7 @@ body.project-detail-page {
   width: 100%;
   margin: 0;
 }
+.project-detail-page .case-briefs,
 .project-detail-page .case-story,
 .project-detail-page .case-gallery,
 .project-detail-page .case-outcome,
@@ -303,8 +305,8 @@ body.project-detail-page:not(.has-case-devices) {
   --case-ink: #343434;
   --case-paper: #f7f7f7;
   --case-line: #b3b3b3;
-  --font-en: "Roboto", "Helvetica Neue", Arial, sans-serif;
-  --font-jp: "Zen Kaku Gothic New", "Noto Sans SC", "Microsoft YaHei", sans-serif;
+  --font-en: "Noto Sans SC", "Source Han Sans SC", "Microsoft YaHei", sans-serif;
+  --font-jp: "Noto Sans SC", "Source Han Sans SC", "Microsoft YaHei", sans-serif;
   color: var(--case-ink);
   background: var(--case-paper);
   font-family: var(--font-en);
@@ -654,6 +656,115 @@ body.has-case-devices .site-footer {
   background: rgba(8, 107, 230, .06);
   color: var(--ink);
 }
+.case-briefs > .case-experience {
+  width: auto;
+  margin-inline: 0;
+  padding-inline: clamp(20px, 4vw, 56px);
+}
+.case-briefs[hidden] { display: none !important; }
+.case-brief {
+  padding: clamp(40px, 6vw, 72px) clamp(20px, 4vw, 56px) 0;
+}
+.case-brief.is-centered .case-section-title {
+  justify-content: center;
+}
+.case-brief.is-centered .case-story__body {
+  margin-inline: auto;
+  text-align: center;
+}
+.case-brief .case-story__body {
+  max-width: 68ch;
+}
+.case-brief .case-story__body + .case-story__body {
+  margin-top: -12px;
+}
+.case-brief__subhead {
+  margin: 28px 0 12px;
+  font-size: 18px;
+  font-weight: 500;
+  letter-spacing: -.01em;
+}
+.case-brief__figures {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(16px, 2vw, 28px);
+  margin: 8px 0 20px;
+  padding: 0;
+  list-style: none;
+}
+.case-brief__figures figure {
+  margin: 0;
+}
+.case-brief__figures img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.case-brief__figures a {
+  display: block;
+  color: inherit;
+}
+.case-brief__figures a figcaption {
+  color: #116af8;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.case-brief__figures a:hover figcaption {
+  color: #0b4fbe;
+}
+.case-brief__figures figcaption {
+  margin-top: 8px;
+  font-size: 14px;
+  line-height: 1.5;
+  text-align: center;
+}
+.case-brief__figure-note {
+  margin: 4px 0 8px;
+  font-size: 14px;
+  line-height: 1.7;
+  text-align: center;
+}
+.case-brief__points {
+  display: grid;
+  gap: 10px;
+  max-width: 68ch;
+  margin: 0 0 8px;
+  padding: 0;
+  list-style: none;
+}
+.case-story__body strong {
+  font-weight: 700;
+}
+.case-brief__table-wrap {
+  width: 100%;
+  overflow-x: auto;
+  margin: 8px 0 12px;
+}
+.case-brief__table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 15px;
+  line-height: 1.65;
+}
+.case-brief__table th,
+.case-brief__table td {
+  padding: 14px 16px;
+  border-bottom: 1px solid rgba(18, 59, 96, .12);
+  text-align: left;
+  vertical-align: top;
+}
+.case-brief__table th {
+  font-weight: 700;
+  background: #fff;
+}
+.case-brief__table td:first-child {
+  font-weight: 700;
+  white-space: nowrap;
+}
+body.project-detail-page:not(.has-case-devices) .case-brief__subhead {
+  color: var(--case-blue, #0870ca);
+  font-family: var(--font-en, inherit);
+}
 .case-story,
 .case-gallery,
 .case-outcome {
@@ -834,6 +945,7 @@ body.has-case-devices .case-links__credentials {
     white-space: normal;
   }
   .case-gallery__grid,
-  .case-outcome__grid { grid-template-columns: 1fr; }
+  .case-outcome__grid,
+  .case-brief__figures { grid-template-columns: 1fr; }
   .case-back-row { flex-direction: column; align-items: flex-start; }
 }

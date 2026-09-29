@@ -206,4 +206,153 @@
       return article;
     }));
   }
+
+  const briefsRoot = document.querySelector('[data-project-sections]');
+  const sections = Array.isArray(project.sections) ? project.sections.filter((section) => section?.title) : [];
+  if (briefsRoot && sections.length) {
+    document.querySelectorAll('.case-story, .case-gallery, .case-outcome').forEach((node) => {
+      node.hidden = true;
+    });
+    briefsRoot.hidden = false;
+    briefsRoot.replaceChildren(...sections.map((section, index) => {
+      const block = document.createElement('section');
+      block.className = 'case-brief' + (section.align === 'center' ? ' is-centered' : '');
+      const headingId = `case-brief-${index}`;
+      block.setAttribute('aria-labelledby', headingId);
+
+      const heading = document.createElement('h2');
+      heading.id = headingId;
+      heading.className = 'case-section-title';
+      const mark = document.createElement('span');
+      mark.setAttribute('aria-hidden', 'true');
+      mark.textContent = '|';
+      heading.append(mark, document.createTextNode(` ${section.title}`));
+      block.appendChild(heading);
+
+      const appendParagraphs = (parent, texts) => {
+        (Array.isArray(texts) ? texts : []).filter(Boolean).forEach((text) => {
+          const paragraph = document.createElement('p');
+          paragraph.className = 'case-story__body';
+          String(text).split(/(\*\*[^*]+\*\*)/g).forEach((part) => {
+            if (!part) return;
+            if (part.startsWith('**') && part.endsWith('**')) {
+              const strong = document.createElement('strong');
+              strong.textContent = part.slice(2, -2);
+              paragraph.appendChild(strong);
+            } else {
+              paragraph.appendChild(document.createTextNode(part));
+            }
+          });
+          parent.appendChild(paragraph);
+        });
+      };
+
+      const appendPoints = (parent, points) => {
+        const items = (Array.isArray(points) ? points : []).filter(Boolean);
+        if (!items.length) return;
+        const list = document.createElement('ul');
+        list.className = 'case-brief__points';
+        items.forEach((text) => {
+          const item = document.createElement('li');
+          item.textContent = text;
+          list.appendChild(item);
+        });
+        parent.appendChild(list);
+      };
+
+      appendParagraphs(block, section.paragraphs);
+
+      const table = section.table;
+      if (table?.columns?.length && table?.rows?.length) {
+        const wrap = document.createElement('div');
+        wrap.className = 'case-brief__table-wrap';
+        const grid = document.createElement('table');
+        grid.className = 'case-brief__table';
+        const head = document.createElement('thead');
+        const headRow = document.createElement('tr');
+        table.columns.forEach((label) => {
+          const cell = document.createElement('th');
+          cell.scope = 'col';
+          cell.textContent = label;
+          headRow.appendChild(cell);
+        });
+        head.appendChild(headRow);
+        const body = document.createElement('tbody');
+        table.rows.forEach((row) => {
+          const line = document.createElement('tr');
+          (Array.isArray(row) ? row : []).forEach((value) => {
+            const cell = document.createElement('td');
+            cell.textContent = value;
+            line.appendChild(cell);
+          });
+          body.appendChild(line);
+        });
+        grid.append(head, body);
+        wrap.appendChild(grid);
+        block.appendChild(wrap);
+      }
+
+      const figures = Array.isArray(section.figures) ? section.figures.filter((item) => item?.src) : [];
+      if (figures.length) {
+        const list = document.createElement('ul');
+        list.className = 'case-brief__figures';
+        figures.forEach((item) => {
+          const entry = document.createElement('li');
+          const figure = document.createElement('figure');
+          const image = document.createElement('img');
+          image.src = item.src;
+          image.alt = item.alt || item.caption || section.title;
+          image.loading = 'lazy';
+          image.decoding = 'async';
+          const caption = document.createElement('figcaption');
+          caption.textContent = item.caption || '';
+          if (item.href) {
+            const anchor = document.createElement('a');
+            anchor.href = item.href;
+            anchor.target = '_blank';
+            anchor.rel = 'noopener noreferrer';
+            anchor.append(image, caption);
+            figure.appendChild(anchor);
+          } else {
+            figure.append(image);
+            if (item.caption) figure.appendChild(caption);
+          }
+          entry.appendChild(figure);
+          list.appendChild(entry);
+        });
+        block.appendChild(list);
+        if (section.figureHint) {
+          const note = document.createElement('p');
+          note.className = 'case-brief__figure-note';
+          note.textContent = '点击样机或标题，可进入对应端体验。';
+          block.appendChild(note);
+        }
+      }
+
+      (Array.isArray(section.blocks) ? section.blocks : []).forEach((item) => {
+        if (item?.heading) {
+          const subhead = document.createElement('h3');
+          subhead.className = 'case-brief__subhead';
+          subhead.textContent = item.heading;
+          block.appendChild(subhead);
+        }
+        appendParagraphs(block, item?.paragraphs);
+        appendPoints(block, item?.points);
+      });
+      return block;
+    }));
+
+    const experienceSection = document.querySelector('[data-project-experience]');
+    const figureLinks = sections.some((section) => (
+      Array.isArray(section.figures) && section.figures.some((item) => item?.href)
+    ));
+    if (experienceSection && figureLinks) {
+      experienceSection.hidden = true;
+      const authNode = document.querySelector('[data-project-experience-auth]');
+      if (authNode) {
+        authNode.hidden = true;
+        authNode.textContent = '';
+      }
+    }
+  }
 })();

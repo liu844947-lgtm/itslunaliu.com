@@ -409,3 +409,8 @@ body.project-detail-page .site-footer { width: 100%; max-width: none; padding: 2
 @media (prefers-reduced-motion: reduce) {
   .project-entry { transition: none; }
 }
+
+body.project-detail-page,
+body.project-detail-page * {
+  font-family: "Noto Sans SC", "Source Han Sans SC", "Microsoft YaHei", sans-serif;
+}

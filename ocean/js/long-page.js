@@ -44,11 +44,39 @@
     });
   }
   const sections = [...document.querySelectorAll('main > section[id]')];
-  const links = [...document.querySelectorAll('#primary-nav a[href^="#"]')];
+  const links = [...document.querySelectorAll('#primary-nav a[href^="#"], .directory-nav a[href^="#"]')];
   const header = document.querySelector('.site-header');
   const nav = document.getElementById('primary-nav');
   const darkIds = new Set(['projects', 'contact']);
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   let navThemeTick = false;
+
+  function scrollToSection(id, { updateHash = true } = {}) {
+    const target = document.getElementById(id);
+    if (!target) return false;
+    if (updateHash && location.hash !== `#${id}`) {
+      history.pushState(null, '', `#${id}`);
+    }
+    target.scrollIntoView({
+      behavior: reducedMotion.matches ? 'auto' : 'smooth',
+      block: 'start',
+    });
+    return true;
+  }
+
+  links.forEach((link) => {
+    link.addEventListener('click', (event) => {
+      const id = link.hash?.replace(/^#/, '');
+      if (!id || !document.getElementById(id)) return;
+      event.preventDefault();
+      scrollToSection(id);
+    });
+  });
+
+  window.addEventListener('hashchange', () => {
+    const id = location.hash.replace(/^#/, '');
+    if (id) scrollToSection(id, { updateHash: false });
+  });
 
   function navOverDarkBackground() {
     if (!nav) return false;

@@ -10,7 +10,7 @@
   const pages = Math.max(1, Number(section.dataset.projectPages || projectsRoot.dataset.projectCount || 3));
   section.style.setProperty('--project-pages', String(pages));
 
-  const desktopPin = window.matchMedia('(min-width: 761px)');
+  const desktopPin = window.matchMedia('(min-width: 992px)');
   let userSelectUntil = 0;
   let lastIndex = -1;
   let ticking = false;

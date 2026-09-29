@@ -69,10 +69,9 @@ try {
   await page.locator('.detail-back').click();
   await page.waitForURL('**/index.html#projects');
   assert.equal(await page.locator('[data-project-current]').textContent(), '03');
-  await page.goto('http://127.0.0.1:4187/ocean/project.html?id=02');
-  await page.waitForFunction(() => document.querySelector('[data-project-title]')?.textContent.includes('来华留学销售 AI Agent'));
-  assert.equal(await page.locator('h1[data-project-title]').textContent(), '来华留学销售 AI Agent');
-  assert.equal(await page.locator('.project-brand-backdrop').textContent(), 'LUNALIU');
+  await page.goto('http://127.0.0.1:4187/ocean/project.html?id=01');
+  await page.waitForFunction(() => document.querySelector('[data-project-title]')?.textContent.includes('博创园'));
+  assert.match(await page.locator('h1[data-project-title]').textContent(), /博创园/);
   assert.notEqual(await page.locator('h1').textContent(), 'LUNALIU');
   for (const heading of ['背景和动作', '我负责的部分', '目前的结果和迭代']) {
     assert.ok(await page.getByRole('heading', { name: new RegExp(heading) }).count() >= 1);
@@ -82,10 +81,10 @@ try {
   const listToggle = page.locator('[data-project-view="list"]');
   if (await listToggle.count()) {
     await listToggle.click();
-    assert.equal(await page.locator('.project-entry:visible').count(), 5);
+    assert.equal(await page.locator('.project-entry:visible').count(), 3);
     await page.locator('[data-project-view="gallery"]').click();
   } else {
-    assert.equal(await page.locator('.project-entry').count(), 5);
+    assert.equal(await page.locator('.project-entry').count(), 3);
   }
   const motionToggle = page.locator('[data-motion-toggle]');
   if (await motionToggle.count()) {
@@ -93,7 +92,7 @@ try {
     assert.equal(await page.locator('html').getAttribute('data-motion'), 'paused');
   }
   await page.locator('[data-project-select="2"]').click();
-  results.checks.push('detail/back identity, five-item directory, motion pause');
+  results.checks.push('detail/back identity, three-item directory, motion pause');
   const mobile = await browser.newPage({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true });
   mobile.on('pageerror', error => results.errors.push(error.message));
   await mobile.goto('http://127.0.0.1:4187/ocean/index.html');

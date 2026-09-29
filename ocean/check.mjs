@@ -17,14 +17,18 @@ for (const id of ['internship', 'projects', 'about']) {
 }
 assert.ok(!/精选项目|home-preview|preview-grid/.test(home), 'no duplicated selected-projects section');
 assert.equal((home.match(/data-projects-root/g) || []).length, 1, 'one project gallery');
-for (const id of ['01', '02']) assert.ok(home.includes(`project.html?id=${id}`), `project ${id} has a detail URL`);
+assert.ok(home.includes('project.html?id=01'), 'bochuangyuan has a detail URL');
 assert.ok(home.includes('projects/scout-ai/index.html'), 'ScoutAI links to full case study');
 assert.ok(home.includes('projects/travel-agent/index.html'), 'Travel Agent links to full case study');
+assert.ok(!home.includes('LIUXUE'), 'liuxue project removed from gallery');
+assert.ok(home.includes('AIGC产品'), 'directory pill includes AIGC产品');
+assert.ok(home.includes('产品运营'), 'directory pill includes 产品运营');
+assert.ok(!home.includes('合肥 · Remote'), 'legacy location pill removed');
 for (const casePage of ['projects/scout-ai/index.html', 'projects/travel-agent/index.html']) {
   await access(resolve(root, casePage));
 }
-assert.equal((home.match(/class="project-entry(?:\s|\")/g) || []).length, 4, 'four project entries');
-assert.ok(home.includes('data-project-count="4"'), 'project count is four');
+assert.equal((home.match(/class="project-entry(?:\s|\")/g) || []).length, 3, 'three project entries');
+assert.ok(home.includes('data-project-count="3"'), 'project count is three');
 assert.ok(!home.includes('电商详情页'), 'loom project removed from gallery');
 assert.ok(home.indexOf('旅游 Agent') < home.indexOf('ScoutAI'), 'travel appears before scout in selectors');
 assert.ok(home.includes('>lunaliu<'), 'home wordmark is lunaliu');
@@ -57,4 +61,4 @@ for (const page of ['internship', 'projects', 'about']) {
   const html = await readFile(resolve(root, `${page}.html`), 'utf8');
   assert.ok(html.includes(`index.html#${page}`), `${page}: legacy entry reaches long page`);
 }
-console.log(`PASS: five ordered sections, four projects, legacy anchors, ${checked} local references.`);
+console.log(`PASS: five ordered sections, three projects, legacy anchors, ${checked} local references.`);

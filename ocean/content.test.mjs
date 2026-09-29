@@ -7,8 +7,9 @@ const detail = await readFile(new URL('project.html', root), 'utf8');
 
 assert.match(data, /window\.OceanContent/);
 for (const key of ['profile', 'internships', 'projects']) assert.match(data, new RegExp(`${key}:`));
-for (const id of ['01', '02', '03', '04']) assert.match(data, new RegExp(`id: '${id}'`));
-assert.doesNotMatch(data, /id: '05'/);
+for (const id of ['01', '02', '03']) assert.match(data, new RegExp(`id: '${id}'`));
+assert.doesNotMatch(data, /id: '04'/);
+assert.doesNotMatch(data, /liuxue-agent/);
 assert.doesNotMatch(data, /loom-detail/);
 assert.match(data, /kind: 'personal'/);
 assert.match(data, /scoutai/);
@@ -34,8 +35,11 @@ for (const hook of [
 ]) {
   assert.match(detail, new RegExp(hook));
 }
-for (const heading of ['在线体验']) {
+for (const heading of ['体验入口', 'data-project-sections']) {
   assert.match(detail, new RegExp(heading));
+}
+for (const heading of ['项目概述', '建设背景', '系统构成', '职责范围', '关键设计', '阶段进展']) {
+  assert.match(data, new RegExp(heading));
 }
 assert.match(detail, /data-case-hero/);
 assert.match(detail, /data-project-devices/);
