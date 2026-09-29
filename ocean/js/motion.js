@@ -55,7 +55,9 @@
     let ready = false;
     let visible = false;
     let introPlayed = false;
+    let introScheduled = false;
     let introRunning = false;
+    const INTRO_DELAY_MS = 1000;
 
     const later = (fn, delay) => {
       const timer = setTimeout(() => { timers.delete(timer); fn(); }, delay);
@@ -97,7 +99,16 @@
 
     const bootReady = () => root.dataset.oceanBoot === "ready";
 
-    const playIntroOnce = () => playLetters({ force: false });
+    const playIntroOnce = () => {
+      if (!ready || !controls.length || introRunning || introScheduled || introPlayed || !bootReady()) return;
+      if (!visible) return;
+      if (!motionEnabled()) {
+        introPlayed = true;
+        return;
+      }
+      introScheduled = true;
+      later(() => playLetters({ force: true }), INTRO_DELAY_MS);
+    };
 
     const playButton = document.querySelector("[data-letter-play], .hero-play");
     if (playButton) {

@@ -65,7 +65,6 @@
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const pauseMs = reduced ? 900 : 3000;
     const typeIntervalMs = reduced ? 70 : 165;
-    const holdAfterTypeMs = reduced ? 500 : 900;
     const timeoutMs = reduced ? 6000 : 16000;
 
     const assetLoad = Promise.allSettled([
@@ -81,7 +80,6 @@
     } else {
       await runTypewriter(screen, typeTarget, typeIntervalMs);
     }
-    await delay(holdAfterTypeMs);
 
     await Promise.race([
       assetLoad,

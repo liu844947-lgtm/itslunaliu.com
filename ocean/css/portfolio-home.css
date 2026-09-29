@@ -1805,10 +1805,11 @@ body.one-page .project-art--sales {
   box-shadow: 0 0 12px rgba(255, 255, 255, .45);
   animation: boot-cursor-blink .85s step-end infinite;
 }
-.ocean-boot-screen.is-typing .ocean-boot-screen__cursor {
+.ocean-boot-screen.is-typing .ocean-boot-screen__cursor,
+.ocean-boot-screen.is-typing-complete .ocean-boot-screen__cursor {
   animation: boot-cursor-blink .85s step-end infinite;
 }
-.ocean-boot-screen.is-typing-complete .ocean-boot-screen__cursor {
+html[data-ocean-boot="ready"] .ocean-boot-screen__cursor {
   opacity: 0;
   animation: none;
 }
