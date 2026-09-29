@@ -30,6 +30,17 @@
       { character: 'O', src: 'assets/letters/portfolio-12-o-a-jellyfish-badge.png', layout: figmaLayout(1567, 392.97, 321) }
     ],
     stickers: [
+      { src: 'assets/emotes/cat-series/cat4-alert-hello.gif', alt: 'Cat alert animation' },
+      { src: 'assets/emotes/cat-series/cat4-alert-new-donation.gif', alt: 'Cat alert animation' },
+      { src: 'assets/emotes/cat-series/cat4-alert-new-subscriber.gif', alt: 'Cat alert animation' },
+      { src: 'assets/emotes/cat-series/cat-alert-01.gif', alt: 'Cat alert animation' },
+      { src: 'assets/emotes/cat-series/cat-alert-02.gif', alt: 'Cat alert animation' },
+      { src: 'assets/emotes/cat-series/cat-alert-03.gif', alt: 'Cat alert animation' },
+      { src: 'assets/emotes/cat-series/cat-alert-04.gif', alt: 'Cat alert animation' },
+      { src: 'assets/emotes/cat-series/cat-alert-05.gif', alt: 'Cat alert animation' },
+      { src: 'assets/emotes/cat-series/cat-alert-06.gif', alt: 'Cat alert animation' },
+      { src: 'assets/emotes/cat-series/cat-alert-cat.gif', alt: 'Cat alert animation' },
+      { src: 'assets/emotes/cat-series/cat-alert-sleeping.gif', alt: 'Cat alert animation' },
       { src: 'assets/emotes/emote-001.png', alt: 'Twitch emote' },
       { src: 'assets/emotes/emote-002.png', alt: 'Twitch emote' },
       { src: 'assets/emotes/emote-003.png', alt: 'Twitch emote' },

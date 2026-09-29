@@ -34,7 +34,8 @@
           if (typeof image.decode === "function") await image.decode();
           resolve(image);
         } catch (error) {
-          reject(error);
+          if (image.complete && image.naturalWidth > 0) resolve(image);
+          else reject(error);
         }
       };
       image.onerror = reject;
