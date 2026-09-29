@@ -726,18 +726,7 @@
     initLetters(generation);
     initPaperBoatCursor();
     initLiquidGallery();
-    const stickerViewport = document.querySelector("[data-sticker-viewport]");
-    if (stickerViewport && "IntersectionObserver" in window) {
-      const stickerObserver = new IntersectionObserver((entries) => {
-        if (!entries.some((entry) => entry.isIntersecting)) return;
-        stickerObserver.disconnect();
-        initStickers(generation);
-      }, { rootMargin: "280px 0px" });
-      stickerObserver.observe(stickerViewport);
-      state.cleanups.push(() => stickerObserver.disconnect());
-    } else {
-      initStickers(generation);
-    }
+    initStickers(generation);
     listen(document, "visibilitychange", refreshMotion);
     listen(document, "ocean:motionchange", refreshMotion);
     watchMedia(reducedQuery, refreshMotion);
