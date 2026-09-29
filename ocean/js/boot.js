@@ -2,6 +2,7 @@
   "use strict";
 
   const root = document.documentElement;
+  const BOOT_WORD = "lunaliu";
   root.dataset.oceanBoot = "loading";
 
   function loadImage(src) {
@@ -32,12 +33,41 @@
     });
   }
 
+  function runTypewriter(screen, target) {
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (!target) return Promise.resolve();
+    if (reduced) {
+      target.textContent = BOOT_WORD;
+      screen?.classList.add("is-typing-complete");
+      return Promise.resolve();
+    }
+
+    return new Promise((resolve) => {
+      target.textContent = "";
+      let index = 0;
+      const step = () => {
+        if (index >= BOOT_WORD.length) {
+          screen?.classList.add("is-typing-complete");
+          window.setTimeout(resolve, 180);
+          return;
+        }
+        target.textContent += BOOT_WORD[index];
+        index += 1;
+        window.setTimeout(step, 88);
+      };
+      step();
+    });
+  }
+
   async function boot() {
+    const screen = document.querySelector(".ocean-boot-screen");
+    const typeTarget = document.querySelector("[data-boot-typewriter]");
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const timeoutMs = reduced ? 4000 : 12000;
     const tasks = [
       Promise.allSettled(criticalAssets().map(loadImage)),
       waitForLettersReady(),
+      runTypewriter(screen, typeTarget),
     ];
     if (document.fonts?.ready) tasks.push(document.fonts.ready);
     await Promise.race([

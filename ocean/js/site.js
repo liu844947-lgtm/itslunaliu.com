@@ -22,9 +22,15 @@
     const closeButton = card.querySelector('.contact-card__close');
     let lastFocus = null;
 
+    function bootReady() {
+      return document.documentElement.dataset.oceanBoot === 'ready';
+    }
+
     function open() {
+      if (!bootReady()) return;
       lastFocus = document.activeElement;
       card.hidden = false;
+      card.style.visibility = 'visible';
       requestAnimationFrame(() => {
         card.classList.add('is-open');
         card.setAttribute('aria-hidden', 'false');
@@ -38,10 +44,15 @@
       card.setAttribute('aria-hidden', 'true');
       document.body.classList.remove('contact-card-open');
       window.setTimeout(() => {
-        if (!card.classList.contains('is-open')) card.hidden = true;
+        if (!card.classList.contains('is-open')) {
+          card.hidden = true;
+          card.style.visibility = 'hidden';
+        }
       }, 240);
       if (lastFocus && typeof lastFocus.focus === 'function') lastFocus.focus();
     }
+
+    close();
 
     openers.forEach((opener) => opener.addEventListener('click', (event) => {
       event.preventDefault();
