@@ -198,6 +198,7 @@
     Promise.allSettled(pending).then(() => {
       if (!state.initialized || state.generation !== generation) return;
       ready = true;
+      document.dispatchEvent(new CustomEvent("ocean:lettersready"));
       refresh();
     });
   }
@@ -763,18 +764,9 @@
   }
 
   window.OceanMotion = { init, destroy };
-
-  function startMotion() {
-    if (document.readyState === "loading") {
-      document.addEventListener("DOMContentLoaded", init, { once: true });
-    } else {
-      init();
-    }
-  }
-
-  if (window.OceanBoot?.whenReady) {
-    window.OceanBoot.whenReady(startMotion);
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init, { once: true });
   } else {
-    startMotion();
+    init();
   }
 }());

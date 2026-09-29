@@ -26,10 +26,19 @@
     ];
   }
 
+  function waitForLettersReady() {
+    return new Promise((resolve) => {
+      document.addEventListener("ocean:lettersready", resolve, { once: true });
+    });
+  }
+
   async function boot() {
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const timeoutMs = reduced ? 3500 : 9000;
-    const tasks = [Promise.allSettled(criticalAssets().map(loadImage))];
+    const timeoutMs = reduced ? 4000 : 12000;
+    const tasks = [
+      Promise.allSettled(criticalAssets().map(loadImage)),
+      waitForLettersReady(),
+    ];
     if (document.fonts?.ready) tasks.push(document.fonts.ready);
     await Promise.race([
       Promise.allSettled(tasks),
