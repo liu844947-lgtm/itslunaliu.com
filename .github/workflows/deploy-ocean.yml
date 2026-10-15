@@ -71,14 +71,14 @@ jobs:
           cache_snippet=/etc/nginx/conf.d/itslunaliu-asset-cache.conf
           cache_added=0
           if [ ! -f "$cache_snippet" ]; then
-            cat > "$cache_snippet" <<'CACHE'
-map $sent_http_content_type $itslunaliu_asset_expires {
-    default off;
-    ~^image/ 30d;
-    ~^font/  30d;
-}
-expires $itslunaliu_asset_expires;
-CACHE
+            printf '%s\n' \
+              'map $sent_http_content_type $itslunaliu_asset_expires {' \
+              '    default off;' \
+              '    ~^image/ 30d;' \
+              '    ~^font/  30d;' \
+              '}' \
+              'expires $itslunaliu_asset_expires;' \
+              > "$cache_snippet"
             cache_added=1
           fi
 
