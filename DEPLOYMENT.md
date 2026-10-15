@@ -7,7 +7,7 @@ The production site is the ocean portfolio in `site/ocean/`. The live URLs are:
 
 ## Automatic deployment
 
-Pushing a commit to the `master` branch that changes `ocean/**` starts `.github/workflows/deploy-ocean.yml`. GitHub Actions packages the ocean theme and uploads it to the Alibaba Cloud Linux ECS at `47.94.99.190` over SSH. The server validates the archive, atomically promotes it to `/var/www/itslunaliu.com`, reloads Nginx, and checks the local HTTPS response before the workflow verifies the public URL.
+Pushing a commit to the `master` branch that changes `ocean/**` starts `.github/workflows/deploy-ocean.yml`. GitHub Actions packages the ocean theme and uploads it to the Alibaba Cloud Linux ECS at `47.94.99.190` over SSH. The server validates the archive, atomically promotes it to `/var/www/itslunaliu.com`, reloads Nginx, and checks the local HTTPS response before the workflow verifies the public URL. On that reload, the workflow also installs `/etc/nginx/conf.d/itslunaliu-asset-cache.conf` if it is missing. The file caches images and fonts for 30 days. HTML, CSS, and JavaScript keep Nginx's default revalidation. A failed `nginx -t` removes a newly added cache file and restores the previous site.
 
 The workflow uses these encrypted GitHub repository secrets:
 

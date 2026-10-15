@@ -709,7 +709,7 @@
         image.className = "ocean-sticker";
         image.src = asset.src.trim();
         image.alt = decorative ? "" : (typeof asset.alt === "string" ? asset.alt : "");
-        image.loading = decorative ? "lazy" : "eager";
+        image.loading = "lazy";
         image.decoding = "async";
         image.draggable = false;
         set.append(image);

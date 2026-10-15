@@ -68,7 +68,22 @@ jobs:
           fi
           mv "$stage" "$live"
 
+          cache_snippet=/etc/nginx/conf.d/itslunaliu-asset-cache.conf
+          cache_added=0
+          if [ ! -f "$cache_snippet" ]; then
+            cat > "$cache_snippet" <<'CACHE'
+map $sent_http_content_type $itslunaliu_asset_expires {
+    default off;
+    ~^image/ 30d;
+    ~^font/  30d;
+}
+expires $itslunaliu_asset_expires;
+CACHE
+            cache_added=1
+          fi
+
           rollback() {
+            if [ "$cache_added" = 1 ]; then rm -f "$cache_snippet"; fi
             rm -rf "$live"
             if [ -d "$backup" ]; then mv "$backup" "$live"; fi
             systemctl reload nginx || true

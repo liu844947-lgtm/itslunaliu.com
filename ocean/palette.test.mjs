@@ -12,10 +12,10 @@ test('all nine letters use distinct served assets in PORTFOLIO order', () => {
   assert.equal(letters.map(item => item.character).join(''), 'PORTFOLIO');
   assert.equal(new Set(letters.map(item => item.src)).size, 9);
   assert.deepEqual(Array.from(letters, item => item.src.split('/').at(-1)), [
-    'p-layered-card.png', 'o-shell-card.png', '09-r-b.png',
-    'portfolio-07-t-b-lighthouse-stamp.png', 'portfolio-08-f-a-signal-flags.png',
-    '12-o-a.png', 'portfolio-10-l-a-voyage-ticket.png', 't-palm-tag.png',
-    'portfolio-12-o-a-jellyfish-badge.png'
+    'p-layered-card.webp', 'o-shell-card.webp', '09-r-b.webp',
+    'portfolio-07-t-b-lighthouse-stamp.webp', 'portfolio-08-f-a-signal-flags.webp',
+    '12-o-a.webp', 'portfolio-10-l-a-voyage-ticket.webp', 't-palm-tag.webp',
+    'portfolio-12-o-a-jellyfish-badge.webp'
   ]);
   for (const item of letters) {
     assert.equal(typeof item.src, 'string');

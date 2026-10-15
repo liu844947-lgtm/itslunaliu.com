@@ -114,6 +114,10 @@ function transformBody(body, slug) {
     .replace(/\.\.\/\.\.\/index\.html/g, '../../index.html')
     .replace(/\.\.\/\.\.\/demo_pic\//g, '../../assets/case-studies/')
     .replace(/\?v=[^"']+/g, '')
+    .replace(/travel-route-detail\.png/g, 'travel-route-detail.webp')
+    .replace(/travel-home\.png/g, 'travel-home.webp')
+    .replace(/travel-ai-optimize\.png/g, 'travel-ai-optimize.webp')
+    .replace(/scoutai-macbook-base\.png/g, 'scoutai-macbook-base.webp')
     .replace(/<header class="global-header">[\s\S]*?<\/header>/, CAPSULE_HEADER);
 
   if (slug === 'travel-agent') {
